@@ -4,8 +4,9 @@ mkdir transcriptions_prepro/
 
 for i in {1..29};
 do
-    transc=$(cat DATA/Transcripció/Debate$i.txt |  tr "\\n" " ")
-    echo "0 <END>" $transc > transcriptions_prepro/Debate$i.txt
+    #transc=$(cat DATA/Transcripció/Debate$i.txt |  tr "\\n" " ")
+    #echo "0 <END>" $transc > transcriptions_prepro/Debate$i.txt
+    python3 prepro_transcriptions.py DATA/Transcripció/Debate$i.txt > transcriptions_prepro/Debate$i.txt
 done
 
 #./youtube-dl -o "audios/Debate%(autonumber)s.%(ext)s" --extract-audio --audio-format wav -a videos_links.lst
