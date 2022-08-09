@@ -6,6 +6,7 @@ def get_converted_labels_to_bio(labels: List[str]) -> List[str]:
 
 
 def eval_labels(predicted_labels: List[str], referece_labels: List[str], convert_to_bio: bool = False):
+    # WIP
     if convert_to_bio:
         labs = ["B", "I", "O"]
     else:
