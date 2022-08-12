@@ -92,2837 +92,2777 @@ jaume primer de castelló moltes gràcies a la fitxa
 
 24
 00:02:26,670 --> 00:02:27,790
-comencem bon debat
+comencem bon debat ***
 
 25
-00:02:53,870 --> 00:02:54,230
-align2.
+00:04:11,160 --> 00:04:11,350
+Contra
 
 26
-00:03:00,340 --> 00:03:00,620
-sh
-
-27
-00:03:04,540 --> 00:03:04,720
-audios
-
-28
-00:03:07,060 --> 00:03:09,070
-config.bash
-
-29
-00:03:21,760 --> 00:03:21,880
-DATA
-
-30
-00:03:30,370 --> 00:03:30,490
-DATA.
-
-31
-00:03:36,280 --> 00:03:38,870
-zip launch_align.sh
-
-32
-00:03:41,560 --> 00:03:43,330
-prepare_align.sh transcriptions_prepro
-
-33
-00:03:58,550 --> 00:04:03,500
-videos.csv videos_links_
-
-34
-00:04:10,940 --> 00:04:14,300
-14_upwards.lst videos_links_21_upwards.lst
-
-35
-00:04:18,550 --> 00:04:18,740
-videos_
-
-36
-00:04:27,200 --> 00:04:27,390
-links.
-
-37
-00:04:33,280 --> 00:04:36,090
-lst youtube-dl Contra
-
-38
 00:04:46,830 --> 00:04:49,630
 bona vesprada a tots i a totes benvolguts
 
-39
+27
 00:04:50,910 --> 00:04:54,880
 el meu nom és júlia i vaig a contar-vos la meua història
 
-40
+28
 00:04:55,470 --> 00:04:59,130
 visc en una societat molt desigual on uns pocs ho tenen tot
 
-41
+29
 00:04:59,580 --> 00:05:02,990
 i la majoria ens hem convertit en els seus esclaus
 
-42
+30
 00:05:05,270 --> 00:05:07,760
 fem tota la feina bruta per ells tota
 
-43
+31
 00:05:08,200 --> 00:05:11,700
 i ara fins i tot ens utilitzen com a fàbriques de nadons
 
-44
+32
 00:05:12,530 --> 00:05:15,390
 les dones riques ja no volen gestar ni parir
 
-45
+33
 00:05:15,990 --> 00:05:19,410
 el procés implica un risc molt gran per a elles
 
-46
+34
 00:05:19,590 --> 00:05:22,800
 i la seva figura és massa important per perdre-la
 
-47
+35
 00:05:22,800 --> 00:05:23,730
 per culpa del nadó
 
-48
+36
 00:05:25,070 --> 00:05:25,930
 d'aquesta manera
 
-49
+37
 00:05:29,060 --> 00:05:31,200
 es va arribar a la conclusió de què ho podrien
 
-50
+38
 00:05:31,200 --> 00:05:33,950
 fer les miserables que ja netejaven la seva immundícia
 
-51
+39
 00:05:35,320 --> 00:05:38,330
 amb aquest raonament van condemnar la meua vida van
 
-52
+40
 00:05:38,330 --> 00:05:40,700
 desfer la meua voluntat i la meua dignitat
 
-53
+41
 00:05:41,270 --> 00:05:46,840
 de sobte es van trobar sense amics i família tancades controlades a tothora
 
-54
+42
 00:05:47,110 --> 00:05:50,020
 obligades a hormonarse i a parir nadons com si de
 
-55
+43
 00:05:50,020 --> 00:05:51,140
 màquines es tractara
 
-56
+44
 00:05:53,480 --> 00:05:54,940
 la realitat era miserable
 
-57
+45
 00:05:55,840 --> 00:05:58,390
 les dones riques pagaven per un producte de primera
 
-58
+46
 00:05:58,730 --> 00:06:01,190
 i la meva vida no valia res en comparació
 
-59
+47
 00:06:02,530 --> 00:06:03,670
 i tot per a què
 
-60
+48
 00:06:04,280 --> 00:06:06,680
 per satisfer els desitjos d'una elit
 
-61
+49
 00:06:07,160 --> 00:06:10,750
 egoista capaç d'explotar de torturar i de menysprear
 
-62
+50
 00:06:11,100 --> 00:06:13,310
 a qualsevol que té al seu voltant
 
-63
+51
 00:06:13,910 --> 00:06:15,300
 per tal d'aconseguir el que volen
 
-64
+52
 00:06:16,540 --> 00:06:19,530
 aquesta companyes i companys és una història
 
-65
+53
 00:06:21,260 --> 00:06:25,470
 d'una realitat distòpica una història on s'han plantejat el fet
 
-66
+54
 00:06:25,680 --> 00:06:28,280
 que les persones adinerades tinguin la capacitat
 
-67
+55
 00:06:29,750 --> 00:06:34,730
 de comprar un nadó a canvi del patiment de la gestant us sona
 
-68
+56
 00:06:36,430 --> 00:06:38,330
 hbo el conte de la serventa
 
-69
+57
 00:06:39,370 --> 00:06:41,050
 us diré més la bíblia
 
-70
+58
 00:06:42,960 --> 00:06:45,690
 aquest món excèntric que hem exposat pot ser el
 
-71
+59
 00:06:45,690 --> 00:06:48,400
 nostre en un futur pròxim sabeu com
 
-72
+60
 00:06:49,130 --> 00:06:49,910
 amb el llenguatge
 
-73
+61
 00:06:50,800 --> 00:06:53,110
 sols que cal fixar-se en la publicitat
 
-74
+62
 00:06:53,550 --> 00:06:57,320
 com diu el filòsof eslovè sisek existeixen dues capes
 
-75
+63
 00:06:59,490 --> 00:07:02,770
 de llenguatge que cohabiten una que se'ns mostra clara
 
-76
+64
 00:07:03,490 --> 00:07:06,540
 al davant i lluminosa i altra que queda amagada per
 
-77
+65
 00:07:06,540 --> 00:07:08,470
 la imposició del políticament correcte
 
-78
+66
 00:07:10,520 --> 00:07:13,360
 quan passegem pel carrer veiem infinitats d'anuncis
 
-79
+67
 00:07:13,360 --> 00:07:16,230
 que bombardegen els nostres sentits infinitats de missatges
 
-80
+68
 00:07:16,230 --> 00:07:19,830
 que ens diuen com menjar què menjar com vestir o com viure
 
-81
+69
 00:07:21,500 --> 00:07:24,350
 el problema radica en què som reticents a descobrir
 
-82
+70
 00:07:24,420 --> 00:07:28,130
 el missatge que queda ocult davant de les paraules boniques
 
-83
+71
 00:07:29,120 --> 00:07:31,820
 quan mireu aquí veieu una platja paradisíaca
 
-84
+72
 00:07:32,410 --> 00:07:35,400
 però el verdader missatge és casat i reprodueix-te
 
-85
+73
 00:07:36,590 --> 00:07:39,820
 aquí veieu un home major en un descapotable però
 
-86
+74
 00:07:39,820 --> 00:07:42,600
 la realitat és altra paga per tindre sexe
 
-87
+75
 00:07:43,470 --> 00:07:46,850
 i aquí veieu gestació subrogada èxit cent per cent
 
-88
+76
 00:07:47,110 --> 00:07:49,000
 som l'agència número uno en europa
 
-89
+77
 00:07:49,450 --> 00:07:52,280
 no veiem la trista realitat per un mòdic preu una
 
-90
+78
 00:07:52,280 --> 00:07:55,130
 parella de classe mitja-alta pot aconseguir un nadó
 
-91
+79
 00:07:55,180 --> 00:07:55,910
 per encàrrec
 
-92
+80
 00:08:00,860 --> 00:08:03,330
 el capitalisme que impera a les nostres societats ens
 
-93
+81
 00:08:03,920 --> 00:08:06,350
 ha transformat la forma de veure el món en què es rodeja
 
-94
+82
 00:08:07,120 --> 00:08:09,570
 en aquesta societat si una persona
 
-95
+83
 00:08:10,810 --> 00:08:14,640
 vol un nen o una nena sols
 
-96
+84
 00:08:17,030 --> 00:08:19,440
 ha de pagar per aconseguir-ho sense tindre en compte
 
-97
+85
 00:08:21,990 --> 00:08:25,070
 els drets i les llibertats dels nadons convertint-lo
 
-98
+86
 00:08:25,210 --> 00:08:26,590
 en una simple mercaderia
 
-99
+87
 00:08:27,940 --> 00:08:30,850
 companyes companys el que realment s'està debatint
 
-100
+88
 00:08:30,850 --> 00:08:34,950
 aquí és si cal legalitzar la compra-venda de nadons
 
-101
+89
 00:08:36,120 --> 00:08:38,740
 per això el nostre equip dirà que no no s'ha de
 
-102
+90
 00:08:38,740 --> 00:08:41,630
 legalitzar la gestació subrogada perquè aquesta política
 
-103
+91
 00:08:41,630 --> 00:08:45,340
 mercantilista atempta directament sobre la llibertat individual del nadó
 
-104
+92
 00:08:45,560 --> 00:08:48,810
 emparant-se en un desig d'uns pares que volen ser
 
-105
-00:08:48,810 --> 00:08:52,430
-progenitors a qualsevol preu moltíssimes gràcies align2.sh
+93
+00:08:48,810 --> 00:08:51,420
+progenitors a qualsevol preu moltíssimes gràcies ***
 
-106
-00:09:24,940 --> 00:09:28,350
-audios config.bash DATA DATA.zip launch_align.sh prepare_align.sh transcriptions_
-
-107
-00:09:28,560 --> 00:09:31,320
-prepro videos.csv videos_links_14_upwards.lst videos_links_21_
-
-108
-00:09:31,910 --> 00:09:33,620
-upwards.lst videos_links.lst youtube-dl
-
-109
+94
 00:09:34,630 --> 00:09:36,680
 vull ser la vostra gestant
 
-110
+95
 00:09:37,720 --> 00:09:40,550
 aquest és el missatge que la xantel mcalom
 
-111
+96
 00:09:41,070 --> 00:09:44,350
 canadenca de vint-i-nou anys va enviar el dos mil divuit
 
-112
+97
 00:09:44,570 --> 00:09:47,150
 a una parella de granollers al costat de barcelona
 
-113
+98
 00:09:47,510 --> 00:09:49,450
 aquests són en jordi i en miquel
 
-114
+99
 00:09:50,220 --> 00:09:53,530
 xantel ja tenia dos fills i sempre deia que
 
-115
+100
 00:09:54,220 --> 00:09:57,300
 si no hagués pogut tenir aquests dos fills d'una manera biològica
 
-116
+101
 00:09:57,430 --> 00:10:01,020
 li hagués agradat que la ajudessin a tenir-los i per aquest motiu
 
-117
+102
 00:10:01,140 --> 00:10:05,630
 va prendre la decisió altruistament d'ajudar en jordi en miquel
 
-118
+103
 00:10:06,840 --> 00:10:08,070
 quin mal ha fet la xantel
 
-119
+104
 00:10:09,170 --> 00:10:10,870
 quin mal han fet en jordi en miquel
 
-120
+105
 00:10:11,860 --> 00:10:15,430
 bona tarda nosaltres som l'equip de la universitat pompeu fabra
 
-121
+106
 00:10:15,660 --> 00:10:18,630
 i jo mateixa que sóc la queralt juntament amb els meus companys
 
-122
+107
 00:10:18,860 --> 00:10:22,980
 l'anna en cristian l'adrian i en josep maria venim a defensar que
 
-123
+108
 00:10:23,080 --> 00:10:26,310
 sí que cal la legalització de la gestació subrogada
 
-124
+109
 00:10:26,920 --> 00:10:29,360
 i defensem aquesta postura perquè creiem que
 
-125
+110
 00:10:29,770 --> 00:10:34,410
 l'oposició a la legalització de la gestació subrogada està fonamentada
 
-126
+111
 00:10:34,580 --> 00:10:38,860
 a base de prejudicis morals que sovint coarten la llibertat
 
-127
+112
 00:10:39,120 --> 00:10:42,010
 de les dones i de retruc de tota la societat
 
-128
+113
 00:10:42,940 --> 00:10:46,440
 hi ha països que ja han respost la pregunta que avui ens ocupa
 
-129
+114
 00:10:46,780 --> 00:10:49,730
 si s'hauria de legalitzar la gestació subrogada i
 
-130
+115
 00:10:49,730 --> 00:10:54,490
 no són països precisament de ser sospitosos en matèries de desenvolupament
 
-131
+116
 00:10:55,250 --> 00:10:56,340
 d'igualtat de gènere
 
-132
+117
 00:10:56,940 --> 00:11:01,580
 canadà regne unit i portugal ja han legalitzat la gestació subrogada
 
-133
+118
 00:11:02,130 --> 00:11:06,710
 basada en un un model de plenes garanties per la dona
 
-134
+119
 00:11:07,200 --> 00:11:09,070
 i per l'infant per als nadons
 
-135
+120
 00:11:09,860 --> 00:11:13,680
 per situar-nos en context nosaltres equiparem el procediment
 
-136
+121
 00:11:13,680 --> 00:11:17,950
 legal de la donació d'òrgans amb el que pot adoptar la gestació subrogada
 
-137
+122
 00:11:18,380 --> 00:11:21,790
 que per cert la donació d'òrgans té un procediment legal
 
-138
+123
 00:11:22,010 --> 00:11:26,690
 basat en un model garant i altruista com el que nosaltres defensem
 
-139
+124
 00:11:26,890 --> 00:11:28,290
 garant i altruista
 
-140
+125
 00:11:29,210 --> 00:11:32,940
 i nosaltres defensem la legalització de la gestació subrogada a través
 
-141
+126
 00:11:33,150 --> 00:11:36,220
 de tres arguments que jo defineixo breument però que
 
-142
+127
 00:11:36,220 --> 00:11:38,320
 els meus companys exposaran a continuació
 
-143
+128
 00:11:38,790 --> 00:11:42,290
 en primer lloc estem convençudes de la defensa del
 
-144
+129
 00:11:42,290 --> 00:11:45,620
 dret de l'autonomia personal reconegut en l'article
 
-145
+130
 00:11:45,620 --> 00:11:49,640
 tres de la declaració dels drets humans basat en dos conceptes
 
-146
+131
 00:11:49,910 --> 00:11:52,750
 la llibertat individual perquè creiem que qualsevol
 
-147
+132
 00:11:52,750 --> 00:11:54,820
 persona ha de ser lliure de decidir
 
-148
+133
 00:11:55,250 --> 00:11:58,770
 i prendre les seves pròpies decisions i aquest enmarcat
 
-149
+134
 00:11:58,770 --> 00:12:03,220
 dins d'un marc jurídic de seguretat que esdevindria un dic
 
-150
+135
 00:12:03,350 --> 00:12:06,620
 de contenció a la possible vulneració dels drets
 
-151
+136
 00:12:06,630 --> 00:12:10,690
 de totes les parts que formarien el contracte de la gestació subrogada
 
-152
+137
 00:12:11,520 --> 00:12:16,290
 en segon lloc defensem la legalització de la gestació subrogada a través
 
-153
+138
 00:12:16,500 --> 00:12:20,700
 d'un argument pragmàtic ja que des d'un punt de vista col·lectiu
 
-154
+139
 00:12:20,960 --> 00:12:25,970
 davant d'un possible mal major com és la no regulació que comporta
 
-155
+140
 00:12:26,170 --> 00:12:30,020
 tràfic de màfies mercat negre turisme reproductiu
 
-156
+141
 00:12:30,170 --> 00:12:33,990
 adoptar un marc comú permetria diferenciar entre les pràctiques
 
-157
+142
 00:12:34,170 --> 00:12:38,210
 lícites i les que no ho són i així garantir reitero els drets
 
-158
+143
 00:12:38,640 --> 00:12:40,940
 de les dones i dels infants
 
-159
+144
 00:12:42,130 --> 00:12:46,590
 i finalment també cal l'argument de la igualtat d'oportunitats
 
-160
+145
 00:12:47,060 --> 00:12:50,070
 ja que defensem la validesa d'un contracte que beneficia
 
-161
+146
 00:12:50,240 --> 00:12:53,980
 a totes les parts i permet a aquelles parelles que
 
-162
+147
 00:12:53,980 --> 00:12:58,190
 no poden tenir fills d'una manera biològica a poder formar una família
 
-163
+148
 00:12:58,440 --> 00:13:03,040
 nosaltres pensem en el col·lectiu lgtbi als solters i solteres
 
-164
+149
 00:13:03,150 --> 00:13:06,320
 a les persones que són infèrtils o estèrils per tant
 
-165
+150
 00:13:06,510 --> 00:13:12,370
 la gestació subrogada és una pràctica inclusiva inclusiva
 
-166
+151
 00:13:14,610 --> 00:13:18,450
 el concepte de família al segle vint-i-u ha canviat
 
-167
+152
 00:13:18,890 --> 00:13:22,350
 de la mateixa manera que ho ha fet el concepte de maternitat
 
-168
+153
 00:13:23,560 --> 00:13:27,640
 per adaptar-nos per modernitzar-los per obrir-nos
 
-169
+154
 00:13:28,070 --> 00:13:34,030
 des de la universitat pompeu fabra defensem la legalització de la gestació
 
-170
+155
 00:13:34,300 --> 00:13:36,120
 subrogada moltes gràcies +++
 
-171
+156
 00:14:07,150 --> 00:14:10,560
 bé abans de començar m'agradaria esmentar unes quantes
 
-172
+157
 00:14:10,560 --> 00:14:14,160
 coses que l'equip contrari ens ha dit i que evidentment no estem d'acord
 
-173
+158
 00:14:15,170 --> 00:14:17,980
 no es pot invocar ni la llibertat ni l'autonomia per
 
-174
+159
 00:14:17,980 --> 00:14:23,480
 a retrocedir en drets no podem permetre que es venga la capacitat reproductiva
 
-175
+160
 00:14:24,100 --> 00:14:25,950
 de la dona això en primer lloc
 
-176
+161
 00:14:28,060 --> 00:14:30,360
 que vosté vullga que han ficat l'exemple de què
 
-177
+162
 00:14:30,740 --> 00:14:34,430
 una dona vullga gestar el que farà aquest aquest acte
 
-178
+163
 00:14:34,650 --> 00:14:38,420
 és condemnar a la resta de les dones del món
 
-179
+164
 00:14:39,810 --> 00:14:44,600
 que quelcom siga voluntari no legitima el que fa és
 
-180
+165
 00:14:44,600 --> 00:14:48,640
 esclavitzar a la resta de persones a la resta de dones
 
-181
+166
 00:14:50,100 --> 00:14:52,880
 bé ens envolta també una una diapositiva mostrant
 
-182
+167
 00:14:53,320 --> 00:14:54,810
 un home embarassat
 
-183
+168
 00:14:55,730 --> 00:14:59,900
 la dona és qui patix tot açò i vostés l'estan condemnant
 
-184
+169
 00:15:00,590 --> 00:15:03,140
 parlem de canadà de regne unit i de portugal vaig
 
-185
+170
 00:15:03,140 --> 00:15:05,030
 a dir vaig a ser molt breu ací vaig a dir tres dades
 
-186
+171
 00:15:05,320 --> 00:15:09,070
 canadà antonio house fader i l'any passat ja s'estaven proposant
 
-187
+172
 00:15:09,400 --> 00:15:11,460
 mesures legislatives per a que aquesta dona cobrara
 
-188
+173
 00:15:11,590 --> 00:15:14,850
 perquè en canadà senyors i senyores es mercantilitza la dona
 
-189
+174
 00:15:15,380 --> 00:15:19,680
 altruista sí però s'ha creat una indústria una indústria que genera
 
-190
+175
 00:15:19,850 --> 00:15:23,840
 milions i el capital ho fagocita tot el mercat
 
-191
+176
 00:15:24,430 --> 00:15:27,090
 ho fagocita tot un segonet i en seguida li responc
 
-192
+177
 00:15:27,090 --> 00:15:30,850
 a la pregunta el regne unit altruista dos de cada
 
-193
+178
 00:15:30,850 --> 00:15:34,390
 tres gestacions subrogades en regne unit van fora legalitzant
 
-194
+179
 00:15:34,390 --> 00:15:37,180
 la gestació subrogada l'únic que fem és legitimar
 
-195
+180
 00:15:37,310 --> 00:15:38,720
 aquesta pràctica en els llocs
 
-196
+181
 00:15:39,410 --> 00:15:43,940
 on més mal es fa a la dona perpetuant desigualtat perpetuant
 
-197
+182
 00:15:44,140 --> 00:15:48,050
 el rol de gènere que degrada a la dona i el portugal
 
-198
+183
 00:15:48,690 --> 00:15:52,810
 portugal senyors i senyores el tribunal constitucional
 
-199
+184
 00:15:53,760 --> 00:15:54,770
 ha parat aquesta llei
 
-200
+185
 00:15:57,130 --> 00:15:58,010
 no està legalitzat
 
-201
+186
 00:15:58,890 --> 00:16:01,290
 al igual que la per exemple la proposta de ciutadans
 
-202
+187
 00:16:02,280 --> 00:16:03,990
 i volen fer un marc internacional
 
-203
+188
 00:16:04,940 --> 00:16:10,130
 com si qualsevol dret internacional té que ser acollit aniran a ucraïna
 
-204
+189
 00:16:10,890 --> 00:16:13,360
 a rússia o al canadà diguem company
 
-205
+190
 00:16:14,100 --> 00:16:17,910
 en el cas de canadà ha explicat una iniciativa individual
 
-206
+191
 00:16:18,020 --> 00:16:21,020
 creu que l'opinió d'una persona és representativa
 
-207
+192
 00:16:21,020 --> 00:16:25,000
 de tot el que opina la societat si és un representant
 
-208
+193
 00:16:25,000 --> 00:16:28,530
 electe clar que és vinculant el que pensa aquesta persona
 
-209
+194
 00:16:29,460 --> 00:16:31,760
 perquè aquesta persona la vota gent però en canadà company
 
-210
+195
 00:16:32,610 --> 00:16:34,990
 el més important no és el que vosté ha dit el
 
-211
+196
 00:16:34,990 --> 00:16:36,600
 més important és que s'ha creat una indústria al
 
-212
+197
 00:16:36,600 --> 00:16:39,590
 voltant de la dona que la mercantilitza la cosifica
 
-213
+198
 00:16:39,790 --> 00:16:41,610
 i la degrada al paper d'esclava
 
-214
+199
 00:16:42,650 --> 00:16:47,250
 companys i companyes del que s'està parlant ací avui és de compra-venda
 
-215
+200
 00:16:47,430 --> 00:16:49,960
 de nadons vostés proposen una realitat altruista una
 
-216
+201
 00:16:49,960 --> 00:16:51,120
 realitat que no existix
 
-217
+202
 00:16:51,810 --> 00:16:53,620
 rússia ucraïna
 
-218
+203
 00:16:54,920 --> 00:16:56,580
 hi ha una multitud
 
-219
+204
 00:16:57,490 --> 00:16:59,630
 de països que no és així
 
-220
+205
 00:17:00,270 --> 00:17:04,280
 i l'únic que faran vostés legalitzant-lo és permetre
 
-221
+206
 00:17:04,280 --> 00:17:07,010
 que aquelles persones vagen a aquests països es traguen
 
-222
+207
 00:17:07,010 --> 00:17:08,800
 el xiquet al país d'origen
 
-223
+208
 00:17:09,840 --> 00:17:14,100
 puguen registrar-lo sense ningun tipus de problema condemnant aquelles dones
 
-224
+209
 00:17:14,730 --> 00:17:17,680
 perquè no ho farà una persona espanyola front a una ucraïnesa
 
-225
+210
 00:17:17,870 --> 00:17:21,640
 una ucraïnesa pobra diguem company vosté parla de
 
-226
+211
 00:17:21,640 --> 00:17:23,660
 la regulació del mercat però vosté no creu que
 
-227
+212
 00:17:23,660 --> 00:17:26,880
 hi ha més garanties quan el mateix estat i no el mercat
 
-228
+213
 00:17:27,040 --> 00:17:29,020
 és qui regula aquesta pràctica com en el casos de
 
-229
+214
 00:17:29,020 --> 00:17:31,860
 canadà portugal i el regne unit clar que sí nosaltres
 
-230
+215
 00:17:31,860 --> 00:17:35,000
 volem regular la volem prohibir perquè és una pràctica
 
-231
+216
 00:17:35,460 --> 00:17:39,140
 que com hem dit cosifica mercantilitza instrumentalitza
 
-232
+217
 00:17:39,140 --> 00:17:43,710
 el cos de la dona legalitzar-la és legitimar les pràctiques més feroces
 
-233
+218
 00:17:44,040 --> 00:17:48,020
 no estem d'acord amb això i crec que tots estem presents aquí
 
-234
+219
 00:17:48,260 --> 00:17:51,370
 tampoc ho estem vulnera la dignitat de la dona
 
-235
+220
 00:17:51,820 --> 00:17:55,600
 vulnera la seva llibertat perquè contractualment en tots els casos
 
-236
+221
 00:17:55,710 --> 00:17:57,500
 que vostés no compten perquè no els convé
 
-237
+222
 00:17:58,210 --> 00:18:00,110
 firmen un contracte en què la dona no és lliure
 
-238
+223
 00:18:00,380 --> 00:18:02,440
 i l'últim mes té que estar recluída no vaigi a
 
-239
+224
 00:18:02,440 --> 00:18:05,800
 ser que aquesta dona prenga drogues prenga alcohol siga lliure
 
-240
+225
 00:18:06,360 --> 00:18:11,400
 i nasca el producte amb tares el producte la cosa
 
-241
+226
 00:18:12,320 --> 00:18:16,280
 no estem en contra de que les persones siguin coses
 
-242
+227
 00:18:16,290 --> 00:18:17,880
 i que passen de ser subjectes
 
-243
+228
 00:18:18,910 --> 00:18:21,550
 a ser objectes diguem company
 
-244
+229
 00:18:22,260 --> 00:18:25,250
 aquesta situació que vosté està descrivint i que
 
-245
+230
 00:18:25,250 --> 00:18:27,520
 nosaltres com no podria ser d'una altra forma condemnem
 
-246
+231
 00:18:27,760 --> 00:18:29,930
 creu que és la que es dóna els models de gestació
 
-247
+232
 00:18:29,930 --> 00:18:33,410
 subrogada altruista de canadà regne unit i portugal sí company
 
-248
+233
 00:18:33,550 --> 00:18:37,810
 perquè per exemple regne unit reunit ha fet un model altruista
 
-249
+234
 00:18:38,330 --> 00:18:42,250
 dos de cada tres gestacions subrogades se'n van fora a llocs
 
-250
+235
 00:18:42,420 --> 00:18:46,640
 on no ho és legitimant aquesta pràctica permetent que les persones
 
-251
+236
 00:18:46,800 --> 00:18:52,650
 puguen traure els nadons registrar-los i passant de ser subjectes
 
-252
+237
 00:18:52,780 --> 00:18:59,620
 en drets a objectes a mercaderia és traspassar l'última frontera del capitalisme
 
-253
+238
 00:19:00,090 --> 00:19:01,790
 que serà el pròxim disculpen company
 
-254
+239
 00:19:02,650 --> 00:19:05,130
 que serà el pròxim vendre un ronyó perquè els
 
-255
+240
 00:19:05,130 --> 00:19:07,660
 meus fills no poden estudiar o millor vendre el meu
 
-256
+241
 00:19:07,660 --> 00:19:11,450
 cor morir i que la meua família puga tindre una vida digna
 
-257
+242
 00:19:11,940 --> 00:19:15,880
 no companys no estem a favor d'això és una pràctica
 
-258
+243
 00:19:16,180 --> 00:19:17,730
 que no estem dispostos a assumir
 
-259
+244
 00:19:18,390 --> 00:19:20,080
 açò és acció i reacció companys
 
-260
+245
 00:19:20,640 --> 00:19:21,830
 acció legalitzar-la
 
-261
+246
 00:19:22,580 --> 00:19:26,350
 reacció compra-venda de nadons perquè companys
 
-262
+247
 00:19:28,190 --> 00:19:31,020
 protocol facultatiu de la convenció de l'haia de vint-i-nou
 
-263
+248
 00:19:31,020 --> 00:19:33,210
 de maig de mil nou-cents noranta-tres sobre la protecció de xiquets
 
-264
+249
 00:19:34,530 --> 00:19:36,520
 no hi ha res més que dir altruista
 
-265
+250
 00:19:37,400 --> 00:19:39,180
 quan van a fer un control altruista
 
-266
+251
 00:19:40,420 --> 00:19:43,230
 com poden assegurar que no hi haurà un pagament
 
-267
+252
 00:19:44,190 --> 00:19:47,060
 i després han dit també el col·lectiu lgtbi
 
-268
+253
 00:19:47,630 --> 00:19:50,140
 un deu per cent de les gestacions subrogades que es fan al món
 
-269
+254
 00:19:50,340 --> 00:19:52,840
 són per aquest col·lectiu no fiquen
 
-270
+255
 00:19:53,750 --> 00:19:55,480
 com a un argument de pes
 
-271
+256
 00:19:56,290 --> 00:19:58,280
 una pràctica que s'acollix a un deu per cent
 
-272
+257
 00:19:59,570 --> 00:20:03,350
 crec que ha quedat palés crec que és evident no
 
-273
+258
 00:20:03,430 --> 00:20:06,330
 podem traspassar l'última frontera del capitalisme
 
-274
+259
 00:20:07,050 --> 00:20:09,440
 dit açò molta sort
 
-275
+260
 00:20:10,080 --> 00:20:12,090
 el meu nom és imanol igual i moltes gràcies +++
 
-276
+261
 00:20:35,560 --> 00:20:38,800
 bona tarda jo sóc en josep maria tirar de l'equip
 
-277
+262
 00:20:38,800 --> 00:20:43,070
 de la universitat pompeu fabra i m'agradaria venir a exposar perquè
 
-278
+263
 00:20:43,210 --> 00:20:46,030
 els nostres arguments pels quals nosaltres pensem que sí
 
-279
+264
 00:20:46,390 --> 00:20:50,270
 que s'hauria de legalitzar la gestació subrogada s'hauria de legalitzar
 
-280
+265
 00:20:50,470 --> 00:20:54,320
 per desenvolupar el dret de l'autonomia personal de les dones
 
-281
+266
 00:20:54,630 --> 00:20:59,080
 per un argument de tipus pragmàtic i per garantir la igualtat d'oportunitats
 
-282
+267
 00:21:00,980 --> 00:21:04,260
 començant amb el cas del dret de l'autonomia voluntat
 
-283
+268
 00:21:04,270 --> 00:21:08,260
 d'autonomia personal reconegut a l'article tres la declaració
 
-284
+269
 00:21:08,260 --> 00:21:11,870
 universal dels drets humans aquest article que és
 
-285
+270
 00:21:11,870 --> 00:21:14,710
 universal dels drets humans ens parla de dos conceptes
 
-286
+271
 00:21:14,880 --> 00:21:18,240
 que s'entenen millor junts que són llibertat i seguretat
 
-287
+272
 00:21:18,940 --> 00:21:26,750
 hem d'entendre que per garantir la l'accés a la dona amb aquesta pràctica
 
-288
+273
 00:21:26,860 --> 00:21:30,790
 de forma lliure cal fer-ho amb un marc jurídic de
 
-289
+274
 00:21:30,790 --> 00:21:34,870
 seguretat i això és el que nosaltres exactament proposem per tant
 
-290
+275
 00:21:34,980 --> 00:21:37,680
 la gestació subrogada suposarà l'exercici del dret
 
-291
+276
 00:21:37,680 --> 00:21:41,730
 a l'autonomia personal en la mesura en què es reguli amb garanties
 
-292
+277
 00:21:42,800 --> 00:21:46,790
 i aquí parlem del regne unit parlem de canadà i
 
-293
+278
 00:21:46,790 --> 00:21:49,080
 parlem de portugal i si em permets acabo d'explicar
 
-294
+279
 00:21:49,080 --> 00:21:50,460
 això i ara et donaré la paraula
 
-295
+280
 00:21:51,310 --> 00:21:54,050
 nosaltres fem el símil amb el cas de la donació d'òrgans
 
-296
+281
 00:21:54,350 --> 00:21:58,530
 de fet rafael matez sanz que és el president d'organització nacional de trasplantaments
 
-297
+282
 00:21:58,730 --> 00:22:01,680
 també el fa vegades aquest símil ens explica que
 
-298
+283
 00:22:01,680 --> 00:22:05,420
 la donació d'òrgans és un procés en el qual està prohibida
 
-299
+284
 00:22:05,530 --> 00:22:08,830
 la venda de la qual ells ja han parlat una mica
 
-300
+285
 00:22:08,830 --> 00:22:12,710
 de la venda per exemple d'un fetge d'un ronyó i nosaltres precisament
 
-301
+286
 00:22:12,890 --> 00:22:16,590
 això és el que volem per la gestació subrogada prohibir la compra-venda
 
-302
+287
 00:22:16,690 --> 00:22:20,010
 de nadons com regulant amb unes garanties fortes i
 
-303
+288
 00:22:20,010 --> 00:22:23,840
 garantint que sigui altruista com es fa al regne unit a portugal
 
-304
+289
 00:22:23,980 --> 00:22:25,560
 i a canadà endavant
 
-305
+290
 00:22:26,290 --> 00:22:28,750
 moltes gràcies company com un estat que ha perdut
 
-306
+291
 00:22:28,750 --> 00:22:31,100
 la sobirania nacional front a la globalització pot
 
-307
+292
 00:22:31,100 --> 00:22:33,510
 garantitzar que el mercat no fagocitar aquesta pràctica
 
-308
+293
 00:22:35,570 --> 00:22:39,590
 val pots reformular la pregunta si com un estat que
 
-309
+294
 00:22:39,590 --> 00:22:42,880
 ha perdut la seva sobirania nacional front a la globalització
 
-310
+295
 00:22:42,880 --> 00:22:45,570
 imperant en el món pot garantir que el mercat no
 
-311
+296
 00:22:45,570 --> 00:22:47,600
 fagocitar la pràctica de la gestació subrogada val
 
-312
+297
 00:22:47,610 --> 00:22:49,660
 demanava que reformulesis però en tot cas
 
-313
+298
 00:22:50,960 --> 00:22:53,330
 nosaltres el que veiem i amb això entraré més en
 
-314
+299
 00:22:53,330 --> 00:22:56,820
 el segon argument és que la no legalització és precisament
 
-315
+300
 00:22:58,460 --> 00:23:01,730
 la porta d'entrada al mercat en aquest tipus de pràctiques
 
-316
+301
 00:23:01,730 --> 00:23:05,580
 per tant nosaltres precisament garantim o proposem una
 
-317
+302
 00:23:05,580 --> 00:23:08,270
 regulació amb garanties perquè el mercat no fagociti
 
-318
+303
 00:23:08,570 --> 00:23:10,910
 i aquesta és la nostra proposta i crec que vostés
 
-319
+304
 00:23:10,910 --> 00:23:12,700
 amb la vostra proposta no poden garantir
 
-320
+305
 00:23:13,390 --> 00:23:15,780
 la no entrada del mercat en aquest tipus de pràctiques
 
-321
+306
 00:23:15,830 --> 00:23:19,540
 i si em permets acabaré aquesta explicació us parlava
 
-322
+307
 00:23:19,540 --> 00:23:22,090
 de tres països del regne unit del canadà de portugal
 
-323
+308
 00:23:22,470 --> 00:23:24,590
 en el cas del regne unit vosaltres em dèieu
 
-324
+309
 00:23:25,450 --> 00:23:27,540
 no perquè dos de cada tres casos del regne unit
 
-325
+310
 00:23:27,540 --> 00:23:30,600
 se'n van a ucraïna no primer m'agradaria saber d'on
 
-326
+311
 00:23:30,600 --> 00:23:32,940
 surt aquesta dada exactament perquè sembla que no
 
-327
+312
 00:23:32,940 --> 00:23:36,380
 ha sortit la font però en tot cas en contraposició a espanya
 
-328
+313
 00:23:37,340 --> 00:23:41,070
 país en el qual tres de cada tres casos se'n van a ucraïna
 
-329
+314
 00:23:41,170 --> 00:23:44,070
 a buscar dones gestants en granges de dones home doncs
 
-330
+315
 00:23:44,070 --> 00:23:45,830
 com a mínim suposa un avenç
 
-331
+316
 00:23:47,630 --> 00:23:48,750
 en el cas de portugal
 
-332
+317
 00:23:51,200 --> 00:23:53,840
 hi ha una sentència al tribunal constitucional de portugal
 
-333
+318
 00:23:54,340 --> 00:23:56,930
 que vostés han citat molt bé que anul·la parcialment
 
-334
+319
 00:23:56,930 --> 00:23:59,570
 la llei de gestació subrogada a portugal certament
 
-335
+320
 00:24:00,210 --> 00:24:03,250
 però què diu exactament la sentència la sentència
 
-336
+321
 00:24:03,260 --> 00:24:06,220
 exactament el que diu és que
 
-337
+322
 00:24:09,930 --> 00:24:14,790
 l'admissibilitat de la gestació subrogada subjecta a un consentiment autònom
 
-338
+323
 00:24:15,030 --> 00:24:18,940
 de les parts interessades no constitueix per ser una
 
-339
+324
 00:24:18,940 --> 00:24:21,600
 violació del dret de la dona ni del nadó això
 
-340
+325
 00:24:21,600 --> 00:24:23,870
 és exactament el que diu el tribunal constitucional de portugal
 
-341
+326
 00:24:24,120 --> 00:24:26,620
 perquè anul·la la llei l'anul·la perquè diu que
 
-342
+327
 00:24:26,620 --> 00:24:29,680
 les garanties no estan establertes de forma prou clara precisament
 
-343
+328
 00:24:29,820 --> 00:24:32,240
 el tribunal constitució de portugal ens dóna la raó
 
-344
+329
 00:24:32,440 --> 00:24:35,890
 el que diu és cal definir bé les garanties i això és precisament
 
-345
+330
 00:24:36,050 --> 00:24:39,570
 el que nosaltres proposem en aquest debat per tant
 
-346
+331
 00:24:40,470 --> 00:24:43,060
 definir garanties vol dir protegir drets i amb això
 
-347
+332
 00:24:43,070 --> 00:24:44,480
 entro en el nostre segon argument
 
-348
+333
 00:24:45,030 --> 00:24:48,370
 l'argument pragmàtic el que s'ha constatat fins ara
 
-349
+334
 00:24:48,460 --> 00:24:50,540
 és que prohibir no implica eliminar
 
-350
+335
 00:24:51,310 --> 00:24:54,560
 vostés estan preocupats perquè pensen que nosaltres
 
-351
+336
 00:24:54,780 --> 00:24:56,930
 amb la nostra proposta volem permetre
 
-352
+337
 00:24:57,380 --> 00:24:58,980
 la gestació subrogada a ucraïna
 
-353
+338
 00:25:00,010 --> 00:25:03,690
 jo crec que ara mateix a espanya estan prohibida la
 
-354
+339
 00:25:03,690 --> 00:25:07,320
 gestació subrogada s'està permetent que cada any entre set-cents i mil
 
-355
+340
 00:25:07,450 --> 00:25:09,560
 nadons s'inscriguen al registre civil
 
-356
+341
 00:25:11,030 --> 00:25:14,930
 fets en gestació subrogada a ucraïna per tant això
 
-357
+342
 00:25:14,940 --> 00:25:18,680
 ara mateix és la realitat la realitat que vostés proposen
 
-358
+343
 00:25:18,890 --> 00:25:22,300
 la vostra proposta no és capaç de solucionar aquest problema
 
-359
+344
 00:25:22,520 --> 00:25:24,680
 és la nostra la proposta la que és capaç de solucionar
 
-360
+345
 00:25:24,680 --> 00:25:25,400
 que aquests nens no
 
-361
+346
 00:25:26,050 --> 00:25:29,060
 neixin en granges de dones a ucraïna precisament per això
 
-362
+347
 00:25:29,250 --> 00:25:33,050
 volem regular la gestació subrogada per reduir o per eliminar
 
-363
+348
 00:25:33,460 --> 00:25:36,090
 la explotació de dones a ucraïna
 
-364
+349
 00:25:37,010 --> 00:25:40,570
 per tant davant d'aquesta realitat que existeix hi ha dues opcions
 
-365
+350
 00:25:41,010 --> 00:25:43,980
 l'opció de prohibir que entenc que és la que vostés proposen
 
-366
+351
 00:25:44,210 --> 00:25:47,080
 i potser afegeixen no prohibir però a més a més
 
-367
+352
 00:25:47,080 --> 00:25:49,710
 prohibir que es puguin inscriure al registre civil no sé si
 
-368
+353
 00:25:49,890 --> 00:25:51,970
 aquesta és la proposta que vosaltres teníeu en tot
 
-369
+354
 00:25:51,970 --> 00:25:53,990
 cas llavors us trobareu al tribunal europeu dels drets
 
-370
+355
 00:25:53,990 --> 00:25:56,340
 humans que en repetides sentències per exemple en
 
-371
+356
 00:25:56,350 --> 00:25:59,080
 el cas menesson contra frança ha dit que això vulnera
 
-372
+357
 00:25:59,080 --> 00:26:00,110
 els drets dels menors
 
-373
+358
 00:26:00,790 --> 00:26:03,080
 l'altra opció que nosaltres veiem que es l'única
 
-374
+359
 00:26:03,080 --> 00:26:06,340
 opció capaç de garantir drets és l'opció de regular
 
-375
+360
 00:26:07,000 --> 00:26:10,350
 i per tant de distingir les pràcctiques lícites i les il·lícites
 
-376
+361
 00:26:11,580 --> 00:26:15,130
 sancionar les il·lícites i permetre les lícites per tant garantir drets
 
-377
+362
 00:26:15,270 --> 00:26:20,090
 i això acabarem amb el meu tercer argument garanteix la igualtat d'oportunitats
 
-378
+363
 00:26:20,260 --> 00:26:22,400
 tant dels col·lectius que no poden accedir a la gestació
 
-379
+364
 00:26:22,400 --> 00:26:25,720
 subrogada per la via tradicional ai a la maternitat
 
-380
+365
 00:26:25,720 --> 00:26:29,770
 per la via convencional com les persones solteres estèrils infèrtils
 
-381
+366
 00:26:30,160 --> 00:26:33,890
 lgtbi com també garantir els drets de les dones gestants
 
-382
+367
 00:26:34,300 --> 00:26:37,480
 com els drets dels infants mitjançant un sistema
 
-383
+368
 00:26:37,890 --> 00:26:40,860
 de garanties ben establertes per totes les parts moltes
 
-384
+369
 00:26:40,860 --> 00:26:41,330
 gràcies +++
 
-385
+370
 00:27:32,350 --> 00:27:36,340
 mai l'esperit dubtatiu aqueixat de hamletisme fou perniciós
 
-386
+371
 00:27:36,920 --> 00:27:39,270
 el principi del mal resideix en l'atenció de la voluntat
 
-387
+372
 00:27:39,650 --> 00:27:42,700
 a la ineptitud per al quietisme a la megalomania prometent
 
-388
+373
 00:27:42,700 --> 00:27:44,120
 que d'una raça que rebentat ideal
 
-389
+374
 00:27:44,530 --> 00:27:46,420
 i que esclata baix les seves conviccions
 
-390
+375
 00:27:46,980 --> 00:27:49,910
 i la qual per haver despreciat la mandra vici molt
 
-391
+376
 00:27:49,910 --> 00:27:52,480
 més noble que totes les seves virtuts s'ha internat
 
-392
+377
 00:27:52,480 --> 00:27:54,690
 en una via de perdició en la història
 
-393
+378
 00:27:55,100 --> 00:27:58,630
 en eixa mescla indecent de banalitat i apocalipsis
 
-394
+379
 00:27:59,220 --> 00:28:02,240
 baix aquestes paraules subjau la gran tara de l'ésser humà
 
-395
+380
 00:28:02,860 --> 00:28:05,350
 la tara que ens diu que si tenim un desig
 
-396
+381
 00:28:05,890 --> 00:28:08,240
 hem de ser satisfer-lo i hem de satisfer-lo
 
-397
+382
 00:28:08,720 --> 00:28:10,170
 a costa del que sigui
 
-398
+383
 00:28:10,940 --> 00:28:12,640
 aquí no estem parlant de drets
 
-399
+384
 00:28:13,280 --> 00:28:16,780
 aquí estem parlant de desitjos i en concret del desig
 
-400
+385
 00:28:16,830 --> 00:28:21,410
 de perpetuar una nissaga el desig de perpetuar un llinatge
 
-401
+386
 00:28:21,810 --> 00:28:25,920
 un llinatge que tinga la genètica correcta per a poder heretar
 
-402
+387
 00:28:26,560 --> 00:28:29,320
 tota la riquesa acumulada per les elits governants
 
-403
+388
 00:28:29,840 --> 00:28:31,140
 i aquí estem debatint
 
-404
+389
 00:28:31,920 --> 00:28:34,070
 que aquesta genètica a partir d'ara
 
-405
+390
 00:28:34,680 --> 00:28:37,250
 la gesten les dones que no tenen res
 
-406
+391
 00:28:38,160 --> 00:28:40,330
 les que abans ja els netejaven les seves cases
 
-407
+392
 00:28:40,760 --> 00:28:41,930
 les dones marginades
 
-408
+393
 00:28:43,380 --> 00:28:47,540
 vivim en un món desigual i seran aquestes si legalitzem aquesta pràctica
 
-409
+394
 00:28:47,910 --> 00:28:52,000
 les que gestaran i patiran els riscos d'una gestació
 
-410
+395
 00:28:52,400 --> 00:28:55,770
 i d'un part perquè les elits puguen continuar governant
 
-411
+396
 00:28:56,470 --> 00:28:59,780
 diguem company ser pare és un desig però fer amb
 
-412
+397
 00:28:59,780 --> 00:29:02,680
 el teu cos el que vulguis en una esfera de llibertat
 
-413
+398
 00:29:02,680 --> 00:29:05,380
 de consentiment i la independència no creu que és un dret
 
-414
+399
 00:29:06,550 --> 00:29:08,860
 precisament company no pot ser un dret
 
-415
+400
 00:29:09,680 --> 00:29:11,410
 de la mateixa manera que jo no puc vendre un ronyó
 
-416
+401
 00:29:12,120 --> 00:29:15,110
 l'estat ha de protegir-me davant de les desigualtats del món
 
-417
+402
 00:29:16,060 --> 00:29:17,800
 jo tinc la necessitat de tindre diners
 
-418
+403
 00:29:18,620 --> 00:29:21,340
 per aconseguir-los no puc ficar la meva salut
 
-419
+404
 00:29:22,200 --> 00:29:23,810
 a la disposició de qui siga
 
-420
+405
 00:29:24,580 --> 00:29:28,340
 i és l'estat el que ens pot garantir que açò no passe
 
-421
+406
 00:29:28,790 --> 00:29:33,410
 per això nosaltres diem que no cal legalitzar la gestació subrogada
 
-422
+407
 00:29:33,610 --> 00:29:36,070
 diem que cal prohibir-la però no només prohibir-la
 
-423
+408
 00:29:36,280 --> 00:29:40,360
 una prohibició tampoc garanteix res cal prohibir-la i a més
 
-424
+409
 00:29:41,030 --> 00:29:43,900
 efectuar mesures paral·leles d'educació
 
-425
+410
 00:29:44,410 --> 00:29:49,840
 mesures que consciencien a la població del que realment representa aquesta pràctica
 
-426
+411
 00:29:50,200 --> 00:29:51,590
 el problema és que l'opinió ja està feta
 
-427
+412
 00:29:52,830 --> 00:29:55,250
 l'opinió l'han feta els mitjans de comunicació
 
-428
+413
 00:29:55,820 --> 00:29:58,520
 quins són els portaveus que estan ficant damunt la taula aquest debat
 
-429
+414
 00:29:58,970 --> 00:30:02,290
 ciutadans tamara gorro per què estem debatint aquí
 
-430
+415
 00:30:03,140 --> 00:30:04,940
 aquest debat està aquí
 
-431
+416
 00:30:05,950 --> 00:30:08,400
 per la quantitat de diners que maneja aquesta pràctica
 
-432
+417
 00:30:09,240 --> 00:30:11,970
 no estem parlant de ser altruistes
 
-433
+418
 00:30:12,420 --> 00:30:15,050
 no estem parlant de donar un fill de forma altruista
 
-434
+419
 00:30:15,360 --> 00:30:17,600
 aquí estem parlant de compra-venda de nadons i per
 
-435
+420
 00:30:17,600 --> 00:30:21,430
 això el nostre equip el que elaborarà serà un discurs completament lúcid
 
-436
+421
 00:30:21,870 --> 00:30:26,430
 un discurs que deixi de banda el fals vel de moralitat i cortesia
 
-437
+422
 00:30:26,720 --> 00:30:27,390
 que ens ha donat
 
-438
+423
 00:30:28,070 --> 00:30:29,730
 la cultura del políticament correcte
 
-439
+424
 00:30:30,250 --> 00:30:33,070
 estem aquí per desprendrens de tot açó i dir les
 
-440
+425
 00:30:33,070 --> 00:30:36,580
 coses tal com són diguim company creu que el tràfic
 
-441
+426
 00:30:36,580 --> 00:30:38,890
 d'òrgans és el mateix que la donació d'òrgans
 
-442
+427
 00:30:39,990 --> 00:30:44,130
 jo no he parlat de la donació d'òrgans vostès m'han preguntat a mi
 
-443
+428
 00:30:44,390 --> 00:30:46,460
 que si jo no sóc lliure de fer el que vullga amb el meu cos
 
-444
+429
 00:30:46,690 --> 00:30:50,510
 no ho sóc no puc vendre un ronyó això seria tràfic d'òrgans
 
-445
+430
 00:30:50,650 --> 00:30:52,340
 puc donar-lo però no vendre'l
 
-446
+431
 00:30:53,720 --> 00:30:58,430
 a més hi ha que tindre en compte una cosa legalitzar tot açó legitima
 
-447
+432
 00:30:58,630 --> 00:31:02,190
 la pràctica deixa la porta entreoberta i no ens equivoquem
 
-448
+433
 00:31:02,500 --> 00:31:05,970
 en el món globalitzat en què vivim en el valor del sistema neoliberal
 
-449
+434
 00:31:06,240 --> 00:31:07,950
 el valor que diu que els diners ho son tot
 
-450
+435
 00:31:08,440 --> 00:31:11,200
 el mercat s'ho menjarà ha passat infinitat de vegades
 
-451
+436
 00:31:11,380 --> 00:31:12,770
 tenim l'exemple del moviment punk
 
-452
+437
 00:31:13,450 --> 00:31:17,060
 anys setanta en el regne unit margaret thatcher governant
 
-453
+438
 00:31:17,700 --> 00:31:21,980
 un moviment contracultural que va en contra del rigorisme va en contra
 
-454
+439
 00:31:22,180 --> 00:31:24,880
 del feixisme dèbil conforme se'l va anomenar
 
-455
+440
 00:31:25,430 --> 00:31:28,150
 quan va tardar el mercat en fagocitar aquesta estètica
 
-456
+441
 00:31:28,720 --> 00:31:31,810
 quan van tardar els puncarres en anar a comprar-se
 
-457
+442
 00:31:31,810 --> 00:31:34,060
 tota la roba que teníen per un mòdic preu
 
-458
+443
 00:31:34,650 --> 00:31:36,990
 tenim molts més exemples ernesto che guevara
 
-459
+444
 00:31:37,430 --> 00:31:40,430
 un guerriller comunista pegant tirs arreu del món
 
-460
+445
 00:31:40,680 --> 00:31:42,890
 per la revolució comunista lluitant contra el capital
 
-461
+446
 00:31:43,230 --> 00:31:44,990
 avui en dia estampat en samarretes
 
-462
+447
 00:31:45,500 --> 00:31:46,720
 podem veure'l arreu del món
 
-463
+448
 00:31:47,470 --> 00:31:48,690
 és una marca més
 
-464
+449
 00:31:49,310 --> 00:31:51,540
 el problema que tenim és el món en el que vivim
 
-465
+450
 00:31:51,810 --> 00:31:56,410
 és impossible regular aquesta pràctica és impossible legalitzar aquesta pràctica
 
-466
+451
 00:31:56,590 --> 00:31:59,250
 sense vulnerar directament la dignitat
 
-467
+452
 00:31:59,840 --> 00:32:04,960
 de les dones sense impedir que aquestes siguen cosificades siguen mercantilitzades
 
-468
+453
 00:32:05,100 --> 00:32:09,090
 instrumentalitzades per això la universitat jaume primer defensarà
 
-469
+454
 00:32:09,290 --> 00:32:12,400
 que no cal legalitzar-la cal prohibir-la diguem company
 
-470
+455
 00:32:12,470 --> 00:32:15,420
 una de les garanties que el model canadenc britànic i també portuguès
 
-471
+456
 00:32:15,700 --> 00:32:18,200
 defensa és que aquelles dones que voluntàriament accedeixin
 
-472
+457
 00:32:18,950 --> 00:32:21,000
 es prestin com a gestants hauran de tenir un nivell
 
-473
+458
 00:32:21,000 --> 00:32:23,070
 socioeconòmic mínim és una garantia més és una
 
-474
+459
 00:32:23,070 --> 00:32:25,260
 font més de seguretat estan en contra d'aquest model
 
-475
+460
 00:32:25,950 --> 00:32:27,700
 estem en contra d'aquest model i com ha explicat el
 
-476
+461
 00:32:27,700 --> 00:32:31,110
 meu company imanol el model canadenc era altruista fins fa poc
 
-477
+462
 00:32:32,760 --> 00:32:36,500
 damunt de la taula n'hi han ja ofertes per a mercantilitzar el procés
 
-478
+463
 00:32:36,750 --> 00:32:39,430
 a més l'altruisme no diu que la dona no reba diners
 
-479
+464
 00:32:39,620 --> 00:32:42,130
 aquesta dona rebia els diners rebia diners per la
 
-480
+465
 00:32:42,130 --> 00:32:43,970
 seva manutenció pel que durava l'embaràs
 
-481
+466
 00:32:44,710 --> 00:32:47,690
 ací ja n'hi ha un contracte n'hi ha un tracte comercial
 
-482
+467
 00:32:48,050 --> 00:32:49,720
 en el moment en què jo signa un contracte en el
 
-483
+468
 00:32:49,720 --> 00:32:51,560
 moment en què jo no puga tirar enrere en
 
-484
+469
 00:32:52,710 --> 00:32:56,160
 el que acabe de signar estic mercantilitzat estic mercantilitzat
 
-485
+470
 00:32:56,210 --> 00:32:58,250
 el meu cos i estic traficant amb un nadó
 
-486
+471
 00:32:58,670 --> 00:33:04,380
 per això és necessari que no legalitzen aquesta pràctica
 
-487
+472
 00:33:04,540 --> 00:33:06,820
 és necessari que la prohibim i és necessari que a més
 
-488
+473
 00:33:06,990 --> 00:33:09,870
 eduquem i conscienciem a la població per a generar una nova realitat
 
-489
+474
 00:33:10,990 --> 00:33:14,460
 és necessari que des del sistema públic de salut
 
-490
+475
 00:33:14,640 --> 00:33:17,380
 i des del sistema públic d'educació ens mostren
 
-491
+476
 00:33:17,860 --> 00:33:21,410
 qui som ens diguen quin és el nostre empoderament
 
-492
+477
 00:33:21,590 --> 00:33:26,070
 quines són les nostres capacitats i que podem superar el que passa
 
-493
+478
 00:33:26,980 --> 00:33:28,190
 no podem permetre
 
-494
+479
 00:33:28,980 --> 00:33:32,040
 que aquesta pràctica sigui portada a terme sóc sergi
 
-495
+480
 00:33:32,040 --> 00:33:34,390
 ortega i som l'equip de la universitat jaume primer
 
-496
+481
 00:33:34,600 --> 00:33:36,260
 molta sort i moltes gràcies companys +++
 
-497
+482
 00:34:11,820 --> 00:34:14,600
 bona tarda a tothom el meu nom és adrian ajenjo
 
-498
+483
 00:34:14,760 --> 00:34:18,950
 i em pertoca a mi fer el segon torn de refutacions d'aquest debat
 
-499
+484
 00:34:19,360 --> 00:34:23,360
 en el qual rebatre'm l'argumentari exposat per l'equip contrari
 
-500
+485
 00:34:23,890 --> 00:34:27,630
 en primer lloc esmentarem un seguit de qüestions que creiem
 
-501
+486
 00:34:27,820 --> 00:34:31,460
 que no han estat certes en aquest debat i que han estat exposades
 
-502
+487
 00:34:32,030 --> 00:34:33,990
 per l'equip contrari com una veritat
 
-503
+488
 00:34:34,770 --> 00:34:38,170
 han explicat que canadà ja no té un model altruista
 
-504
+489
 00:34:38,760 --> 00:34:42,010
 amb l'única evidència de que un representant polític
 
-505
+490
 00:34:42,290 --> 00:34:45,840
 un representant polític qualsevol individual proposa
 
-506
+491
 00:34:45,870 --> 00:34:47,890
 la gestació subrogada mercantil
 
-507
+492
 00:34:49,150 --> 00:34:53,530
 a cas a espanya està en contra del matrimoni homosexual perquè
 
-508
+493
 00:34:53,690 --> 00:34:58,700
 hi hagin partits amb representació minoritària als parlaments
 
-509
+494
 00:34:58,880 --> 00:35:03,150
 que ho proposin no veritat per tant canadà segueix
 
-510
+495
 00:35:03,390 --> 00:35:06,880
 un model de gestació altruista i així seguirà sent
 
-511
+496
 00:35:07,220 --> 00:35:10,760
 i qualsevol país que tingui un model de gestació mercantil
 
-512
+497
 00:35:11,450 --> 00:35:16,500
 no ho defensem ho condemnem i de fet el nostre model està orientat
 
-513
+498
 00:35:16,690 --> 00:35:22,420
 perquè aquests països no tinguin demanda que la demanda es pugui satisfer
 
-514
+499
 00:35:22,610 --> 00:35:27,360
 aquí i referent també al col·lectiu lgtbi heu parlat que
 
-515
+500
 00:35:28,100 --> 00:35:31,970
 el noranta per cent de clients són heterosexuals i
 
-516
+501
 00:35:31,970 --> 00:35:34,330
 que el deu per cent són del col·lectiu lgtbi
 
-517
+502
 00:35:34,790 --> 00:35:38,970
 bé seria un problema si el col·lectiu lgtbi fos el noranta o
 
-518
+503
 00:35:39,220 --> 00:35:43,210
 noranta per cent de la clientela som el deu per cent de la societat
 
-519
+504
 00:35:43,350 --> 00:35:46,990
 és normal que el deu per cent de clients de gestació subrogada
 
-520
+505
 00:35:47,170 --> 00:35:51,430
 sigui del col·lectiu lgtbi també han dit que la dona durant els
 
-521
+506
 00:35:52,040 --> 00:35:56,580
 últims mesos de l'embaràs ha d'estar reclosa a la seva casa
 
-522
+507
 00:35:57,180 --> 00:35:59,070
 no pot beure alcohol no pot fumar
 
-523
+508
 00:36:00,320 --> 00:36:02,010
 com si això fos diferent
 
-524
+509
 00:36:02,660 --> 00:36:05,190
 d'una gestació biològica i natural
 
-525
+510
 00:36:05,830 --> 00:36:08,870
 això succeeix sempre pel bé del nadó
 
-526
+511
 00:36:09,280 --> 00:36:11,350
 i també ha parlat de la globalització
 
-527
+512
 00:36:11,850 --> 00:36:14,210
 en contra de la sobirania de l'estat
 
-528
+513
 00:36:14,700 --> 00:36:18,430
 i tenim evidències de que la globalització no pot amb l'estat
 
-529
+514
 00:36:18,620 --> 00:36:23,530
 en aquest cas els estats units per exemple un país clarament capitalista
 
-530
+515
 00:36:24,370 --> 00:36:28,090
 format per quasi bé cinquanta estats
 
-531
+516
 00:36:30,240 --> 00:36:33,540
 que té més estats que la legalitzen que no que la prohibeixen
 
-532
+517
 00:36:33,900 --> 00:36:38,370
 també han parlat de què bé la nostra proposta no és vàlida
 
-533
+518
 00:36:38,700 --> 00:36:40,290
 perquè sempre seran dones
 
-534
+519
 00:36:40,990 --> 00:36:44,260
 les que accedeixin a ser gestants en situació d'explotació
 
-535
+520
 00:36:45,130 --> 00:36:49,860
 nosaltres oferim garanties oferim garanties per solucionar
 
-536
+521
 00:36:50,140 --> 00:36:52,730
 tots els potencials problemes que puguin sorgir
 
-537
+522
 00:36:53,240 --> 00:36:57,100
 en primer lloc eliminarem les agències es farà mitjançant
 
-538
+523
 00:36:57,140 --> 00:37:00,230
 el sistema sanitari públic no hi hauran beneficis
 
-539
+524
 00:37:00,430 --> 00:37:02,530
 hi haurà igualtat d'accés sí endavant
 
-540
+525
 00:37:03,990 --> 00:37:08,630
 company vostè ha dit que en canadà no reben diners la pregunta és
 
-541
+526
 00:37:09,450 --> 00:37:14,230
 en canadà la mare gestant rep algun tipus de rendiment econòmic
 
-542
+527
 00:37:14,430 --> 00:37:18,400
 moltes gràcies la dona gestant en canadà no rep
 
-543
+528
 00:37:18,490 --> 00:37:23,040
 cap tipus de benefici econòmic és clar la família paga
 
-544
+529
 00:37:23,370 --> 00:37:26,910
 cert tipus de despeses relacionades amb el procés de gestació
 
-545
+530
 00:37:27,230 --> 00:37:28,130
 com per exemple
 
-546
+531
 00:37:29,510 --> 00:37:32,180
 l'atenció del metge la qual cosa és normal
 
-547
+532
 00:37:32,600 --> 00:37:36,290
 la dona es troba en una situació d'altruisme limitat és clar
 
-548
+533
 00:37:36,470 --> 00:37:38,140
 l'altruisme però tampoc
 
-549
+534
 00:37:38,770 --> 00:37:42,860
 el que farà és donar els seus diners per tal de satisfer un desig
 
-550
+535
 00:37:42,970 --> 00:37:48,460
 que no és seu seguint amb les garanties també impulsarem una penalització
 
-551
+536
 00:37:48,710 --> 00:37:53,280
 de qualsevol pràctica de gestació subrogada que pugui venir de
 
-552
+537
 00:37:53,420 --> 00:37:59,210
 països on la gestació subrogada és mercantil impulsarem una renda mínima
 
-553
+538
 00:37:59,370 --> 00:38:03,740
 i també que la dona estigui en una situació d'estabilitat econòmica
 
-554
+539
 00:38:03,990 --> 00:38:08,280
 i a més per garantir que no es podran produir granges
 
-555
+540
 00:38:08,280 --> 00:38:11,880
 de dones limitarem la gestació subrogada a un cop per dona
 
-556
+541
 00:38:12,000 --> 00:38:13,870
 sí endavant moltes gràcies company
 
-557
+542
 00:38:14,290 --> 00:38:17,440
 un model organitzat a través del sistema de salut qui pagarà
 
-558
+543
 00:38:17,600 --> 00:38:18,880
 que es compleixi aquest desig
 
-559
+544
 00:38:19,500 --> 00:38:24,340
 l'estat si el paga el sistema sanitari públic el paga l'estat
 
-560
+545
 00:38:24,580 --> 00:38:28,880
 en el seu lliure exercici de sobirania contra la globalització
 
-561
+546
 00:38:29,480 --> 00:38:32,060
 i és que nosaltres si proposem aquest model
 
-562
+547
 00:38:32,540 --> 00:38:36,510
 és per garantir que podem acabar amb el turisme reproductiu
 
-563
+548
 00:38:37,330 --> 00:38:39,380
 és cert que les lleis són imperfectes
 
-564
+549
 00:38:39,830 --> 00:38:43,960
 potser no podem acabar amb el cent per cent de la demanda exterior
 
-565
+550
 00:38:44,320 --> 00:38:47,580
 és veritat però no totes les lleis es compleixen
 
-566
+551
 00:38:47,740 --> 00:38:50,660
 en el cent per cent dels casos encara que puguem
 
-567
+552
 00:38:50,890 --> 00:38:54,510
 evitar que el vint-i-cinc per cent de famílies que accedeixen
 
-568
+553
 00:38:55,080 --> 00:38:59,530
 a la pràctica de la gestació subrogada marxin ja estem evitant
 
-569
+554
 00:38:59,680 --> 00:39:05,850
 casos d'explotació a l'exterior ja estem evitant conseqüències negatives col·lectives
 
-570
+555
 00:39:06,290 --> 00:39:11,730
 estem propiciant un sistema on realment les dones tenen
 
-571
+556
 00:39:11,810 --> 00:39:16,470
 un seguit de drets garantits i també en consideració del menor
 
-572
+557
 00:39:17,310 --> 00:39:21,510
 per tant el nostre model hem demostrat que és el més eficaç
 
-573
+558
 00:39:21,750 --> 00:39:26,860
 en contraposició al de l'equip contrari que tampoc ha proposat exactament
 
-574
+559
 00:39:27,000 --> 00:39:34,050
 res si l'educació com si fos algun tipus de política pública excloent
 
-575
+560
 00:39:34,270 --> 00:39:37,620
 és clar que no és clar que no nosaltres estem a favor
 
-576
+561
 00:39:37,800 --> 00:39:42,230
 d'una campanya educativa i una campanya internacional en contra
 
-577
+562
 00:39:42,350 --> 00:39:46,040
 d'aquells països que practica la gestació subrogada mercantil
 
-578
+563
 00:39:46,640 --> 00:39:50,770
 però no hem d'educar en contra de la gestació subrogada altruista
 
-579
+564
 00:39:51,100 --> 00:39:55,530
 perquè això seria educar en contra d'un exercici
 
-580
+565
 00:39:55,870 --> 00:40:01,610
 del dret de l'autonomia personal en condicions de llibertat en condicions d'independència
 
-581
+566
 00:40:01,780 --> 00:40:04,190
 i en condicions de consentiment
 
-582
+567
 00:40:04,800 --> 00:40:08,890
 com diu el tribunal constitucional la gestació subrogada per se
 
-583
+568
 00:40:09,160 --> 00:40:13,990
 no és dolenta de fet com la proposem nosaltres és la millor
 
-584
+569
 00:40:14,210 --> 00:40:16,580
 nova realitat moltes gràcies +++
 
-585
+570
 00:40:54,540 --> 00:40:57,360
 hola bon dia el meu nom és cristian soriano vinc en representació
 
-586
+571
 00:40:57,620 --> 00:41:00,790
 de la universitat pompeu fabra i abans d'acabar de
 
-587
+572
 00:41:00,790 --> 00:41:03,440
 tancar aquest darrer torn d'un debat força entretingut
 
-588
+573
 00:41:03,440 --> 00:41:05,730
 i crec que d'un nivell força alt podríem dir també
 
-589
+574
 00:41:05,940 --> 00:41:09,220
 m'agradaria donar les gràcies als companys de la universitat
 
-590
+575
 00:41:09,220 --> 00:41:11,670
 jaume primer també els meus companys com podria ser d'altra manera
 
-591
+576
 00:41:11,860 --> 00:41:13,720
 a la xarxa vives i els seus jutges i a totes i
 
-592
+577
 00:41:13,720 --> 00:41:16,170
 cadascuna de les persones que heu vingut avui a veure'ns
 
-593
+578
 00:41:16,830 --> 00:41:20,070
 bé en debat d'avui començava la júlia amb la seva introducció
 
-594
+579
 00:41:20,280 --> 00:41:23,150
 parlant d'una societat desigual on aquelles persones
 
-595
+580
 00:41:23,150 --> 00:41:27,820
 amb una renda baixa doncs es veien doncs en una situació de precarietat
 
-596
+581
 00:41:28,090 --> 00:41:30,490
 enfront aquelles persones que tenien un nivell socioeconòmic
 
-597
+582
 00:41:31,010 --> 00:41:34,190
 més alt i deia també que era el mercat qui esclavitza la dona
 
-598
+583
 00:41:34,700 --> 00:41:37,370
 parcialment podríem estar d'acord amb aquesta
 
-599
+584
 00:41:37,900 --> 00:41:41,100
 definició però el debat que ens ocupa sobre la gestació subrogada
 
-600
+585
 00:41:41,460 --> 00:41:44,200
 creiem que hi ha certa distorsió perquè nosaltres
 
-601
+586
 00:41:44,200 --> 00:41:46,540
 dèiem i ho rectificava el meu company josep maria
 
-602
+587
 00:41:46,540 --> 00:41:50,530
 la seva primera intervenció que l'estat és qui pot regular el mercat
 
-603
+588
 00:41:50,740 --> 00:41:53,690
 que l'estat és qui pot controlar el mercat com s'està
 
-604
+589
 00:41:53,690 --> 00:41:56,290
 veient en els casos del regne unit canadà i portugal
 
-605
+590
 00:41:56,540 --> 00:41:59,960
 si portugal també perquè el company imanol ens deia no
 
-606
+591
 00:42:00,290 --> 00:42:03,290
 actualment a portugal la llei sobre la gestació subrogada
 
-607
+592
 00:42:03,290 --> 00:42:05,780
 altruista està prohibida la prohibit el tribunal constitucional
 
-608
+593
 00:42:06,120 --> 00:42:09,360
 no si llegim la sentència dos-cents vint-i-cinc barra dos mil divuit
 
-609
+594
 00:42:09,530 --> 00:42:12,270
 com bé deia molt bé també el meu company josep maria
 
-610
+595
 00:42:12,440 --> 00:42:14,560
 el que diu el tribunal constitucional són dues coses
 
-611
+596
 00:42:14,840 --> 00:42:18,540
 u la llei és insuficient dos calen més garanties
 
-612
+597
 00:42:18,860 --> 00:42:20,730
 que està fent el tribunal constitucional portuguès
 
-613
+598
 00:42:20,890 --> 00:42:23,780
 ratificar el seu model però dient-li al govern que
 
-614
+599
 00:42:23,780 --> 00:42:26,910
 posi més garanties per les dones per no sacrificar els seus drets
 
-615
+600
 00:42:27,850 --> 00:42:32,500
 i per garantir-los aquests després es diuen que si legalitzem les dones
 
-616
+601
 00:42:33,000 --> 00:42:36,310
 aquelles que tenen una renda baixa pel perdran els seus drets
 
-617
+602
 00:42:36,730 --> 00:42:38,660
 el meu company adrià la segona refundació els deia
 
-618
+603
 00:42:38,660 --> 00:42:42,170
 nosaltres parlem d'un bolet de garanties i una d'aquestes garanties
 
-619
+604
 00:42:42,350 --> 00:42:45,740
 és que les dones que vulguin prestar-se a la gestació subrogada altruista
 
-620
+605
 00:42:45,880 --> 00:42:50,880
 hauran de tenir un cert nivell socioeconòmic premeditat després deien
 
-621
+606
 00:42:51,120 --> 00:42:53,610
 que canadà no té un model altruista perquè un dels
 
-622
+607
 00:42:53,610 --> 00:42:56,190
 parlamentaristes canadencs diu que no és altruista
 
-623
+608
 00:42:56,980 --> 00:42:59,600
 bé més enllà d'això i la contestació que li ha fet
 
-624
+609
 00:42:59,840 --> 00:43:02,310
 el meu company el model canadenc no preveu beneficis
 
-625
+610
 00:43:02,310 --> 00:43:05,100
 econòmics i els deia l'únic que preveu és que aquelles
 
-626
+611
 00:43:05,100 --> 00:43:08,120
 despeses que se'n derivin de tot el procés no les
 
-627
+612
 00:43:08,120 --> 00:43:10,590
 hagi de fer de càrrec la voluntària és que només falta
 
-628
+613
 00:43:10,780 --> 00:43:13,470
 això és el que els reclamava el meu company i crec
 
-629
+614
 00:43:13,470 --> 00:43:15,150
 que és una de les coses que han quedat prou clares
 
-630
+615
 00:43:15,690 --> 00:43:18,290
 és que jo crec que hi ha cert error de
 
-631
+616
 00:43:18,980 --> 00:43:21,380
 comunicació entre un i l'altre equip perquè hem vist
 
-632
+617
 00:43:21,380 --> 00:43:23,650
 que vosaltres aposteu tot en dir que els drets de
 
-633
+618
 00:43:23,650 --> 00:43:26,020
 les dones que es perden i nosaltres veníem a dir
 
-634
+619
 00:43:26,140 --> 00:43:29,300
 que el principal dret de la dona que s'ha de mantenir és l'autonomia privada
 
-635
+620
 00:43:29,580 --> 00:43:33,420
 l'autonomia d'aquesta dona a practicar alló que ella vulgui
 
-636
+621
 00:43:33,610 --> 00:43:36,990
 dins de l'article tres de la declaració dels drets humans
 
-637
+622
 00:43:37,230 --> 00:43:40,090
 que parla d'autonomia privada i de seguretat
 
-638
+623
 00:43:40,670 --> 00:43:44,660
 d'un marc jurídic de seguretat per la dona perquè després el company
 
-639
+624
 00:43:44,910 --> 00:43:46,540
 ens parlava dels òrgans que ell no pot
 
-640
+625
 00:43:47,110 --> 00:43:48,350
 vendre un òrgan clar que no
 
-641
+626
 00:43:49,450 --> 00:43:52,730
 el tràfic d'òrgans no és possible el que sí que és possible
 
-642
+627
 00:43:53,140 --> 00:43:55,440
 és la donació d'òrgans perquè aqui a espanya tenim
 
-643
+628
 00:43:55,440 --> 00:43:58,470
 un sistema altruista com deia també el meu company per què
 
-644
+629
 00:43:58,640 --> 00:44:01,380
 per acabar amb les màfies i amb el tràfic d'òrgans
 
-645
+630
 00:44:01,530 --> 00:44:03,050
 així doncs quina és la solució per acabar
 
-646
+631
 00:44:04,060 --> 00:44:07,080
 amb les màfies i el tràfic de la gestació subrogada
 
-647
+632
 00:44:07,260 --> 00:44:11,510
 regularització i control legalització els deia el meu company
 
-648
+633
 00:44:12,000 --> 00:44:15,870
 nosaltres hem exposat els nostres tres arguments autonomia en garantia
 
-649
+634
 00:44:16,030 --> 00:44:18,880
 pragmàtic igualtat d'oportunitats per emmarcar
 
-650
+635
 00:44:19,340 --> 00:44:21,920
 la dona en aquest cas i que la gestació subrogada
 
-651
+636
 00:44:22,040 --> 00:44:24,380
 s'haurà dia de legalitzar com a mecanisme
 
-652
+637
 00:44:25,630 --> 00:44:27,200
 i els hi deia la meva companya a l'inici
 
-653
+638
 00:44:27,660 --> 00:44:29,080
 què té de dolent el que ha fet la xantel
 
-654
+639
 00:44:29,910 --> 00:44:33,070
 una dona que de forma voluntària es presta a ajudar
 
-655
+640
 00:44:33,070 --> 00:44:36,220
 aquelles persones que per mecanismes biològics no poden tenir fills
 
-656
+641
 00:44:36,530 --> 00:44:38,860
 i els hi deia molt bé la meva companya queralt al principi
 
-657
+642
 00:44:39,010 --> 00:44:42,280
 el concepte de família i el concepte de maternitat al segle vint-i-u
 
-658
+643
 00:44:42,490 --> 00:44:47,000
 han canviat i hem d'obrir-nos adaptar-nos a aquesta nova realitat
 
-659
+644
 00:44:47,220 --> 00:44:50,030
 respectant els drets de les dones i respectant el
 
-660
+645
 00:44:50,030 --> 00:44:52,390
 control per part de l'estat per dir sí
 
-661
+646
 00:44:53,110 --> 00:44:55,450
 a la legalització de la gestació subrogada moltes
 
-662
+647
 00:44:55,450 --> 00:44:55,900
 gràcies +++
 
-663
+648
 00:45:56,520 --> 00:46:00,650
 devem els ciutadans pagar per garantir els desitjos o els drets
 
-664
+649
 00:46:02,300 --> 00:46:06,570
 creieu que és possible que aquesta societat tan manipulable pel llenguatge
 
-665
+650
 00:46:07,250 --> 00:46:10,360
 i presències externes estiga preparada per obrir els ulls
 
-666
+651
 00:46:11,140 --> 00:46:12,720
 bon dia bona tarda
 
-667
+652
 00:46:13,430 --> 00:46:15,630
 l'ania hamzi representant de jaume primer
 
-668
+653
 00:46:16,890 --> 00:46:19,440
 m'agradaria sintetitzar els aspectes principals abordats
 
-669
+654
 00:46:19,440 --> 00:46:20,810
 al llarg d'aquest interessant debat
 
-670
+655
 00:46:21,710 --> 00:46:24,250
 al llarg d'aquest debat en el qual hem deixat palès
 
-671
+656
 00:46:24,250 --> 00:46:28,940
 que legalitzar aquesta pràctica suposa legitimar la compra-venda de nadons
 
-672
+657
 00:46:29,100 --> 00:46:32,930
 suposa legitimar el tràfic de persones companyes i companys
 
-673
+658
 00:46:34,250 --> 00:46:38,450
 vostés els companys la universitat pompeu fabra ens han presentat
 
-674
+659
 00:46:38,860 --> 00:46:42,010
 una proposta argumentada en l'autonomia personal
 
-675
+660
 00:46:43,070 --> 00:46:44,060
 que els nostres companys
 
-676
+661
 00:46:45,400 --> 00:46:49,050
 ens han esmentat que no podem emprar la llibertat
 
-677
+662
 00:46:49,060 --> 00:46:52,780
 per a retrocedir en drets no podem companyes i companys també
 
-678
+663
 00:46:53,010 --> 00:46:55,090
 han fet referència a un argument pragmàtic
 
-679
+664
 00:46:55,640 --> 00:46:59,790
 la no regulació suposa un mal major companyes companys
 
-680
+665
 00:46:59,970 --> 00:47:04,140
 regular suposa legitimar la pràctica vostés mateixa ens han dit
 
-681
+666
 00:47:04,610 --> 00:47:07,460
 que sols es podria pel fet de
 
-682
+667
 00:47:08,270 --> 00:47:11,480
 salvar un vint-i-cinc per cent d'esclavitud i estem aconseguint
 
-683
+668
 00:47:11,590 --> 00:47:14,650
 per tant la prohibició que vostés ens han ens han esmentat
 
-684
+669
 00:47:15,050 --> 00:47:18,250
 és més garantista que la que la
 
-685
+670
 00:47:19,180 --> 00:47:20,470
 legalització de la mateixa
 
-686
+671
 00:47:22,240 --> 00:47:24,670
 ens han parlat també de la igualtat d'oportunitats
 
-687
+672
 00:47:25,580 --> 00:47:28,590
 que nosaltres hem contestat que aquesta igualtat és inexistent
 
-688
+673
 00:47:28,930 --> 00:47:32,030
 estaria reservada per aquelles persones amb poders
 
-689
+674
 00:47:32,440 --> 00:47:33,240
 amb riqueses
 
-690
+675
 00:47:34,740 --> 00:47:37,310
 companyes i companys des de la jaume primer hem dit
 
-691
+676
 00:47:37,310 --> 00:47:39,370
 que no clar que no cal legalitzar la gestació per
 
-692
+677
 00:47:39,370 --> 00:47:42,530
 substitució clar que no perquè perquè és una pràctica
 
-693
+678
 00:47:42,830 --> 00:47:46,230
 que per molt altruista que és la presenten no mai
 
-694
+679
 00:47:46,470 --> 00:47:49,230
 deixa de cosificar no mai deixa d'instrumentalitzar
 
-695
+680
 00:47:49,230 --> 00:47:53,780
 la dona i no mai deixa de tractar-nos com a mer objecte
 
-696
+681
 00:47:53,920 --> 00:47:56,660
 estem perdent la nostra dignitat com a ésser
 
-697
+682
 00:47:59,370 --> 00:48:02,440
 vulnera la nostra dignitat per què perquè nosaltres
 
-698
+683
 00:48:02,880 --> 00:48:05,570
 com ens ha explicat en este company imanol no som lliures
 
-699
+684
 00:48:05,800 --> 00:48:08,990
 les dones deixem de ser lliures vinculades a un contracte
 
-700
+685
 00:48:10,090 --> 00:48:12,510
 encara que siga l'estat qui ho regule
 
-701
+686
 00:48:13,990 --> 00:48:18,820
 companyes i companys l'acció és legalitzar aquesta pràctica la reacció
 
-702
+687
 00:48:19,050 --> 00:48:23,300
 la compra-venda de nadons la vulneració de la dignitat i dels drets
 
-703
+688
 00:48:23,470 --> 00:48:24,940
 de les dones i dels nadons
 
-704
+689
 00:48:26,360 --> 00:48:28,460
 estem traspassant l'última frontera
 
-705
+690
 00:48:29,020 --> 00:48:30,350
 els nostres propis òrgans
 
-706
+691
 00:48:32,290 --> 00:48:35,510
 clar que estem d'acord en un punt i és que l'educació
 
-707
+692
 00:48:35,570 --> 00:48:40,110
 és la ferramenta necessària com hem coincidit amb dues universitats
 
-708
+693
 00:48:40,530 --> 00:48:44,020
 per a millorar aquest món l'educació sempre serà ferramenta
 
-709
+694
 00:48:44,280 --> 00:48:45,520
 mitjans en aquesta educació
 
-710
+695
 00:48:46,710 --> 00:48:50,380
 aconseguirem abolir aquestes pràctiques i no legitimant-les
 
-711
+696
 00:48:50,380 --> 00:48:51,600
 les companyes i companys
 
-712
+697
 00:48:53,270 --> 00:48:57,760
 també també hem parlat de del tema dels òrgans la donació d'aquest
 
-713
+698
 00:48:58,480 --> 00:49:01,910
 perdonen no podem vendre un ronyó ni un fetge
 
-714
+699
 00:49:02,570 --> 00:49:03,910
 l'estat ens ha de protegir
 
-715
+700
 00:49:04,680 --> 00:49:08,280
 per això ho hem de garantir mitjançant prohibició mitjans en educació
 
-716
+701
 00:49:08,470 --> 00:49:11,470
 creant consciència social com bé ha explicat el nostre company sergi
 
-717
+702
 00:49:11,790 --> 00:49:13,940
 en el segon torn de refutació
 
-718
+703
 00:49:15,740 --> 00:49:18,330
 tenim una opinió creada una opinió que no està
 
-719
+704
 00:49:18,330 --> 00:49:21,700
 clara de manera lliure companyes i companys no podem legalitzar
 
-720
+705
 00:49:22,320 --> 00:49:24,560
 sense perdre la nostra dignitat
 
-721
+706
 00:49:26,110 --> 00:49:27,540
 companyes i companys
 
-722
+707
 00:49:28,230 --> 00:49:29,300
 ens hem de donar compte
 
-723
+708
 00:49:30,690 --> 00:49:35,030
 que estem debatint hui el fet de legitimar una pràctica aberrant
 
-724
+709
 00:49:35,270 --> 00:49:38,650
 una pràctica inhumana una pràctica immoral que en
 
-725
+710
 00:49:38,650 --> 00:49:41,390
 el cas de ser legalitzada companyes i companys
 
-726
+711
 00:49:42,680 --> 00:49:44,350
 convertiria en realitat
 
-727
+712
 00:49:45,070 --> 00:49:47,820
 la distopia que hem presentat en la nostra introducció
 
-728
+713
 00:49:48,440 --> 00:49:52,070
 el món de júlia seria el nostre futur i companyes
 
-729
+714
 00:49:52,070 --> 00:49:54,070
 companys la jaume primer no vol això
 
-730
+715
 00:49:54,800 --> 00:49:55,790
 moltíssimes gràcies
 
-731
+716
 00:49:56,500 --> 00:49:59,610
 a la jaume primer a la pompeu fabra a fabra i a
 
-732
+717
 00:49:59,610 --> 00:50:00,330
 la xarxa vives
 
