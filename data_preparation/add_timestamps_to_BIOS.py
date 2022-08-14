@@ -11,7 +11,7 @@ def write_timestamps(bio_file_fn, align_file_fn, output_file_fn):
             word_groups = segment['wl']
             for word_group in word_groups:
                 for token in word_group["w"].split():
-                    out.append((str(word_group['b']), str(word_group['e']), token))
+                    out.append((str(word_group['b']), str(word_group['e'])))
 
         for bio_line, out in zip_longest(bio_file, out):
             if bio_line is not None:
