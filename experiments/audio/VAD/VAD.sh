@@ -11,7 +11,8 @@ do
     do
         for aggressiveness_mode in 1 2 3;
         do
-        path_to_custom_segmentation_yaml=$out_folder/$set.length"$frame_length"_agress"$aggressiveness_mode"/segmentation.yaml
+        out_path=$out_folder/$set.length"$frame_length"_agress"$aggressiveness_mode"/
+        path_to_custom_segmentation_yaml=$out_path/segmentation.yaml
 
         python3 ${SHAS_ROOT}/src/segmentation_methods/pause_based.py \
           -wavs $path_to_wavs \
@@ -19,7 +20,7 @@ do
           -l $frame_length \
           -a $aggressiveness_mode
 
-        python3 convert_segmentation_to_labels.py $path_to_custom_segmentation_yaml
+        python3 ../../../../src/eval/convert_segmentation_to_labels.py $path_to_custom_segmentation_yaml $out_path
         done
     done
 done
