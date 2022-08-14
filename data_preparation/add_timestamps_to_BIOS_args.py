@@ -36,7 +36,7 @@ def write_timestamps(bio_arg_file_fn, bio_timestamps_file_fn, output_file_fn):
 
         for token, timestamp_line in zip_longest(arg_tokens, timestamp_lines[index:]):
             if token is not None:
-                print(token, timestamp_line.strip(), file=output_file)
+                print(timestamp_line.strip(), file=output_file)
             else:
                 break
 
