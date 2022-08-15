@@ -138,6 +138,7 @@ def convert_segmentation_to_labels(yaml_fp, timestamps_folder, out_folder, segme
                                                                             timestamps_folder=timestamps_folder)
 
     for filename_raw in list(labels_dict.keys()):
+        print(f"Writing {filename_raw}")
         labels = labels_dict[filename_raw]
         filename = filename_raw.split("_")[0]
         out_file = out_folder + "/" + filename + ".labels"
