@@ -138,8 +138,8 @@ if __name__ == "__main__":
     """
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--hypotheses_files', nargs="+", type=str)
-    parser.add_argument('--reference_files', nargs="+", type=str)
+    parser.add_argument('--hypotheses_files', nargs="+", type=str, required=True)
+    parser.add_argument('--reference_files', nargs="+", type=str, required=True)
     parser.add_argument('--convert_to_bio', type=bool, action='store_true',
                         help="If set, converts the BIOE format to BIO, in both hypotheses and references")
 

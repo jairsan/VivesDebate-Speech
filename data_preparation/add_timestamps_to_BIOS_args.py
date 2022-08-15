@@ -42,6 +42,7 @@ def write_timestamps(bio_arg_file_fn, bio_timestamps_file_fn, output_file_fn):
 
         return indexes
 
+
 if __name__ == "__main__":
     """
     Run from this folder
