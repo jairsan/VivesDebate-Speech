@@ -12,13 +12,13 @@ def get_segmentation_from_yaml(yaml_fp) -> Dict[str, List[Dict]]:
         # First iterate over all segments, assigning segments to corresponding file
         for segment in items:
             file = segment["wav"]
-            file_struct = organized_segments.get(file, default=[])
+            file_struct = organized_segments.get(file, [])
             file_struct.append(segment)
 
     return organized_segments
 
 
-def check_if_token_belongs(token_start: float, token_end:float, segment_start: float, segment_end: float):
+def check_if_token_belongs(token_start: float, token_end: float, segment_start: float, segment_end: float):
     # Token fully before segment
     if token_start < segment_start and token_end < segment_end:
         return False
@@ -47,6 +47,7 @@ def check_if_token_belongs(token_start: float, token_end:float, segment_start: f
 def filter_segments(organized_segments: Dict[str, List[Dict]], segment_classifier: str) -> Dict[str, List[Dict]]:
     # TODO implement an actual segment classifier
     return organized_segments
+
 
 def convert_indexes_to_labels(indexes: List[int]) -> List[str]:
     labels = ["O"] * len(indexes)
@@ -146,9 +147,6 @@ def convert_segmentation_to_labels(yaml_fp, timestamps_folder, out_folder, segme
 
 
 if __name__ == "__main__":
-    """
-    
-    """
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--yaml_file', type=str, required=True)
