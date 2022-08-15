@@ -3,14 +3,17 @@ SHAS_ROOT=/scratch/jiranzotmp/trabajo/ICASSP2023_argumentation/software/SHAS
 TIMESTAMPS_FOLDER=/scratch/jiranzotmp/trabajo/ICASSP2023_argumentation/data_preparation/DATA/BIO_arg_timestamps/
 out_folder=$PWD/infer/
 
-for set in dev test;
+#for set in dev test;
+for set in dev;
 do
 
     path_to_wavs=$AUDIO_LOC/$set/
 
-    for frame_length in 10 20 30;
+    #for frame_length in 10 20 30;
+    for frame_length in 10;
     do
-        for aggressiveness_mode in 1 2 3;
+        #for aggressiveness_mode in 1 2 3;
+        for aggressiveness_mode in 1;
         do
         out_path=$out_folder/$set.length"$frame_length"_agress"$aggressiveness_mode"/
         path_to_custom_segmentation_yaml=$out_path/segmentation.yaml

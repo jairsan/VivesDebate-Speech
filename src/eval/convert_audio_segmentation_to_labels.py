@@ -11,9 +11,10 @@ def get_segmentation_from_yaml(yaml_fp) -> Dict[str, List[Dict]]:
 
         # First iterate over all segments, assigning segments to corresponding file
         for segment in items:
-            file = segment["wav"]
-            file_struct = organized_segments.get(file, [])
+            fil = segment["wav"]
+            file_struct = organized_segments.get(fil, [])
             file_struct.append(segment)
+            organized_segments[fil] = file_struct
 
     return organized_segments
 
@@ -100,11 +101,12 @@ def get_tokens_belonging_to_segmentation(organized_segments: Dict[str, List[Dict
 
             indexes = []
             for line in timestamps_file:
-                line = line.strip()
+                line = line.strip().split()
                 token = line[0]
                 start_token = float(line[1])
                 end_token = float(line[2])
 
+                token_inside_segment = False
                 for i in range(n_segments):
                     segment = organized_segments[file_name_raw][i]
                     duration = segment["duration"]
@@ -112,12 +114,15 @@ def get_tokens_belonging_to_segmentation(organized_segments: Dict[str, List[Dict
                     start_segment = offset + wav_start
                     end_segment = start_segment + duration
 
-                    if check_if_token_belongs(token_start=start_token, token_end=end_token,
-                                          segment_start=start_token, segment_end=end_segment):
+                    is_inside = check_if_token_belongs(token_start=start_token, token_end=end_token, segment_start=start_segment, segment_end=end_segment)
+                    #print(is_inside, start_token, end_token, start_segment, end_segment)
+                    if is_inside:
                         this_tokens_belonging_to_segments[i].append(token)
                         indexes.append(i)
+                        token_inside_segment = True
                         break
-                indexes.append(-1)
+                if not token_inside_segment:
+                    indexes.append(-1)
 
             this_labels = convert_indexes_to_labels(indexes)
         assert len(organized_segments[file_name_raw]) == len(this_tokens_belonging_to_segments)
@@ -131,14 +136,11 @@ def convert_segmentation_to_labels(yaml_fp, timestamps_folder, out_folder, segme
     organized_segments = get_segmentation_from_yaml(yaml_fp=yaml_fp)
     tokens_belonging_to_seg, _ = get_tokens_belonging_to_segmentation(organized_segments=organized_segments,
                                                                    timestamps_folder=timestamps_folder)
-
     filtered_segments = filter_segments(organized_segments=organized_segments, segment_classifier=segment_classifier)
 
     _, labels_dict = get_tokens_belonging_to_segmentation(organized_segments=filtered_segments,
                                                                             timestamps_folder=timestamps_folder)
-
     for filename_raw in list(labels_dict.keys()):
-        print(f"Writing {filename_raw}")
         labels = labels_dict[filename_raw]
         filename = filename_raw.split("_")[0]
         out_file = out_folder + "/" + filename + ".labels"
