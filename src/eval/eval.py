@@ -55,15 +55,11 @@ def eval_one(predicted_labels: List[str], reference_labels: List[str], convert_t
 
     assert len(predicted_labels) == len(reference_labels)
 
-    # WIP
     if convert_to_bio:
-        labs = ["B", "I", "O"]
         predicted_labels = get_converted_labels_to_bio(predicted_labels)
         reference_labels = get_converted_labels_to_bio(reference_labels)
-    else:
-        labs = ["B", "I", "O, E"]
 
-    acc = accuracy_score((reference_labels, predicted_labels))
+    acc = accuracy_score(reference_labels, predicted_labels)
     precision, recall, f1, _ = precision_recall_fscore_support(reference_labels, predicted_labels, average='macro')
     report = classification_report(reference_labels, predicted_labels)
 
@@ -140,11 +136,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--hypotheses_files', nargs="+", type=str, required=True)
     parser.add_argument('--reference_files', nargs="+", type=str, required=True)
-    parser.add_argument('--convert_to_bio', type=bool, action='store_true',
+    parser.add_argument('--convert_to_bio', action='store_true',
                         help="If set, converts the BIOE format to BIO, in both hypotheses and references")
 
     args = parser.parse_args()
 
-    per_file_results, flat_results = eval_all(args.hypotheses_files, args.reference_files, args.convert_to_bio)
+    per_file_results, flat_results_eval = eval_all(args.hypotheses_files, args.reference_files, args.convert_to_bio)
 
-    print(flat_results)
+    print(flat_results_eval.report)

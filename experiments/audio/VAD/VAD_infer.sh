@@ -20,7 +20,6 @@ do
           -l $frame_length \
           -a $aggressiveness_mode
 
-        python3 ../../../../src/eval/convert_segmentation_to_labels.py $path_to_custom_segmentation_yaml $out_path
         done
     done
 done

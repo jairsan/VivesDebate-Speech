@@ -69,8 +69,10 @@ def convert_indexes_to_labels(indexes: List[int]) -> List[str]:
             num_remaining_labels = remaining_tokens_belonging_to_segment[index]
             max_labels = max_tokens_belongign_to_segment[index]
 
-            if max_labels == 1 and num_remaining_labels == 1:
+            if max_labels == num_remaining_labels:
                 labels[i] = "B"
+                remaining_tokens_belonging_to_segment[index] = num_remaining_labels - 1
+
             elif max_labels > 1 and num_remaining_labels == 1:
                 labels[i] = "E"
             elif num_remaining_labels > 1:
