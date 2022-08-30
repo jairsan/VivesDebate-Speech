@@ -1,4 +1,4 @@
-from transformers import TokenClassificationPipeline, AutoModelForTokenClassification, AutoModelForSequenceClassification
+from transformers import DataCollatorWithPadding, AutoModelForTokenClassification, AutoModelForSequenceClassification
 from transformers import DataCollatorForTokenClassification, AutoTokenizer, TrainingArguments, Trainer
 from datasets import Dataset, DatasetDict
 import os
@@ -13,14 +13,21 @@ def prepare_sample_sequence(bio_file):
     prev_label = 'N'
     for ln in bio_file:
         line = ln.split()
-        tags.append(line[1])
+        if line[1] == 'B':
+            tags.append(0)
+        elif line[1] == 'I':
+            tags.append(1)
+        elif line[1] == 'O':
+            tags.append(2)
+        else:
+            tags.append(3)
         text.append(prev+' '+'['+prev_label+']'+' '+line[0])
         prev = line[0]
         prev_label = line[1]
     return tags, text
 
 
-def prepare_samples_token(bio_file, file):
+def prepare_samples_token(bio_file):
     samples_tags = []
     samples_tokens = []
     tags = []
@@ -37,7 +44,7 @@ def prepare_samples_token(bio_file, file):
             tags.append(2)
         else:
             tags.append(3)
-            if len(tags) >= 75:
+            if len(tags) >= 50:
                 samples_tags.append(tags)
                 tags = []
                 samples_tokens.append(tokens)
@@ -50,12 +57,21 @@ def prepare_samples_token(bio_file, file):
 
 def load_dataset(mode):
     data = {'train': {}, 'dev': {}, 'test': {}}
-    data['dev']['tags'] = []
-    data['dev']['tokens'] = []
-    data['test']['tags'] = []
-    data['test']['tokens'] = []
-    data['train']['tags'] = []
-    data['train']['tokens'] = []
+    if mode == 'Sequence':
+        data['dev']['label'] = []
+        data['dev']['text'] = []
+        data['test']['label'] = []
+        data['test']['text'] = []
+        data['train']['label'] = []
+        data['train']['text'] = []
+    else:
+        data['dev']['tags'] = []
+        data['dev']['tokens'] = []
+        data['test']['tags'] = []
+        data['test']['tokens'] = []
+        data['train']['tags'] = []
+        data['train']['tokens'] = []
+
     for file in os.listdir("BIO_arg/"):
         bio_file = open('BIO_arg/' + file, 'r')
         if mode == 'Sequence':
@@ -63,21 +79,21 @@ def load_dataset(mode):
             if file == 'Debate24.txt' or file == 'Debate25.txt' or file == 'Debate26.txt':
                 for c in range(len(tags)):
 
-                    data['dev']['tags'].append(tags[c])
-                    data['dev']['tokens'].append(text[c])
+                    data['dev']['label'].append(tags[c])
+                    data['dev']['text'].append(text[c])
 
             elif file == 'Debate27.txt' or file == 'Debate28.txt' or file == 'Debate29.txt':
                 for c in range(len(tags)):
 
-                    data['test']['tags'].append(tags[c])
-                    data['test']['tokens'].append(text[c])
+                    data['test']['label'].append(tags[c])
+                    data['test']['text'].append(text[c])
 
             else:
                 for c in range(len(tags)):
-                    data['train']['tags'].append(tags[c])
-                    data['train']['tokens'].append(text[c])
+                    data['train']['label'].append(tags[c])
+                    data['train']['text'].append(text[c])
         else:
-            tags, text = prepare_samples_token(bio_file, file)
+            tags, text = prepare_samples_token(bio_file)
             if file == 'Debate24.txt' or file == 'Debate25.txt' or file == 'Debate26.txt':
                 for c in range(len(tags)):
                     data['dev']['tags'].append(tags[c])
@@ -101,8 +117,12 @@ def load_dataset(mode):
     return full_data
 
 
-def tokenize_and_align_labels(samples):
-    tokenized_inputs = tknz(samples["tokens"], max_length=512, padding=True, truncation=False, is_split_into_words=True)
+def tokenize_sequence(samples):
+    return tknz(samples["text"], padding=True, truncation=True)
+
+
+def tokenize_token(samples):
+    tokenized_inputs = tknz(samples["tokens"], padding=True, truncation=True, is_split_into_words=True)
     labels = []
     for i, label in enumerate(samples["tags"]):
         word_ids = tokenized_inputs.word_ids(batch_index=i)  # Map tokens to their respective word.
@@ -124,8 +144,8 @@ def tokenize_and_align_labels(samples):
 
 def load_model(mode):
     if mode == 'Sequence':
-        tokenizer_hf = AutoTokenizer.from_pretrained('projecte-aina/roberta-base-ca-v2')
-        model = AutoModelForSequenceClassification.from_pretrained('projecte-aina/roberta-base-ca-v2', num_labels=4)
+        tokenizer_hf = AutoTokenizer.from_pretrained('projecte-aina/roberta-base-ca-v2-cased-tc')
+        model = AutoModelForSequenceClassification.from_pretrained('projecte-aina/roberta-base-ca-v2-cased-tc', num_labels=4, ignore_mismatched_sizes=True)
     else:
         tokenizer_hf = AutoTokenizer.from_pretrained('projecte-aina/roberta-base-ca-v2-cased-pos')
         model = AutoModelForTokenClassification.from_pretrained('projecte-aina/roberta-base-ca-v2-cased-pos', num_labels=4, ignore_mismatched_sizes=True)
@@ -141,8 +161,8 @@ def train_model(model, tokenizer, data):
         save_strategy='epoch',
         save_total_limit=3,
         learning_rate=2e-5,
-        per_device_train_batch_size=32,
-        per_device_eval_batch_size=32,
+        per_device_train_batch_size=2048,
+        per_device_eval_batch_size=2048,
         num_train_epochs=10,
         weight_decay=0.01,
         load_best_model_at_end=True
@@ -162,7 +182,27 @@ def train_model(model, tokenizer, data):
     return trainer
 
 
-def predictions_output(preds):
+def predictions_output_sequence(preds):
+    prediction_file = open('out/predict.txt', 'w+')
+
+    for j in range(len(preds)):
+
+        if preds[j] == 0:
+            label = 'B'
+        elif preds[j] == 1:
+            label = 'I'
+        elif preds[j] == 2:
+            label = 'O'
+        else:
+            label = 'E'
+
+        text = tokenized_data['test']['text'][j]
+        token = text.split()[-1]
+
+        prediction_file.write(token + ' ' + label + '\n')
+
+
+def predictions_output_token(preds):
     prediction_file = open('out/predict.txt', 'w+')
 
     for j in range(len(preds)):
@@ -214,20 +254,24 @@ def predictions_output(preds):
 
 
 if __name__ == "__main__":
-    mode = 'Token'
+    mode = 'Sequence'
     dataset = load_dataset(mode)
 
     tknz, mdl = load_model(mode)
 
-    # tokenized_data = dataset.map(tokenize_text, batched=True)
-    tokenized_data = dataset.map(tokenize_and_align_labels, batched=True)
-
-    data_collator = DataCollatorForTokenClassification(tokenizer=tknz, max_length=512)
+    if mode == 'Sequence':
+        tokenized_data = dataset.map(tokenize_sequence, batched=True)
+        # tokenized_data = tokenized_data.remove_columns("text")
+        data_collator = DataCollatorWithPadding(tokenizer=tknz)
+    else:
+        tokenized_data = dataset.map(tokenize_token, batched=True)
+        data_collator = DataCollatorForTokenClassification(tokenizer=tknz)
 
     trainer = train_model(mdl, tknz, tokenized_data)
     predictions = trainer.predict(tokenized_data['test'])
     predict = np.argmax(predictions.predictions, axis=-1)
 
-    predictions_output(predict)
-
-
+    if mode == 'Sequence':
+        predictions_output_sequence(predict)
+    else:
+        predictions_output_token(predict)
