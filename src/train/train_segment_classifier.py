@@ -1,4 +1,5 @@
 import sys
+import pickle
 
 from typing import Dict, List, Tuple
 from sklearn.feature_extraction.text import CountVectorizer
@@ -6,15 +7,17 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.svm import SVC
 from sklearn.metrics import classification_report
 from sklearn.ensemble import VotingClassifier
-
+import numpy as np
 from xgboost.sklearn import XGBClassifier
 
 DISCARD = 0
 KEEP = 1
 
+MAJORITY_STR = "majority"
+MAJORITY_CLASS = KEEP
 
 class SegmentClassifier:
-    def classify_segment(self, segment: Dict):
+    def classify_segment(self, segment: str):
         raise NotImplementedError
 
     def train(self, train_samples: List[str], train_labels: List[int]):
@@ -24,10 +27,18 @@ class SegmentClassifier:
         raise NotImplementedError
 
 
+class MajorityClassifier(SegmentClassifier):
+    def classify_segment(self, segment: str):
+        return np.array([MAJORITY_CLASS])
+
 class SKLearnSegmentClassifier(SegmentClassifier):
     def __init__(self, vectorizer: CountVectorizer, estimator):
         self.vectorizer = vectorizer
         self.estimator = estimator
+
+    def classify_segment(self, segment: str):
+        x = self.vectorizer.transform(segment)
+        return self.estimator.predict(x)
 
     def train(self, train_samples: List[str], train_labels: List[int]):
         X = self.vectorizer.fit_transform(train_samples)
@@ -36,7 +47,7 @@ class SKLearnSegmentClassifier(SegmentClassifier):
     def eval(self, eval_samples: List[str], eval_labels: List[int]) -> str:
         X = self.vectorizer.transform(eval_samples)
         yhat = self.estimator.predict(X)
-        return classification_report(eval_labels, yhat)
+        return classification_report(y_true=eval_labels, y_pred=yhat)
 
 
 def generate_dataset(document_name_list: List[str]) -> Tuple[List[str], List[int]]:
@@ -80,7 +91,7 @@ def generate_dataset(document_name_list: List[str]) -> Tuple[List[str], List[int
         return samples, samples_labels
 
 
-def train_and_eval_NB(train_files: List[str], eval_files: List[str]):
+def train_and_eval_NB(train_files: List[str], eval_files: List[str], output_filename: str):
     train_samples, train_labels = generate_dataset(train_files)
     eval_samples, eval_labels = generate_dataset(eval_files)
 
@@ -98,6 +109,9 @@ def train_and_eval_NB(train_files: List[str], eval_files: List[str]):
 
     print(report)
 
+    with open(output_filename, "wb") as outf:
+        pickle.dump(segment_classifier, outf)
+
 
 if __name__ == "__main__":
-    train_and_eval_NB(sys.argv[1].split(), sys.argv[2].split())
+    train_and_eval_NB(train_files=sys.argv[1].split(), eval_files=sys.argv[2].split(), output_filename=sys.argv[3])

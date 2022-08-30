@@ -61,7 +61,7 @@ def eval_one(predicted_labels: List[str], reference_labels: List[str], convert_t
 
     acc = accuracy_score(reference_labels, predicted_labels)
     precision, recall, f1, _ = precision_recall_fscore_support(reference_labels, predicted_labels, average='macro')
-    report = classification_report(reference_labels, predicted_labels)
+    report = classification_report(y_true=reference_labels, y_pred=predicted_labels)
 
     evaluation_results = EvaluationResults(accuracy=acc, precision=precision, recall=recall, f1=f1, report=report)
 

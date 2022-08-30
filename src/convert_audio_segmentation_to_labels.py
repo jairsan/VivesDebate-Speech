@@ -1,6 +1,8 @@
 import yaml
 import argparse
+import pickle
 from typing import List, Dict, Tuple
+from train.train_segment_classifier import SegmentClassifier, MajorityClassifier, KEEP, MAJORITY_STR
 
 
 def get_segmentation_from_yaml(yaml_fp) -> Dict[str, List[Dict]]:
@@ -45,8 +47,29 @@ def check_if_token_belongs(token_start: float, token_end: float, segment_start: 
         return False
 
 
-def filter_segments(organized_segments: Dict[str, List[Dict]], segment_classifier: str) -> Dict[str, List[Dict]]:
-    # TODO implement an actual segment classifier
+def filter_segments(organized_segments: Dict[str, List[Dict]], tokens_belonging_to_segmentation: Dict[str, List[List[str]]],
+                    segment_classifier: str) -> Dict[str, List[Dict]]:
+
+    #return organized_segments
+
+    if segment_classifier == MAJORITY_STR:
+        segment_classifier = MajorityClassifier()
+    else:
+        with open(segment_classifier, "rb") as fil:
+            segment_classifier: SegmentClassifier = pickle.load(fil)
+
+    for vid in list(organized_segments.keys()):
+        segments = organized_segments[vid]
+        tokens = tokens_belonging_to_segmentation[vid]
+        new_segments: List[Dict] = []
+        assert len(segments) == len(tokens)
+        for segment, tokens in zip(segments, tokens_belonging_to_segmentation):
+            sentence = " ".join(tokens)
+            predict = segment_classifier.classify_segment(segment=sentence).flatten()[0]
+            if predict == KEEP:
+                new_segments.append(segment)
+        organized_segments[vid] = new_segments
+
     return organized_segments
 
 
@@ -138,7 +161,8 @@ def convert_segmentation_to_labels(yaml_fp, timestamps_folder, out_folder, segme
     organized_segments = get_segmentation_from_yaml(yaml_fp=yaml_fp)
     tokens_belonging_to_seg, _ = get_tokens_belonging_to_segmentation(organized_segments=organized_segments,
                                                                    timestamps_folder=timestamps_folder)
-    filtered_segments = filter_segments(organized_segments=organized_segments, segment_classifier=segment_classifier)
+    filtered_segments = filter_segments(organized_segments=organized_segments, segment_classifier=segment_classifier,
+                                        tokens_belonging_to_segmentation=tokens_belonging_to_seg)
 
     _, labels_dict = get_tokens_belonging_to_segmentation(organized_segments=filtered_segments,
                                                                             timestamps_folder=timestamps_folder)
@@ -157,7 +181,7 @@ if __name__ == "__main__":
     parser.add_argument('--yaml_file', type=str, required=True)
     parser.add_argument('--timestamps_folder', type=str, required=True)
     parser.add_argument('--output_folder', type=str, required=True)
-    parser.add_argument('--segment_classifier', type=str)
+    parser.add_argument('--segment_classifier', type=str, default=MAJORITY_STR)
 
     args = parser.parse_args()
 
