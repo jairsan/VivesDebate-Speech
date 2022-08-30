@@ -5,6 +5,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.svm import SVC
 from sklearn.metrics import classification_report
+from sklearn.ensemble import VotingClassifier
+
 from xgboost.sklearn import XGBClassifier
 
 DISCARD = 0
@@ -34,7 +36,7 @@ class SKLearnSegmentClassifier(SegmentClassifier):
     def eval(self, eval_samples: List[str], eval_labels: List[int]) -> str:
         X = self.vectorizer.transform(eval_samples)
         yhat = self.estimator.predict(X)
-        return classification_report(yhat, eval_labels)
+        return classification_report(eval_labels, yhat)
 
 
 def generate_dataset(document_name_list: List[str]) -> Tuple[List[str], List[int]]:
@@ -82,10 +84,12 @@ def train_and_eval_NB(train_files: List[str], eval_files: List[str]):
     train_samples, train_labels = generate_dataset(train_files)
     eval_samples, eval_labels = generate_dataset(eval_files)
 
-    estimator = MultinomialNB(fit_prior=False)
-    estimator = SVC(kernel="linear")
-    estimator = XGBClassifier()
-
+    estimator = SVC(kernel="linear", probability=True, class_weight="balanced")
+    #estimator = VotingClassifier([("e1",estimator1),("e2",estimator2)],voting='soft')
+    xgb_params = {'learning_rate': 0.1, 'n_estimators': 150, 'max_depth': 5, 'scale_pos_weight': 2, 'min_child_weight': 2, 'gamma': 0.44285714285714284, 'subsample': 0.8383838383838385, 'colsample_bytree': 0.5303030303030303, 'n_jobs': 7}
+    estimator = XGBClassifier(**xgb_params)
+    estimator = XGBClassifier(n_estimators=100, max_depth=7, use_label_encoder=False)
+    
     segment_classifier = SKLearnSegmentClassifier(CountVectorizer(ngram_range=(1, 1)), estimator)
 
     segment_classifier.train(train_samples, train_labels)
