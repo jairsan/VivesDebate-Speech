@@ -100,6 +100,8 @@ def train_and_eval_NB(train_files: List[str], eval_files: List[str], output_file
     xgb_params = {'learning_rate': 0.1, 'n_estimators': 150, 'max_depth': 5, 'scale_pos_weight': 2, 'min_child_weight': 2, 'gamma': 0.44285714285714284, 'subsample': 0.8383838383838385, 'colsample_bytree': 0.5303030303030303, 'n_jobs': 7}
     estimator = XGBClassifier(**xgb_params)
     estimator = XGBClassifier(n_estimators=100, max_depth=7, use_label_encoder=False)
+    estimator = XGBClassifier(n_estimators=100, max_depth=7, use_label_encoder=False, scale_pos_weight=99)
+
     
     segment_classifier = SKLearnSegmentClassifier(CountVectorizer(ngram_range=(1, 1)), estimator)
 
