@@ -16,7 +16,7 @@ do
         out_path=$out_folder/$set.length"$frame_length"_agress"$aggresiveness_mode"
         path_to_custom_segmentation_yaml=$out_path/segmentation.yaml
 
-        python3 ../../../src/eval/convert_audio_segmentation_to_labels.py --yaml_file $path_to_custom_segmentation_yaml --timestamps_folder $TIMESTAMPS_FOLDER --output_folder $out_path
+        python3 ../../../src/eval/convert_audio_segmentation_to_labels.py --segment_classifier ../../../src/train/model.pkl --yaml_file $path_to_custom_segmentation_yaml --timestamps_folder $TIMESTAMPS_FOLDER --output_folder $out_path
 
         echo "##########"
         echo "frame_length$frame_length.aggressiveness_mode$aggressiveness_mode"

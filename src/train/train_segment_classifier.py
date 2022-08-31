@@ -37,7 +37,7 @@ class SKLearnSegmentClassifier(SegmentClassifier):
         self.estimator = estimator
 
     def classify_segment(self, segment: str):
-        x = self.vectorizer.transform(segment)
+        x = self.vectorizer.transform([segment])
         return self.estimator.predict(x)
 
     def train(self, train_samples: List[str], train_labels: List[int]):

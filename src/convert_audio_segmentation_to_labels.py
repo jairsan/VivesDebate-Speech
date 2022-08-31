@@ -2,7 +2,7 @@ import yaml
 import argparse
 import pickle
 from typing import List, Dict, Tuple
-from train.train_segment_classifier import SegmentClassifier, MajorityClassifier, KEEP, MAJORITY_STR
+from train.train_segment_classifier import SegmentClassifier, SKLearnSegmentClassifier, MajorityClassifier, KEEP, MAJORITY_STR
 
 
 def get_segmentation_from_yaml(yaml_fp) -> Dict[str, List[Dict]]:
@@ -63,7 +63,7 @@ def filter_segments(organized_segments: Dict[str, List[Dict]], tokens_belonging_
         tokens = tokens_belonging_to_segmentation[vid]
         new_segments: List[Dict] = []
         assert len(segments) == len(tokens)
-        for segment, tokens in zip(segments, tokens_belonging_to_segmentation):
+        for segment, tokens in zip(segments, tokens):
             sentence = " ".join(tokens)
             predict = segment_classifier.classify_segment(segment=sentence).flatten()[0]
             if predict == KEEP:
