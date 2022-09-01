@@ -9,7 +9,7 @@ def generate_and_punct_split_dataset(document_name_list, pip: Pipeline) -> Tuple
     samples, labels = generate_dataset(document_name_list=document_name_list)
     new_samples: List[str] = []
     new_labels: List[int] = []
-
+    print(samples[-5:], labels[-5:])
     for sample, label in zip(samples, labels):
         if label == KEEP:
             new_samples.append(sample)
@@ -36,12 +36,10 @@ def train_model(model_name, train_files, eval_files):
     punct_name = "softcatala/fullstop-catalan-punctuation-prediction"
     punct_model = AutoModelForTokenClassification.from_pretrained(punct_name)
     punct_tokenizer = AutoTokenizer.from_pretrained(punct_name)
-    pipeline = TokenClassificationPipeline(model=punct_model, tokenizer=punct_model)
+    pipeline = TokenClassificationPipeline(model=punct_model, tokenizer=punct_tokenizer)
 
     train_samples, train_labels = generate_and_punct_split_dataset(train_files,pip=pipeline)
     eval_samples, eval_labels = generate_and_punct_split_dataset(eval_files,pip=pipeline)
-
-    print(eval_samples[-5:], eval_labels[-5:])
 
 
 if __name__ == "__main__":

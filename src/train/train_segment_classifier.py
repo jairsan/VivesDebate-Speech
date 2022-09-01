@@ -96,7 +96,7 @@ def generate_dataset(document_name_list: List[str]) -> Tuple[List[str], List[int
 
         assert len(samples) == len(samples_labels)
 
-        return samples, samples_labels
+    return samples, samples_labels
 
 
 def train_and_eval_NB(train_files: List[str], eval_files: List[str], output_filename: str):
