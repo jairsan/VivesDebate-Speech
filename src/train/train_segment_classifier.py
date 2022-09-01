@@ -16,6 +16,7 @@ KEEP = 1
 MAJORITY_STR = "majority"
 MAJORITY_CLASS = KEEP
 
+
 class SegmentClassifier:
     def classify_segment(self, segment: str):
         raise NotImplementedError
@@ -28,8 +29,15 @@ class SegmentClassifier:
 
 
 class MajorityClassifier(SegmentClassifier):
+    def train(self, train_samples: List[str], train_labels: List[int]):
+        raise NotImplementedError
+
+    def eval(self, eval_samples: List[str], eval_labels: List[int]) -> str:
+        raise NotImplementedError
+
     def classify_segment(self, segment: str):
         return np.array([MAJORITY_CLASS])
+
 
 class SKLearnSegmentClassifier(SegmentClassifier):
     def __init__(self, vectorizer: CountVectorizer, estimator):
@@ -41,12 +49,12 @@ class SKLearnSegmentClassifier(SegmentClassifier):
         return self.estimator.predict(x)
 
     def train(self, train_samples: List[str], train_labels: List[int]):
-        X = self.vectorizer.fit_transform(train_samples)
-        self.estimator.fit(X, train_labels)
+        x = self.vectorizer.fit_transform(train_samples)
+        self.estimator.fit(x, train_labels)
 
     def eval(self, eval_samples: List[str], eval_labels: List[int]) -> str:
-        X = self.vectorizer.transform(eval_samples)
-        yhat = self.estimator.predict(X)
+        x = self.vectorizer.transform(eval_samples)
+        yhat = self.estimator.predict(x)
         return classification_report(y_true=eval_labels, y_pred=yhat)
 
 
@@ -102,7 +110,6 @@ def train_and_eval_NB(train_files: List[str], eval_files: List[str], output_file
     estimator = XGBClassifier(n_estimators=100, max_depth=7, use_label_encoder=False)
     estimator = XGBClassifier(n_estimators=100, max_depth=7, use_label_encoder=False, scale_pos_weight=99)
 
-    
     segment_classifier = SKLearnSegmentClassifier(CountVectorizer(ngram_range=(1, 1)), estimator)
 
     segment_classifier.train(train_samples, train_labels)
