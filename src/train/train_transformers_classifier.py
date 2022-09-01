@@ -45,7 +45,7 @@ def train_model(model_name, train_files, eval_files):
 
 
 if __name__ == "__main__":
-    train_model(sys.argv[1], sys.argv[2], sys.argv[3])
+    train_model(sys.argv[1], sys.argv[2].split(), sys.argv[3].split())
     #model_name = "softcatala/fullstop-catalan-punctuation-prediction"
     #model = AutoModelForTokenClassification.from_pretrained(model_name)
     #tokenizer = AutoTokenizer.from_pretrained(model_name)
