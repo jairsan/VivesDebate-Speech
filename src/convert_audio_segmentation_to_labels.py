@@ -3,6 +3,29 @@ import argparse
 import pickle
 from typing import List, Dict, Tuple
 from train.train_segment_classifier import SegmentClassifier, SKLearnSegmentClassifier, MajorityClassifier, KEEP, MAJORITY_STR
+from transformers import AutoModelForSequenceClassification, AutoTokenizer, TextClassificationPipeline
+from os import PathLike
+import numpy as np
+
+class TransformersClassifier(SegmentClassifier):
+
+    def __init__(self, model_folder_path: str):
+        # TODO fixme so that the tokenizer is saved during training, that way it can be loaded later
+        self.tokenizer = AutoTokenizer.from_pretrained("PlanTL-GOB-ES/roberta-base-ca")
+        self.model = AutoModelForSequenceClassification.from_pretrained(model_folder_path, local_files_only=True)
+        self.pipeline = TextClassificationPipeline(model=self.model, tokenizer=self.tokenizer)
+
+    def classify_segment(self, segment: str):
+        prediction = self.pipeline([segment])
+        label = int(prediction[0]["label"].split("_")[1])
+        print(prediction, label)
+        return np.array(label)
+
+    def train(self, train_samples: List[str], train_labels: List[int]):
+        raise NotImplementedError
+
+    def eval(self, eval_samples: List[str], eval_labels: List[int]) -> str:
+        raise NotImplementedError
 
 
 def get_segmentation_from_yaml(yaml_fp) -> Dict[str, List[Dict]]:
@@ -50,10 +73,11 @@ def check_if_token_belongs(token_start: float, token_end: float, segment_start: 
 def filter_segments(organized_segments: Dict[str, List[Dict]], tokens_belonging_to_segmentation: Dict[str, List[List[str]]],
                     segment_classifier: str) -> Dict[str, List[Dict]]:
 
-    #return organized_segments
-
     if segment_classifier == MAJORITY_STR:
         segment_classifier = MajorityClassifier()
+    elif segment_classifier.startswith("transformers#"):
+        path = segment_classifier.split("#")[1]
+        segment_classifier = TransformersClassifier(model_folder_path=path)
     else:
         with open(segment_classifier, "rb") as fil:
             segment_classifier: SegmentClassifier = pickle.load(fil)

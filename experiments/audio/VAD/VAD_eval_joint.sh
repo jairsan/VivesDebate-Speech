@@ -16,10 +16,14 @@ do
         out_path=$out_folder/$set.length"$frame_length"_agress"$aggresiveness_mode"
         path_to_custom_segmentation_yaml=$out_path/segmentation.yaml
 
-        python3 ../../../src/eval/convert_audio_segmentation_to_labels.py --segment_classifier ../../../src/train/model.pkl --yaml_file $path_to_custom_segmentation_yaml --timestamps_folder $TIMESTAMPS_FOLDER --output_folder $out_path
+        # Without segment classifier
+        python3 ../../../src/convert_audio_segmentation_to_labels.py --yaml_file $path_to_custom_segmentation_yaml --timestamps_folder $TIMESTAMPS_FOLDER --output_folder $out_path
+        
+        # With segment classifier
+        #python3 ../../../src/convert_audio_segmentation_to_labels.py --segment_classifier ../segment_classifier/model.pkl --yaml_file $path_to_custom_segmentation_yaml --timestamps_folder $TIMESTAMPS_FOLDER --output_folder $out_path
 
         echo "##########"
-        echo "frame_length$frame_length.aggressiveness_mode$aggressiveness_mode"
+        echo "frame_length$frame_length.aggressiveness_mode$aggresiveness_mode"
         if [[ $set == "dev" ]];
         then
             python3 ../../../src/eval/eval.py --hypotheses_files $out_path/Debate24.labels $out_path/Debate25.labels $out_path/Debate26.labels --reference_files ../../../data_preparation/DATA/BIO_arg_timestamps/Debate24.txt ../../../data_preparation/DATA/BIO_arg_timestamps/Debate25.txt ../../../data_preparation/DATA/BIO_arg_timestamps/Debate26.txt
