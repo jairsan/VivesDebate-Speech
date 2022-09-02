@@ -59,8 +59,6 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
     train_samples, train_labels = generate_and_punct_split_dataset(train_files, pip=pipeline)
     eval_samples, eval_labels = generate_and_punct_split_dataset(eval_files, pip=pipeline)
 
-    # print("train", train_samples[-10:], train_labels[-10:])
-
     classifier_tknzr = AutoTokenizer.from_pretrained(model_name)
     classifier_model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)
 
@@ -103,6 +101,8 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
 
     print("Finished preparing training")
     trainer.train()
+
+    classifier_tknzr.save_pretrained(output_dir_name + "_tokenizer")
 
 
 if __name__ == "__main__":

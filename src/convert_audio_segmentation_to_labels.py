@@ -9,10 +9,12 @@ import numpy as np
 
 class TransformersClassifier(SegmentClassifier):
 
-    def __init__(self, model_folder_path: str):
+    def __init__(self, model_folder_path: str, checkpoint: str):
         # TODO fixme so that the tokenizer is saved during training, that way it can be loaded later
-        self.tokenizer = AutoTokenizer.from_pretrained("PlanTL-GOB-ES/roberta-base-ca")
-        self.model = AutoModelForSequenceClassification.from_pretrained(model_folder_path, local_files_only=True)
+        self.tokenizer = AutoTokenizer.from_pretrained(model_folder_path + "_tokenizer")
+        self.model = AutoModelForSequenceClassification.from_pretrained(model_folder_path +
+                                                                        "_models/checkpoint-" + checkpoint,
+                                                                        local_files_only=True)
         self.pipeline = TextClassificationPipeline(model=self.model, tokenizer=self.tokenizer)
 
     def classify_segment(self, segment: str):
@@ -75,8 +77,10 @@ def filter_segments(organized_segments: Dict[str, List[Dict]], tokens_belonging_
     if segment_classifier == MAJORITY_STR:
         segment_classifier = MajorityClassifier()
     elif segment_classifier.startswith("transformers:"):
-        path = segment_classifier.split(":")[1]
-        segment_classifier = TransformersClassifier(model_folder_path=path)
+        fields = segment_classifier.split(":")
+        path = fields[1]
+        checkpoint = fields[2]
+        segment_classifier = TransformersClassifier(model_folder_path=path, checkpoint=checkpoint)
     else:
         with open(segment_classifier, "rb") as fil:
             segment_classifier: SegmentClassifier = pickle.load(fil)
