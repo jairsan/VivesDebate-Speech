@@ -75,24 +75,22 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
         acc = evaluate.load("accuracy")
         logits, labels = eval_preds
         predictions = np.argmax(logits, axis=-1)
-        # print("[II] predictions", predictions[-10:])
-        # print("[II] labels", labels[-10:])
         return {"f1": f1.compute(predictions=predictions, references=labels), "acc": acc.compute(predictions=predictions, references=labels)}
 
     training_args = TrainingArguments(
         output_dir=output_dir_name + "_models",  # output directory
-        num_train_epochs=2,  # total number of training epochs
+        overwrite_output_dir=True,
+        num_train_epochs=3,  # total number of training epochs
         per_device_train_batch_size=32,  # batch size per device during training
         per_device_eval_batch_size=32,  # batch size for evaluation
         warmup_steps=250,  # number of warmup steps for learning rate scheduler
         weight_decay=0.01,  # strength of weight decay
-        logging_dir=output_dir_name + "_logs",  # directory for storing logs
         logging_steps=10,
         do_eval=True,
         evaluation_strategy="steps",
         eval_steps=50,
         save_strategy="steps",
-        save_steps=125
+        save_steps=300
     )
 
     trainer = Trainer(

@@ -18,7 +18,6 @@ class TransformersClassifier(SegmentClassifier):
     def classify_segment(self, segment: str):
         prediction = self.pipeline([segment])
         label = int(prediction[0]["label"].split("_")[1])
-        print(prediction, label)
         return np.array(label)
 
     def train(self, train_samples: List[str], train_labels: List[int]):
@@ -75,8 +74,8 @@ def filter_segments(organized_segments: Dict[str, List[Dict]], tokens_belonging_
 
     if segment_classifier == MAJORITY_STR:
         segment_classifier = MajorityClassifier()
-    elif segment_classifier.startswith("transformers#"):
-        path = segment_classifier.split("#")[1]
+    elif segment_classifier.startswith("transformers:"):
+        path = segment_classifier.split(":")[1]
         segment_classifier = TransformersClassifier(model_folder_path=path)
     else:
         with open(segment_classifier, "rb") as fil:

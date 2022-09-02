@@ -12,8 +12,8 @@ do
         out_path=$out_folder/$set.maxlen"$maxlen"/
         path_to_custom_segmentation_yaml=$out_path/segmentation.yaml
         #--segment_classifier ../segment_classifier/model.pkl
-        #--segment_classifier transformers#../segment_classifier/tmp_transformers_models/checkpoint-125/
-        python3 ../../../src/convert_audio_segmentation_to_labels.py --segment_classifier transformers#../segment_classifier/tmp_transformers_models/checkpoint-250/ --yaml_file $path_to_custom_segmentation_yaml --timestamps_folder $TIMESTAMPS_FOLDER --output_folder $out_path
+        #--segment_classifier transformers:../segment_classifier/tmp_transformers_models/checkpoint-900/
+        python3 ../../../src/convert_audio_segmentation_to_labels.py --segment_classifier transformers:../segment_classifier/tmp_transformers_models/checkpoint-900/ --yaml_file $path_to_custom_segmentation_yaml --timestamps_folder $TIMESTAMPS_FOLDER --output_folder $out_path
 
         echo "##########"
         echo "maxlen$maxlen"
