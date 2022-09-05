@@ -142,7 +142,7 @@ def get_tokens_belonging_to_segmentation(organized_segments: Dict[str, List[Dict
                     end_segment = start_segment + duration
 
                     is_inside = check_if_token_belongs(token_start=start_token, token_end=end_token, segment_start=start_segment, segment_end=end_segment)
-                    print(is_inside, start_token, end_token, start_segment, end_segment)
+                    # print(is_inside, start_token, end_token, start_segment, end_segment)
                     if is_inside:
                         this_tokens_belonging_to_segments[i].append(token)
                         indexes.append(i)
