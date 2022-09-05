@@ -57,13 +57,13 @@ def check_if_token_belongs(token_start: float, token_end: float, segment_start: 
         return True
     elif token_start < segment_start < token_end < segment_end:
         overlap = token_end - segment_start
-        if overlap >= (token_end - token_start) / 2:
+        if overlap >= (token_end - token_start) / 2.0:
             return True
         else:
             return False
     elif segment_start < token_start < segment_end < token_end:
         overlap = segment_end - token_start
-        if overlap >= (token_end - token_start) / 2:
+        if overlap >= (token_end - token_start) / 2.0:
             return True
         else:
             return False
@@ -167,7 +167,7 @@ def get_tokens_belonging_to_segmentation(organized_segments: Dict[str, List[Dict
                     end_segment = start_segment + duration
 
                     is_inside = check_if_token_belongs(token_start=start_token, token_end=end_token, segment_start=start_segment, segment_end=end_segment)
-                    #print(is_inside, start_token, end_token, start_segment, end_segment)
+                    print(is_inside, start_token, end_token, start_segment, end_segment)
                     if is_inside:
                         this_tokens_belonging_to_segments[i].append(token)
                         indexes.append(i)

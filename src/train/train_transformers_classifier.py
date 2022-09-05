@@ -78,17 +78,17 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
     training_args = TrainingArguments(
         output_dir=output_dir_name + "_models",  # output directory
         overwrite_output_dir=True,
-        num_train_epochs=3,  # total number of training epochs
-        per_device_train_batch_size=32,  # batch size per device during training
-        per_device_eval_batch_size=32,  # batch size for evaluation
+        num_train_epochs=10,  # total number of training epochs
+        learning_rate=5e-6,
+        per_device_train_batch_size=8,  # batch size per device during training
+        gradient_accumulation_steps=4,
+        per_device_eval_batch_size=16,  # batch size for evaluation
         warmup_steps=250,  # number of warmup steps for learning rate scheduler
         weight_decay=0.01,  # strength of weight decay
         logging_steps=10,
         do_eval=True,
-        evaluation_strategy="steps",
-        eval_steps=50,
-        save_strategy="steps",
-        save_steps=300
+        evaluation_strategy="epoch",
+        save_strategy="epoch"
     )
 
     trainer = Trainer(
@@ -99,10 +99,10 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
         compute_metrics=compute_metrics
     )
 
+    classifier_tknzr.save_pretrained(output_dir_name + "_tokenizer")
     print("Finished preparing training")
     trainer.train()
 
-    classifier_tknzr.save_pretrained(output_dir_name + "_tokenizer")
 
 
 if __name__ == "__main__":
