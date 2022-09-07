@@ -33,3 +33,14 @@ def test_overlap():
 
     assert check_if_token_belongs(token_start=tok_start, token_end=tok_end,
                                   segment_start=seg_start, segment_end=seg_end)
+
+
+def test_other():
+    tok_start = 1064.83
+    tok_end = 1065.36
+
+    seg_start = 1064.87
+    seg_end = 1067.57
+
+    assert check_if_token_belongs(token_start=tok_start, token_end=tok_end,
+                                  segment_start=seg_start, segment_end=seg_end)

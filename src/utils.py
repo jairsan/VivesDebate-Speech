@@ -1,6 +1,7 @@
 def check_if_token_belongs(token_start: float, token_end: float, segment_start: float, segment_end: float):
+    aux = token_start <= segment_start <= token_end <= segment_end
     # Token fully before segment
-    if token_start < segment_start and token_end < segment_end:
+    if token_start < segment_start and token_end < segment_start:
         return False
     # Token fully after segment
     elif token_start > segment_end:

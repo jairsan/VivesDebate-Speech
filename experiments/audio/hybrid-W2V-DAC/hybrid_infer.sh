@@ -8,16 +8,18 @@ do
 
     path_to_wavs=$AUDIO_LOC/$set/
 
-    for maxlen in 10 20 30;
+    for maxlen in 3 5 7 10 20 30;
     do
         out_path=$out_folder/$set.maxlen"$maxlen"/
         path_to_custom_segmentation_yaml=$out_path/segmentation.yaml
 
-        python3 ${SHAS_ROOT}/src/supervised_hybrid/segment.py \
+        python ${SHAS_ROOT}/src/segmentation_methods/hybrid.py \
           -wavs $path_to_wavs \
           -yaml $path_to_custom_segmentation_yaml \
-          -ckpt mult_sfc_model_epoch-4.pt \
-          -max $maxlen
+          -pause wav2vec \
+          -alg dac \
+          -max $maxlen \
+          --wav2vec_model_name softcatala/wav2vec2-large-xlsr-catala
 
         done
 done

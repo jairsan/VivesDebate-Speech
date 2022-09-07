@@ -75,6 +75,29 @@ def filter_segments(organized_segments: Dict[str, List[Dict]], tokens_belonging_
     return organized_segments
 
 
+def filter_segments_oracle(organized_segments: Dict[str, List[Dict]], reference_labels: Dict[str, List[List[str]]]) \
+        -> Dict[str, List[Dict]]:
+
+    for vid in list(organized_segments.keys()):
+        new_segments: List[Dict] = []
+
+        segments = organized_segments[vid]
+        labels = reference_labels[vid]
+
+        for segment, this_segment_labels in zip(segments, labels):
+            count_O = this_segment_labels.count("O")
+            count_I = len(this_segment_labels) - count_O
+
+            #print(count_I, count_O)
+
+            if count_I >= count_O:
+                new_segments.append(segment)
+
+        organized_segments[vid] = new_segments
+
+    return organized_segments
+
+
 def convert_indexes_to_labels(indexes: List[int]) -> List[str]:
     labels = ["O"] * len(indexes)
     remaining_tokens_belonging_to_segment: Dict[int, int] = {}
@@ -114,17 +137,20 @@ def convert_indexes_to_labels(indexes: List[int]) -> List[str]:
 
 
 def get_tokens_belonging_to_segmentation(organized_segments: Dict[str, List[Dict]], timestamps_folder) \
-        -> Tuple[Dict[str, List[List[str]]], Dict[str, List[str]]]:
+        -> Tuple[Dict[str, List[List[str]]], Dict[str, List[str]], Dict[str, List[List[str]]]]:
     tokens_paired_with_segments_per_wav_dict: Dict[str, List[List[str]]] = {}
     labels: Dict[str, List[str]] = {}
+    oracle_labels: Dict[str, List[List[str]]] = {}
     for file_name_raw in list(organized_segments.keys()):
         file_name = file_name_raw.split("_")[0]
         wav_start = float(file_name_raw.split("_")[1])
         with open(timestamps_folder + "/" + file_name + ".txt", "r") as timestamps_file:
             n_segments = len(organized_segments[file_name_raw])
             this_tokens_belonging_to_segments: List[List[str]] = []
+            this_oracle_labels_belonging_to_segments: List[List[str]] = []
             for i in range(n_segments):
                 this_tokens_belonging_to_segments.append([])
+                this_oracle_labels_belonging_to_segments.append([])
 
             indexes = []
             for line in timestamps_file:
@@ -132,6 +158,7 @@ def get_tokens_belonging_to_segmentation(organized_segments: Dict[str, List[Dict
                 token = line[0]
                 start_token = float(line[1])
                 end_token = float(line[2])
+                oracle_label = line[-1]
 
                 token_inside_segment = False
                 for i in range(n_segments):
@@ -145,6 +172,7 @@ def get_tokens_belonging_to_segmentation(organized_segments: Dict[str, List[Dict
                     # print(is_inside, start_token, end_token, start_segment, end_segment)
                     if is_inside:
                         this_tokens_belonging_to_segments[i].append(token)
+                        this_oracle_labels_belonging_to_segments[i].append(oracle_label)
                         indexes.append(i)
                         token_inside_segment = True
                         break
@@ -152,21 +180,29 @@ def get_tokens_belonging_to_segmentation(organized_segments: Dict[str, List[Dict
                     indexes.append(-1)
 
             this_labels = convert_indexes_to_labels(indexes)
-        assert len(organized_segments[file_name_raw]) == len(this_tokens_belonging_to_segments)
+        assert len(organized_segments[file_name_raw]) == len(this_tokens_belonging_to_segments) \
+               == len(this_oracle_labels_belonging_to_segments)
         tokens_paired_with_segments_per_wav_dict[file_name_raw] = this_tokens_belonging_to_segments
+        oracle_labels[file_name_raw] = this_oracle_labels_belonging_to_segments
         labels[file_name_raw] = this_labels
 
-    return tokens_paired_with_segments_per_wav_dict, labels
+    return tokens_paired_with_segments_per_wav_dict, labels, oracle_labels
 
 
 def convert_segmentation_to_labels(yaml_fp, timestamps_folder, out_folder, segment_classifier):
     organized_segments = get_segmentation_from_yaml(yaml_fp=yaml_fp)
-    tokens_belonging_to_seg, _ = get_tokens_belonging_to_segmentation(organized_segments=organized_segments,
+    tokens_belonging_to_seg, _, oracle_labels = get_tokens_belonging_to_segmentation(organized_segments=organized_segments,
                                                                    timestamps_folder=timestamps_folder)
-    filtered_segments = filter_segments(organized_segments=organized_segments, segment_classifier=segment_classifier,
+
+    if not segment_classifier.startswith("oracle"):
+        filtered_segments = filter_segments(organized_segments=organized_segments, segment_classifier=segment_classifier,
                                         tokens_belonging_to_segmentation=tokens_belonging_to_seg)
 
-    _, labels_dict = get_tokens_belonging_to_segmentation(organized_segments=filtered_segments,
+    else:
+        filtered_segments = filter_segments_oracle(organized_segments=organized_segments,
+                                                   reference_labels=oracle_labels)
+
+    _, labels_dict, _ = get_tokens_belonging_to_segmentation(organized_segments=filtered_segments,
                                                                             timestamps_folder=timestamps_folder)
     for filename_raw in list(labels_dict.keys()):
         labels = labels_dict[filename_raw]

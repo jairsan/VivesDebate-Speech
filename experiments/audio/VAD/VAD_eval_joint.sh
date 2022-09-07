@@ -6,21 +6,22 @@ out_folder=$PWD/infer
 for set in dev;
 do
 
-    #for frame_length in 10 20 30;
-    for frame_length in 10;
+    for frame_length in 10 20 30;
+    #for frame_length in 10;
     do
-        #for aggressiveness_mode in 1 2 3;
-        for aggresiveness_mode in 1;
+        for aggresiveness_mode in 1 2 3;
+        #for aggresiveness_mode in 1;
 
         do
         out_path=$out_folder/$set.length"$frame_length"_agress"$aggresiveness_mode"
         path_to_custom_segmentation_yaml=$out_path/segmentation.yaml
 
         # Without segment classifier
-        python3 ../../../src/convert_audio_segmentation_to_labels.py --yaml_file $path_to_custom_segmentation_yaml --timestamps_folder $TIMESTAMPS_FOLDER --output_folder $out_path
-        
+        #python3 ../../../src/convert_audio_segmentation_to_labels.py --yaml_file $path_to_custom_segmentation_yaml --timestamps_folder $TIMESTAMPS_FOLDER --output_folder $out_path
+
+        # --segment_classifier transformers:../segment_classifier/BERTa:1570
         # With segment classifier
-        #python3 ../../../src/convert_audio_segmentation_to_labels.py --segment_classifier ../segment_classifier/model.pkl --yaml_file $path_to_custom_segmentation_yaml --timestamps_folder $TIMESTAMPS_FOLDER --output_folder $out_path
+        python3 ../../../src/convert_audio_segmentation_to_labels.py --segment_classifier transformers:../segment_classifier/BERTa:1570 --yaml_file $path_to_custom_segmentation_yaml --timestamps_folder $TIMESTAMPS_FOLDER --output_folder $out_path
 
         echo "##########"
         echo "frame_length$frame_length.aggressiveness_mode$aggresiveness_mode"
