@@ -6,11 +6,9 @@ import numpy as np
 
 
 def prepare_sample_sequence(bio_file):
-    samples = []
     tags = []
     text = []
     prev = '[CLS]'
-    prev_label = 'N'
     for ln in bio_file:
         line = ln.split()
         if line[1] == 'B':
@@ -20,42 +18,68 @@ def prepare_sample_sequence(bio_file):
         elif line[1] == 'O':
             tags.append(2)
         else:
-            tags.append(3)
-        text.append(prev+' '+'['+prev_label+']'+' '+line[0])
+            # E(nd) label treated as I
+            tags.append(1)
+        text.append(prev+' '+line[0])
         prev = line[0]
-        prev_label = line[1]
     return tags, text
 
 
-def prepare_samples_token(bio_file):
+def prepare_samples_token(bio_file, only_seg):
     samples_tags = []
     samples_tokens = []
     tags = []
     tokens = []
+    prev_tag = ''
     for ln in bio_file:
         line = ln.split()
         tokens.append(line[0])
 
         if line[1] == 'B':
-            tags.append(0)
+            prev_tag = 'B'
+            if only_seg:
+                tags.append(1)
+            else:
+                tags.append(0)
+
         elif line[1] == 'I':
-            tags.append(1)
+            prev_tag = 'I'
+            if only_seg:
+                tags.append(0)
+            else:
+                tags.append(1)
+
         elif line[1] == 'O':
-            tags.append(2)
+            if only_seg and prev_tag == 'E':
+                tags.append(1)
+            elif only_seg:
+                tags.append(0)
+            else:
+                tags.append(2)
+
+            prev_tag = 'O'
         else:
-            tags.append(3)
-            if len(tags) >= 50:
-                samples_tags.append(tags)
-                tags = []
-                samples_tokens.append(tokens)
-                tokens = []
-    samples_tags.append(tags)
-    samples_tokens.append(tokens)
+            # E(nd) label treated as I
+            if only_seg:
+                tags.append(0)
+            else:
+                tags.append(1)
+            prev_tag = 'E'
+
+        if len(tags) == 5:
+            samples_tags.append(tags)
+            tags = []
+            samples_tokens.append(tokens)
+            tokens = []
+
+    if len(tags) > 0:
+        samples_tags.append(tags)
+        samples_tokens.append(tokens)
 
     return samples_tags, samples_tokens
 
 
-def load_dataset(mode):
+def load_dataset(mode, flag):
     data = {'train': {}, 'dev': {}, 'test': {}}
     if mode == 'Sequence':
         data['dev']['label'] = []
@@ -93,7 +117,7 @@ def load_dataset(mode):
                     data['train']['label'].append(tags[c])
                     data['train']['text'].append(text[c])
         else:
-            tags, text = prepare_samples_token(bio_file)
+            tags, text = prepare_samples_token(bio_file, flag)
             if file == 'Debate24.txt' or file == 'Debate25.txt' or file == 'Debate26.txt':
                 for c in range(len(tags)):
                     data['dev']['tags'].append(tags[c])
@@ -142,29 +166,26 @@ def tokenize_token(samples):
     return tokenized_inputs
 
 
-def load_model(mode):
-    if mode == 'Sequence':
-        tokenizer_hf = AutoTokenizer.from_pretrained('projecte-aina/roberta-base-ca-v2-cased-tc')
-        model = AutoModelForSequenceClassification.from_pretrained('projecte-aina/roberta-base-ca-v2-cased-tc', num_labels=4, ignore_mismatched_sizes=True)
-    else:
-        tokenizer_hf = AutoTokenizer.from_pretrained('projecte-aina/roberta-base-ca-v2-cased-pos')
-        model = AutoModelForTokenClassification.from_pretrained('projecte-aina/roberta-base-ca-v2-cased-pos', num_labels=4, ignore_mismatched_sizes=True)
+def load_model(n_lb):
+    tokenizer_hf = AutoTokenizer.from_pretrained('projecte-aina/roberta-base-ca-v2')
+    model = AutoModelForTokenClassification.from_pretrained('projecte-aina/roberta-base-ca-v2', num_labels=n_lb, ignore_mismatched_sizes=True)
+
     return tokenizer_hf, model
 
 
 def train_model(model, tokenizer, data):
 
     training_args = TrainingArguments(
-        output_dir="./results",
+        output_dir="models",
         evaluation_strategy="epoch",
         logging_strategy='epoch',
         save_strategy='epoch',
         save_total_limit=3,
-        learning_rate=2e-5,
-        per_device_train_batch_size=2048,
-        per_device_eval_batch_size=2048,
-        num_train_epochs=10,
+        learning_rate=1e-5,
         weight_decay=0.01,
+        per_device_train_batch_size=1024,
+        per_device_eval_batch_size=1024,
+        num_train_epochs=20,
         load_best_model_at_end=True
     )
 
@@ -202,7 +223,7 @@ def predictions_output_sequence(preds):
         prediction_file.write(token + ' ' + label + '\n')
 
 
-def predictions_output_token(preds):
+def predictions_output_token(preds, only_seg):
     prediction_file = open('out/predict.txt', 'w+')
 
     for j in range(len(preds)):
@@ -217,8 +238,9 @@ def predictions_output_token(preds):
 
             write_buffer += token
 
-            if k < len(preds[j])-1:
+            if k < len(tokenized_data['test']['input_ids'][j])-1:
                 next_token = tknz.convert_ids_to_tokens(tokenized_data['test']['input_ids'][j][k+1])
+
                 if next_token[0] == 'Ġ' or next_token[0] == '<':
                     ready2write = True
 
@@ -233,12 +255,16 @@ def predictions_output_token(preds):
 
             if preds[j][k] == 0:
                 label = 'B'
+                if only_seg:
+                    label = 'X'
             elif preds[j][k] == 1:
                 label = 'I'
+                if only_seg:
+                    label = 'B'
             elif preds[j][k] == 2:
                 label = 'O'
             else:
-                label = 'E'
+                label = 'I'
 
             label_buffer += label
 
@@ -254,10 +280,12 @@ def predictions_output_token(preds):
 
 
 if __name__ == "__main__":
-    mode = 'Sequence'
-    dataset = load_dataset(mode)
+    mode = 'Token'
+    only_segmentation = True
+    num_labels = 2
+    dataset = load_dataset(mode, only_segmentation)
 
-    tknz, mdl = load_model(mode)
+    tknz, mdl = load_model(num_labels)
 
     if mode == 'Sequence':
         tokenized_data = dataset.map(tokenize_sequence, batched=True)
@@ -274,4 +302,4 @@ if __name__ == "__main__":
     if mode == 'Sequence':
         predictions_output_sequence(predict)
     else:
-        predictions_output_token(predict)
+        predictions_output_token(predict, only_segmentation)

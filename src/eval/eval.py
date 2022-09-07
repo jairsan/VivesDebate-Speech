@@ -44,7 +44,30 @@ def get_converted_labels_to_bio(labels: List[str]) -> List[str]:
     return [x if x != "E" else "I" for x in labels]
 
 
-def eval_one(predicted_labels: List[str], reference_labels: List[str], convert_to_bio: bool) -> EvaluationResults:
+def get_converted_labels_to_seg(labels: List[str]) -> List[str]:
+    label_list = []
+    prev_label = ''
+    for x in labels:
+        if x == 'B':
+            label_list.append(x)
+            prev_label = 'B'
+        elif x == 'I':
+            label_list.append('X')
+            prev_label = 'I'
+        elif x == 'O':
+            if prev_label == 'E':
+                label_list.append('B')
+            else:
+                label_list.append('X')
+            prev_label = 'O'
+        else:
+            label_list.append('X')
+            prev_label = 'E'
+
+    return label_list
+
+
+def eval_one(predicted_labels: List[str], reference_labels: List[str], convert_to_bio: bool, only_segmentation: bool) -> EvaluationResults:
     """
     Eval one set of labels agains the reference. Tipically one call is made to this method for each evaluated debate.
     :param predicted_labels: List containing the labels (str) to evaluate
@@ -58,6 +81,9 @@ def eval_one(predicted_labels: List[str], reference_labels: List[str], convert_t
     if convert_to_bio:
         predicted_labels = get_converted_labels_to_bio(predicted_labels)
         reference_labels = get_converted_labels_to_bio(reference_labels)
+    elif only_segmentation:
+        predicted_labels = get_converted_labels_to_seg(predicted_labels)
+        reference_labels = get_converted_labels_to_seg(reference_labels)
 
     acc = accuracy_score(reference_labels, predicted_labels)
     precision, recall, f1, _ = precision_recall_fscore_support(reference_labels, predicted_labels, average='macro')
@@ -89,7 +115,7 @@ def eval_one_with_reference_file(predicted_labels: List[str], reference_file: st
     return results
 
 
-def eval_all(hypotheses_files: List[str], reference_files: List[str], convert_to_bio: bool) \
+def eval_all(hypotheses_files: List[str], reference_files: List[str], convert_to_bio: bool, only_segmentation: bool) \
         -> Tuple[List[EvaluationResults], EvaluationResults]:
     """
     Evaluates a the systems hypotheses agains the references.
@@ -118,11 +144,12 @@ def eval_all(hypotheses_files: List[str], reference_files: List[str], convert_to
         flat_predictions.extend(hypo_labels)
         flat_references.extend(ref_labels)
 
-        one_results = eval_one(predicted_labels=hypo_labels, reference_labels=ref_labels, convert_to_bio=convert_to_bio)
+        one_results = eval_one(predicted_labels=hypo_labels, reference_labels=ref_labels, convert_to_bio=convert_to_bio,
+                               only_segmentation=only_segmentation)
         evaluation_results.append(one_results)
 
     flat_results = eval_one(predicted_labels=flat_predictions, reference_labels=flat_references,
-                            convert_to_bio=convert_to_bio)
+                            convert_to_bio=convert_to_bio, only_segmentation=only_segmentation)
 
     return evaluation_results, flat_results
 
@@ -137,10 +164,13 @@ if __name__ == "__main__":
     parser.add_argument('--hypotheses_files', nargs="+", type=str, required=True)
     parser.add_argument('--reference_files', nargs="+", type=str, required=True)
     parser.add_argument('--convert_to_bio', action='store_true',
-                        help="If set, converts the BIOE format to BIO, in both hypotheses and references")
+                        help="If set, converts the BIOE format to BIO, in both hypotheses and references.")
+    parser.add_argument('--only_segmentation', action='store_true',
+                        help="If set, evaluates only the segmentation problem.")
 
     args = parser.parse_args()
 
-    per_file_results, flat_results_eval = eval_all(args.hypotheses_files, args.reference_files, args.convert_to_bio)
+    per_file_results, flat_results_eval = eval_all(args.hypotheses_files, args.reference_files, args.convert_to_bio,
+                                                   args.only_segmentation)
 
     print(flat_results_eval.report)
