@@ -66,7 +66,7 @@ def prepare_samples_token(bio_file, only_seg):
                 tags.append(1)
             prev_tag = 'E'
 
-        if len(tags) == 5:
+        if len(tags) == 25:
             samples_tags.append(tags)
             tags = []
             samples_tokens.append(tokens)
@@ -173,6 +173,13 @@ def load_model(n_lb):
     return tokenizer_hf, model
 
 
+def load_model_trained():
+    tokenizer_hf = AutoTokenizer.from_pretrained('models/BIO/5/checkpoint-252')
+    model = AutoModelForTokenClassification.from_pretrained('models/BIO/5/checkpoint-252')
+
+    return tokenizer_hf, model
+
+
 def train_model(model, tokenizer, data):
 
     training_args = TrainingArguments(
@@ -183,9 +190,9 @@ def train_model(model, tokenizer, data):
         save_total_limit=3,
         learning_rate=1e-5,
         weight_decay=0.01,
-        per_device_train_batch_size=1024,
-        per_device_eval_batch_size=1024,
-        num_train_epochs=20,
+        per_device_train_batch_size=512,
+        per_device_eval_batch_size=512,
+        num_train_epochs=75,
         load_best_model_at_end=True
     )
 
@@ -223,23 +230,23 @@ def predictions_output_sequence(preds):
         prediction_file.write(token + ' ' + label + '\n')
 
 
-def predictions_output_token(preds, only_seg):
-    prediction_file = open('out/predict.txt', 'w+')
+def predictions_output_token(preds, partition, only_seg):
+    prediction_file = open('out/'+partition+'_predict.txt', 'w+')
 
     for j in range(len(preds)):
         # Data batch
         ready2write = False
         write_buffer = ''
         label_buffer = ''
-        for k in range(len(tokenized_data['test']['input_ids'][j])):
+        for k in range(len(tokenized_data[partition]['input_ids'][j])):
             # Each token in batch
 
-            token = tknz.convert_ids_to_tokens(tokenized_data['test']['input_ids'][j][k])
+            token = tknz.convert_ids_to_tokens(tokenized_data[partition]['input_ids'][j][k])
 
             write_buffer += token
 
-            if k < len(tokenized_data['test']['input_ids'][j])-1:
-                next_token = tknz.convert_ids_to_tokens(tokenized_data['test']['input_ids'][j][k+1])
+            if k < len(tokenized_data[partition]['input_ids'][j])-1:
+                next_token = tknz.convert_ids_to_tokens(tokenized_data[partition]['input_ids'][j][k+1])
 
                 if next_token[0] == 'Ġ' or next_token[0] == '<':
                     ready2write = True
@@ -281,11 +288,14 @@ def predictions_output_token(preds, only_seg):
 
 if __name__ == "__main__":
     mode = 'Token'
-    only_segmentation = True
-    num_labels = 2
+    only_segmentation = False
+    num_labels = 3
+    if only_segmentation:
+        num_labels = 2
     dataset = load_dataset(mode, only_segmentation)
 
-    tknz, mdl = load_model(num_labels)
+    tknz, mdl = load_model_trained()
+    #tknz, mdl = load_model(num_labels)
 
     if mode == 'Sequence':
         tokenized_data = dataset.map(tokenize_sequence, batched=True)
@@ -295,11 +305,15 @@ if __name__ == "__main__":
         tokenized_data = dataset.map(tokenize_token, batched=True)
         data_collator = DataCollatorForTokenClassification(tokenizer=tknz)
 
+    #trainer = Trainer(mdl)
     trainer = train_model(mdl, tknz, tokenized_data)
-    predictions = trainer.predict(tokenized_data['test'])
-    predict = np.argmax(predictions.predictions, axis=-1)
+    dev_predictions = trainer.predict(tokenized_data['dev'])
+    dev_predict = np.argmax(dev_predictions.predictions, axis=-1)
+    test_predictions = trainer.predict(tokenized_data['test'])
+    test_predict = np.argmax(test_predictions.predictions, axis=-1)
 
     if mode == 'Sequence':
-        predictions_output_sequence(predict)
+        predictions_output_sequence(test_predict)
     else:
-        predictions_output_token(predict, only_segmentation)
+        predictions_output_token(dev_predict, 'dev', only_segmentation)
+        predictions_output_token(dev_predict, 'test', only_segmentation)
