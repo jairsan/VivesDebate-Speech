@@ -357,7 +357,7 @@ def predictions_output_token(preds, partition, only_seg):
 
 if __name__ == "__main__":
     # T-Token, P-Token, T-Sequence, P-Sequence
-    mode = 'P-Sequence'
+    mode = 'P-Token'
     # Activate only segmentation for T-Token and P-Token modes to detect argumentative spans instead of BIO tags.
     only_segmentation = True
 
@@ -371,8 +371,12 @@ if __name__ == "__main__":
         dataset = load_dataset(mode, only_segmentation)
 
     # Predict Model
-    if mode == 'P-Token' or mode == 'P-Sequence':
+    if mode == 'P-Sequence':
         tknz, mdl = load_model_trained('models/Classifier/checkpoint-429')
+    elif mode == 'P-Token' and only_segmentation:
+        tknz, mdl = load_model_trained('models/Segmentation/25/checkpoint-536')
+    elif mode == 'P-Token' and only_segmentation is False:
+        tknz, mdl = load_model_trained('models/BIO/5/checkpoint-252')
     # Train Model
     else:
         tknz, mdl = load_model(num_labels)
