@@ -8,21 +8,55 @@ import numpy as np
 def prepare_sample_sequence(bio_file):
     tags = []
     text = []
-    prev = '[CLS]'
+    sample = ''
+    prev_lbl = ''
     for ln in bio_file:
         line = ln.split()
         if line[1] == 'B':
-            tags.append(0)
+            if len(sample) > 0 and prev_lbl == 'O':
+                text.append(sample)
+                tags.append(0)
+                sample = ''
+            sample += ' '+line[0]
+            prev_lbl = line[1]
         elif line[1] == 'I':
-            tags.append(1)
+            sample += ' '+line[0]
+            prev_lbl = line[1]
         elif line[1] == 'O':
-            tags.append(2)
+            sample += ' '+line[0]
+            prev_lbl = line[1]
         else:
             # E(nd) label treated as I
             tags.append(1)
-        text.append(prev+' '+line[0])
-        prev = line[0]
+            sample += ' '+line[0]
+            text.append(sample)
+            sample = ''
+            prev_lbl = line[1]
+    if len(sample) > 0 and prev_lbl == 'O':
+        text.append(sample)
+        tags.append(0)
+
     return tags, text
+
+
+def prepare_sample_segmented_sequence(bio_file):
+    text = []
+    sample = ''
+    for ln in bio_file:
+        line = ln.split()
+        if line[1] == 'B':
+            if len(sample) > 0:
+                text.append(sample)
+            sample = ''
+            sample += ' '+line[0]
+        else:
+            # X label
+            sample += ' '+line[0]
+
+    if len(sample) > 0:
+        text.append(sample)
+
+    return text
 
 
 def prepare_samples_token(bio_file, only_seg):
@@ -79,9 +113,36 @@ def prepare_samples_token(bio_file, only_seg):
     return samples_tags, samples_tokens
 
 
+def load_segmented_dataset():
+    data = {'dev': {}, 'test': {}}
+
+    data['dev']['text'] = []
+    data['test']['text'] = []
+
+    for file in os.listdir("out/Segmentation/25/"):
+        bio_file = open('out/Segmentation/25/' + file, 'r')
+
+        if file == 'dev_hypothesis.txt':
+            text = prepare_sample_segmented_sequence(bio_file)
+            for c in range(len(text)):
+                data['dev']['text'].append(text[c])
+
+        elif file == 'test_hypothesis.txt':
+            text = prepare_sample_segmented_sequence(bio_file)
+            for c in range(len(text)):
+                data['test']['text'].append(text[c])
+
+    full_data = DatasetDict()
+    # using your `Dict` object
+    for k, v in data.items():
+        full_data[k] = Dataset.from_dict(v)
+
+    return full_data
+
+
 def load_dataset(mode, flag):
     data = {'train': {}, 'dev': {}, 'test': {}}
-    if mode == 'Sequence':
+    if mode == 'T-Sequence' or mode == 'P-Sequence':
         data['dev']['label'] = []
         data['dev']['text'] = []
         data['test']['label'] = []
@@ -98,7 +159,7 @@ def load_dataset(mode, flag):
 
     for file in os.listdir("BIO_arg/"):
         bio_file = open('BIO_arg/' + file, 'r')
-        if mode == 'Sequence':
+        if mode == 'T-Sequence' or mode == 'P-Sequence':
             tags, text = prepare_sample_sequence(bio_file)
             if file == 'Debate24.txt' or file == 'Debate25.txt' or file == 'Debate26.txt':
                 for c in range(len(tags)):
@@ -168,14 +229,23 @@ def tokenize_token(samples):
 
 def load_model(n_lb):
     tokenizer_hf = AutoTokenizer.from_pretrained('projecte-aina/roberta-base-ca-v2')
-    model = AutoModelForTokenClassification.from_pretrained('projecte-aina/roberta-base-ca-v2', num_labels=n_lb, ignore_mismatched_sizes=True)
+    if mode == 'T-Sequence' or mode == 'P-Sequence':
+        model = AutoModelForSequenceClassification.from_pretrained('projecte-aina/roberta-base-ca-v2', num_labels=2,
+                                                                   ignore_mismatched_sizes=True)
+    else:
+        model = AutoModelForTokenClassification.from_pretrained('projecte-aina/roberta-base-ca-v2', num_labels=n_lb,
+                                                            ignore_mismatched_sizes=True)
 
     return tokenizer_hf, model
 
 
-def load_model_trained():
-    tokenizer_hf = AutoTokenizer.from_pretrained('models/BIO/5/checkpoint-252')
-    model = AutoModelForTokenClassification.from_pretrained('models/BIO/5/checkpoint-252')
+def load_model_trained(path):
+    if mode == 'T-Sequence' or mode == 'P-Sequence':
+        tokenizer_hf = AutoTokenizer.from_pretrained(path)
+        model = AutoModelForSequenceClassification.from_pretrained(path)
+    else:
+        tokenizer_hf = AutoTokenizer.from_pretrained(path)
+        model = AutoModelForTokenClassification.from_pretrained(path)
 
     return tokenizer_hf, model
 
@@ -190,9 +260,9 @@ def train_model(model, tokenizer, data):
         save_total_limit=3,
         learning_rate=1e-5,
         weight_decay=0.01,
-        per_device_train_batch_size=512,
-        per_device_eval_batch_size=512,
-        num_train_epochs=75,
+        per_device_train_batch_size=50,
+        per_device_eval_batch_size=50,
+        num_train_epochs=50,
         load_best_model_at_end=True
     )
 
@@ -210,24 +280,23 @@ def train_model(model, tokenizer, data):
     return trainer
 
 
-def predictions_output_sequence(preds):
-    prediction_file = open('out/predict.txt', 'w+')
+def predictions_output_sequence(preds, partition):
+    prediction_file = open('out/'+partition+'_predict.txt', 'w+')
 
     for j in range(len(preds)):
 
-        if preds[j] == 0:
+        text = tokenized_data[partition]['text'][j].split()
+
+        if preds[j] == 1:
             label = 'B'
-        elif preds[j] == 1:
-            label = 'I'
-        elif preds[j] == 2:
+            for word in text:
+                prediction_file.write(word + ' ' + label + '\n')
+                label = 'I'
+
+        elif preds[j] == 0:
             label = 'O'
-        else:
-            label = 'E'
-
-        text = tokenized_data['test']['text'][j]
-        token = text.split()[-1]
-
-        prediction_file.write(token + ' ' + label + '\n')
+            for word in text:
+                prediction_file.write(word + ' ' + label + '\n')
 
 
 def predictions_output_token(preds, partition, only_seg):
@@ -287,33 +356,51 @@ def predictions_output_token(preds, partition, only_seg):
 
 
 if __name__ == "__main__":
-    mode = 'Token'
-    only_segmentation = False
+    # T-Token, P-Token, T-Sequence, P-Sequence
+    mode = 'P-Sequence'
+    # Activate only segmentation for T-Token and P-Token modes to detect argumentative spans instead of BIO tags.
+    only_segmentation = True
+
     num_labels = 3
-    if only_segmentation:
+    if only_segmentation or mode == 'T-Sequence' or mode == 'P-Sequence':
         num_labels = 2
-    dataset = load_dataset(mode, only_segmentation)
 
-    tknz, mdl = load_model_trained()
-    #tknz, mdl = load_model(num_labels)
+    if mode == 'P-Sequence':
+        dataset = load_segmented_dataset()
+    else:
+        dataset = load_dataset(mode, only_segmentation)
 
-    if mode == 'Sequence':
+    # Predict Model
+    if mode == 'P-Token' or mode == 'P-Sequence':
+        tknz, mdl = load_model_trained('models/Classifier/checkpoint-429')
+    # Train Model
+    else:
+        tknz, mdl = load_model(num_labels)
+
+    # Data prepared for Sequence inputs
+    if mode == 'T-Sequence' or mode == 'P-Sequence':
         tokenized_data = dataset.map(tokenize_sequence, batched=True)
-        # tokenized_data = tokenized_data.remove_columns("text")
         data_collator = DataCollatorWithPadding(tokenizer=tknz)
+    # Data prepared for Token inputs
     else:
         tokenized_data = dataset.map(tokenize_token, batched=True)
         data_collator = DataCollatorForTokenClassification(tokenizer=tknz)
 
-    #trainer = Trainer(mdl)
-    trainer = train_model(mdl, tknz, tokenized_data)
+    # Predict Model
+    if mode == 'P-Token' or mode == 'P-Sequence':
+        trainer = Trainer(mdl)
+    # Train Model
+    else:
+        trainer = train_model(mdl, tknz, tokenized_data)
+
     dev_predictions = trainer.predict(tokenized_data['dev'])
     dev_predict = np.argmax(dev_predictions.predictions, axis=-1)
     test_predictions = trainer.predict(tokenized_data['test'])
     test_predict = np.argmax(test_predictions.predictions, axis=-1)
 
-    if mode == 'Sequence':
-        predictions_output_sequence(test_predict)
+    if mode == 'T-Sequence' or mode == 'P-Sequence':
+        predictions_output_sequence(dev_predict, 'dev')
+        predictions_output_sequence(test_predict, 'test')
     else:
         predictions_output_token(dev_predict, 'dev', only_segmentation)
-        predictions_output_token(dev_predict, 'test', only_segmentation)
+        predictions_output_token(test_predict, 'test', only_segmentation)
