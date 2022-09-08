@@ -1,5 +1,4 @@
 def check_if_token_belongs(token_start: float, token_end: float, segment_start: float, segment_end: float):
-    aux = token_start <= segment_start <= token_end <= segment_end
     # Token fully before segment
     if token_start < segment_start and token_end < segment_start:
         return False
@@ -7,7 +6,7 @@ def check_if_token_belongs(token_start: float, token_end: float, segment_start: 
     elif token_start > segment_end:
         return False
     # Token fully inside segment:
-    elif token_start > segment_start and token_end < segment_end:
+    elif token_start >= segment_start and token_end <= segment_end:
         return True
     elif token_start <= segment_start <= token_end <= segment_end:
         overlap = token_end - segment_start

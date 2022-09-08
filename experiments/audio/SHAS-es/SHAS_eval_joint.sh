@@ -10,8 +10,7 @@ do
     do
         out_path=$out_folder/$set.maxlen"$maxlen"/
         path_to_custom_segmentation_yaml=$out_path/segmentation.yaml
-        #--segment_classifier ../segment_classifier/model.pkl
-        python3 ../../../src/eval/convert_audio_segmentation_to_labels.py --yaml_file $path_to_custom_segmentation_yaml --timestamps_folder $TIMESTAMPS_FOLDER --output_folder $out_path
+        python3 ../../../src/convert_audio_segmentation_to_labels.py --segment_classifier transformers:../segment_classifier/BERTa:1570 --yaml_file $path_to_custom_segmentation_yaml --timestamps_folder $TIMESTAMPS_FOLDER --output_folder $out_path
 
         echo "##########"
         echo "maxlen$maxlen"
