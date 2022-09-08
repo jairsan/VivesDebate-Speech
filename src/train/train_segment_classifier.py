@@ -68,10 +68,12 @@ def generate_dataset(document_name_list: List[str]) -> Tuple[List[str], List[int
     """
     samples: List[str] = []
     samples_labels: List[int] = []
-    current_sample: List[str] = []
-    current_label: int = -1
 
     for file_fp in document_name_list:
+
+        current_sample: List[str] = []
+        current_label: int = -1
+
         with open(file_fp) as file:
             for line in file:
                 fields = line.strip().split()
@@ -93,6 +95,10 @@ def generate_dataset(document_name_list: List[str]) -> Tuple[List[str], List[int
                     current_label = KEEP
 
                 current_sample.append(word)
+
+            if len(current_sample) > 0:
+                samples.append(" ".join(current_sample))
+                samples_labels.append(current_label)
 
         assert len(samples) == len(samples_labels)
 

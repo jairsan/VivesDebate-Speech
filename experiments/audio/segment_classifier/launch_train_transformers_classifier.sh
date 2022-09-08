@@ -4,7 +4,13 @@ dev_files="../../../data_preparation/DATA/BIO_arg_timestamps/Debate24.txt ../../
 #cant be loaded using fp32, even for BS=1
 #python3 ../../../src/train/train_transformers_classifier.py  facebook/xlm-roberta-xl "$train_files" "$dev_files" XLM-ROBERTA-XL
 
+#python3 ../../../src/train/train_transformers_classifier.py  --model_name xlm-roberta-large --train_files "$train_files" --eval_files "$dev_files" --output_dir_name XLM-ROBERTA-LARGE
+
+#With punc datasets
 #python3 ../../../src/train/train_transformers_classifier.py  PlanTL-GOB-ES/roberta-base-ca "$train_files" "$dev_files" BERTa
 
-python3 ../../../src/train/train_transformers_classifier.py  xlm-roberta-large "$train_files" "$dev_files" XLM-ROBERTA-LARGE
+#With spans datasets
+spans_train=../SHAS-multi/spans/train.maxlen10/
+spans_dev=../SHAS-multi/spans/dev.maxlen10/
 
+python3 ../../../src/train/train_transformers_classifier.py  --model_name PlanTL-GOB-ES/roberta-base-ca --train_files "$train_files" --eval_files "$dev_files" --output_dir_name BERTa_spans --generate_train_datasets_from_spans_folder $spans_train --generate_eval_datasets_from_spans_folder $spans_dev

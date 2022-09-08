@@ -9,6 +9,8 @@ from transformers import Pipeline, AutoTokenizer, AutoModelForTokenClassificatio
     TokenClassificationPipeline
 from transformers import Trainer, TrainingArguments
 import evaluate
+import argparse
+
 
 class SegmentsDataset(torch.utils.data.Dataset):
     def __init__(self, encodings, labels):
@@ -49,15 +51,82 @@ def generate_and_punct_split_dataset(document_name_list, pip: Pipeline) -> Tuple
 
     return new_samples, new_labels
 
+def generate_dataset_from_spans(document_name_list: List[str],
+                                span_folder: str) -> Tuple[List[str], List[int]]:
 
-def train_model(model_name: str, train_files: List[str], eval_files: List[str], output_dir_name: str):
+    samples, labels = generate_dataset(document_name_list=document_name_list)
+
+    samples_tokens_count = 0
+    for sample in samples:
+        samples_tokens_count += len(sample.strip().split())
+
+    per_token_labels: List[int] = []
+
+    for sample, label in zip(samples, labels):
+        per_token_labels.extend([label] * len(sample.strip().split()))
+
+    assert len(per_token_labels) == samples_tokens_count
+
+    new_samples: List[str] = []
+    new_labels: List[int] = []
+
+    spans: List[List[str]] = []
+
+    for filename in document_name_list:
+        filename_raw=filename.split("/")[-1].split(".")[0]
+        with open(span_folder + "/" + filename_raw + ".spans") as span_file:
+            for line in span_file:
+                spans.append(line.strip().split())
+
+    span_tokens_count = 0
+    for span in spans:
+        span_tokens_count += len(span)
+
+    assert span_tokens_count == samples_tokens_count
+
+    for span in spans:
+        new_samples.append(" ".join(span))
+        this_labels = per_token_labels[:len(span)]
+
+        tokens_I = this_labels.count(KEEP)
+        tokens_O = len(this_labels) - tokens_I
+
+        if tokens_O > tokens_I:
+            label = DISCARD
+        else:
+            label = KEEP
+
+        new_labels.append(label)
+
+        per_token_labels = per_token_labels[len(span):]
+
+    assert len(per_token_labels) == 0
+    assert len(new_samples) == len(new_labels)
+
+    return new_samples, new_labels
+
+
+def train_model(model_name: str, train_files: List[str], eval_files: List[str], output_dir_name: str,
+                generate_train_datasets_from_span_folder: str, generate_eval_datasets_from_span_folder: str):
+
     punct_name = "softcatala/fullstop-catalan-punctuation-prediction"
     punct_model = AutoModelForTokenClassification.from_pretrained(punct_name)
     punct_tokenizer = AutoTokenizer.from_pretrained(punct_name)
     pipeline = TokenClassificationPipeline(model=punct_model, tokenizer=punct_tokenizer)
 
-    train_samples, train_labels = generate_and_punct_split_dataset(train_files, pip=pipeline)
-    eval_samples, eval_labels = generate_and_punct_split_dataset(eval_files, pip=pipeline)
+    if generate_train_datasets_from_span_folder is not None:
+        print("Generating train dataset from spans...")
+        train_samples, train_labels = generate_dataset_from_spans(document_name_list=train_files,
+                                                                  span_folder=generate_train_datasets_from_span_folder)
+    else:
+        train_samples, train_labels = generate_and_punct_split_dataset(train_files, pip=pipeline)
+
+    if generate_eval_datasets_from_span_folder is not None:
+        print("Generating dev dataset from spans...")
+        eval_samples, eval_labels = generate_dataset_from_spans(document_name_list=eval_files,
+                                                                span_folder=generate_eval_datasets_from_span_folder)
+    else:
+        eval_samples, eval_labels = generate_and_punct_split_dataset(eval_files, pip=pipeline)
 
     classifier_tknzr = AutoTokenizer.from_pretrained(model_name)
     classifier_model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)
@@ -104,6 +173,18 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
     trainer.train()
 
 
-
 if __name__ == "__main__":
-    train_model(sys.argv[1], sys.argv[2].split(), sys.argv[3].split(), sys.argv[4])
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--model_name', type=str, required=True)
+    parser.add_argument('--train_files', type=str, required=True)
+    parser.add_argument('--eval_files', type=str, required=True)
+    parser.add_argument('--output_dir_name', type=str, required=True)
+    parser.add_argument('--generate_train_datasets_from_spans_folder', type=str)
+    parser.add_argument('--generate_eval_datasets_from_spans_folder', type=str)
+
+    args = parser.parse_args()
+
+    train_model(model_name=args.model_name, train_files=args.train_files.split(), eval_files=args.eval_files.split(),
+                output_dir_name=args.output_dir_name,
+                generate_train_datasets_from_span_folder=args.generate_train_datasets_from_spans_folder,
+                generate_eval_datasets_from_span_folder=args.generate_eval_datasets_from_spans_folder)

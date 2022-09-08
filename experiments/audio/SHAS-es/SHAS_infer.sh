@@ -13,9 +13,12 @@ do
         out_path=$out_folder/$set.maxlen"$maxlen"/
         path_to_custom_segmentation_yaml=$out_path/segmentation.yaml
 
+        thres=0.3
+
         python3 ${SHAS_ROOT}/src/supervised_hybrid/segment.py \
           -wavs $path_to_wavs \
           -yaml $path_to_custom_segmentation_yaml \
+          --dac_threshol $thres \
           -ckpt es_sfc_model_epoch-2.pt \
           -max $maxlen
 
