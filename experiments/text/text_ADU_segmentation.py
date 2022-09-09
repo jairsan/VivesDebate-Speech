@@ -113,24 +113,35 @@ def prepare_samples_token(bio_file, only_seg):
     return samples_tags, samples_tokens
 
 
-def load_segmented_dataset():
+def load_segmented_dataset(audio):
     data = {'dev': {}, 'test': {}}
 
     data['dev']['text'] = []
     data['test']['text'] = []
 
-    for file in os.listdir("out/Segmentation/25/"):
-        bio_file = open('out/Segmentation/25/' + file, 'r')
+    if audio:
+        for file in os.listdir("out/Segmentation/audio_5/"):
+            bio_file = open('out/Segmentation/audio_5/' + file, 'r')
+            if file == 'dev_hypothesis.txt':
+                for ln in bio_file:
+                    data['dev']['text'].append(ln.strip())
+            elif file == 'test_hypothesis.txt':
+                for ln in bio_file:
+                    data['test']['text'].append(ln.strip())
 
-        if file == 'dev_hypothesis.txt':
-            text = prepare_sample_segmented_sequence(bio_file)
-            for c in range(len(text)):
-                data['dev']['text'].append(text[c])
+    else:
+        for file in os.listdir("out/Segmentation/25/"):
+            bio_file = open('out/Segmentation/25/' + file, 'r')
 
-        elif file == 'test_hypothesis.txt':
-            text = prepare_sample_segmented_sequence(bio_file)
-            for c in range(len(text)):
-                data['test']['text'].append(text[c])
+            if file == 'dev_hypothesis.txt':
+                text = prepare_sample_segmented_sequence(bio_file)
+                for c in range(len(text)):
+                    data['dev']['text'].append(text[c])
+
+            elif file == 'test_hypothesis.txt':
+                text = prepare_sample_segmented_sequence(bio_file)
+                for c in range(len(text)):
+                    data['test']['text'].append(text[c])
 
     full_data = DatasetDict()
     # using your `Dict` object
@@ -357,17 +368,19 @@ def predictions_output_token(preds, partition, only_seg):
 
 if __name__ == "__main__":
     # T-Token, P-Token, T-Sequence, P-Sequence
-    mode = 'P-Token'
+    mode = 'P-Sequence'
     # Activate only segmentation for T-Token and P-Token modes to detect argumentative spans instead of BIO tags.
     only_segmentation = True
+    from_audio = True
 
     num_labels = 3
     if only_segmentation or mode == 'T-Sequence' or mode == 'P-Sequence':
         num_labels = 2
 
     if mode == 'P-Sequence':
-        dataset = load_segmented_dataset()
+        dataset = load_segmented_dataset(from_audio)
     else:
+        # TODO: add from audio variable and load data splits from SHAS segments
         dataset = load_dataset(mode, only_segmentation)
 
     # Predict Model
