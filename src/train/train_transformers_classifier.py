@@ -1,4 +1,4 @@
-import sys
+from dataclasses import dataclass, field
 from typing import List, Tuple
 import numpy as np
 
@@ -7,9 +7,18 @@ import torch
 from train_segment_classifier import generate_dataset, KEEP, DISCARD
 from transformers import Pipeline, AutoTokenizer, AutoModelForTokenClassification, AutoModelForSequenceClassification,\
     TokenClassificationPipeline
-from transformers import Trainer, TrainingArguments
+from transformers import Trainer, TrainingArguments, HfArgumentParser
 import evaluate
 import argparse
+
+
+@dataclass
+class TrainingArgs:
+    learning_rate: float = field(default=5e-5)
+    per_device_train_batch_size: int = field(default=8)
+    gradient_accumulation_steps: int = field(default=1)
+    per_device_eval_batch_size: int = field(default=16)
+    num_train_epochs: int = field(default=3)
 
 
 class SegmentsDataset(torch.utils.data.Dataset):
@@ -50,6 +59,7 @@ def generate_and_punct_split_dataset(document_name_list, pip: Pipeline) -> Tuple
                 new_labels.append(DISCARD)
 
     return new_samples, new_labels
+
 
 def generate_dataset_from_spans(document_name_list: List[str],
                                 span_folder: str) -> Tuple[List[str], List[int]]:
@@ -107,7 +117,8 @@ def generate_dataset_from_spans(document_name_list: List[str],
 
 
 def train_model(model_name: str, train_files: List[str], eval_files: List[str], output_dir_name: str,
-                generate_train_datasets_from_span_folder: str, generate_eval_datasets_from_span_folder: str):
+                generate_train_datasets_from_span_folder: str, generate_eval_datasets_from_span_folder: str,
+                training_args: TrainingArgs):
 
     punct_name = "softcatala/fullstop-catalan-punctuation-prediction"
     punct_model = AutoModelForTokenClassification.from_pretrained(punct_name)
@@ -147,11 +158,11 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
     training_args = TrainingArguments(
         output_dir=output_dir_name + "_models",  # output directory
         overwrite_output_dir=True,
-        num_train_epochs=10,  # total number of training epochs
-        learning_rate=5e-6,
-        per_device_train_batch_size=8,  # batch size per device during training
-        gradient_accumulation_steps=4,
-        per_device_eval_batch_size=16,  # batch size for evaluation
+        num_train_epochs=training_args.num_train_epochs,  # total number of training epochs
+        learning_rate=training_args.learning_rate,
+        per_device_train_batch_size=training_args.per_device_train_batch_size,  # batch size per device during training
+        gradient_accumulation_steps=training_args.gradient_accumulation_steps,
+        per_device_eval_batch_size=training_args.per_device_eval_batch_size,  # batch size for evaluation
         warmup_steps=250,  # number of warmup steps for learning rate scheduler
         weight_decay=0.01,  # strength of weight decay
         logging_steps=10,
@@ -182,9 +193,16 @@ if __name__ == "__main__":
     parser.add_argument('--generate_train_datasets_from_spans_folder', type=str)
     parser.add_argument('--generate_eval_datasets_from_spans_folder', type=str)
 
-    args = parser.parse_args()
+    args, remaining_args = parser.parse_known_args()
+
+    hf_parser = HfArgumentParser([TrainingArgs])
+
+    training_args_dc_it, _ = hf_parser.parse_args(args=remaining_args)
+
+    training_args_dc = training_args_dc_it[0]
 
     train_model(model_name=args.model_name, train_files=args.train_files.split(), eval_files=args.eval_files.split(),
                 output_dir_name=args.output_dir_name,
                 generate_train_datasets_from_span_folder=args.generate_train_datasets_from_spans_folder,
-                generate_eval_datasets_from_span_folder=args.generate_eval_datasets_from_spans_folder)
+                generate_eval_datasets_from_span_folder=args.generate_eval_datasets_from_spans_folder,
+                training_args=training_args_dc)

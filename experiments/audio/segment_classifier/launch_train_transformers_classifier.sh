@@ -9,8 +9,22 @@ dev_files="../../../data_preparation/DATA/BIO_arg_timestamps/Debate24.txt ../../
 #With punc datasets
 #python3 ../../../src/train/train_transformers_classifier.py  PlanTL-GOB-ES/roberta-base-ca "$train_files" "$dev_files" BERTa
 
-#With spans datasets
-spans_train=../SHAS-multi/spans/train.maxlen10/
-spans_dev=../SHAS-multi/spans/dev.maxlen10/
 
-python3 ../../../src/train/train_transformers_classifier.py  --model_name PlanTL-GOB-ES/roberta-base-ca --train_files "$train_files" --eval_files "$dev_files" --output_dir_name BERTa_spans --generate_train_datasets_from_spans_folder $spans_train --generate_eval_datasets_from_spans_folder $spans_dev
+#for num_spans in 5 10;
+for num_spans in 5;
+do
+  #With spans datasets
+  spans_train=../SHAS-multi/spans/train.maxlen$num_spans/
+  spans_dev=../SHAS-multi/spans/dev.maxlen$num_spans/
+
+  python3 ../../../src/train/train_transformers_classifier.py  --model_name PlanTL-GOB-ES/roberta-base-ca \
+   --train_files "$train_files" --eval_files "$dev_files" --output_dir_name BERTa_spans$num_spans \
+   --generate_train_datasets_from_spans_folder $spans_train \
+   --generate_eval_datasets_from_spans_folder $spans_dev \
+   --learning_rate 5e-5 \
+   --per_device_train_batch_size 32 \
+   --gradient_accumulation_steps 1 \
+   --per_device_eval_batch_size 32 \
+   --num_train_epochs 5
+
+ done
