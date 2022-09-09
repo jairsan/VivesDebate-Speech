@@ -25,6 +25,6 @@ do
    --per_device_train_batch_size 32 \
    --gradient_accumulation_steps 1 \
    --per_device_eval_batch_size 32 \
-   --num_train_epochs 5
+   --num_train_epochs 10
 
  done

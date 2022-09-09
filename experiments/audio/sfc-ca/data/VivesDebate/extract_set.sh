@@ -1,5 +1,5 @@
 
-WAVDIR=/scratch/translectures/data/TV3/CRAWL/data/
+WAVDIR=/scratch/jiranzotmp/trabajo/ICASSP2023_argumentation/data_preparation/audios_16khz_mono/
 ALIGN_DIR=/scratch/jiranzotmp/trabajo/ICASSP2023_argumentation/data_preparation/aligned_adus/
 
 

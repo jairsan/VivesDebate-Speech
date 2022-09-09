@@ -3,8 +3,9 @@ AUDIO_LOC=/scratch/jiranzotmp/trabajo/ICASSP2023_argumentation/data_preparation/
 SHAS_ROOT=/scratch/jiranzotmp/trabajo/ICASSP2023_argumentation/software/SHAS
 out_folder=$PWD/infer/
 
+dataset=tv3_joint_vives
 run=run1
-ckpt=step-7272.pt
+ckpt=step-30120.pt
 
 for set in dev;
 do
@@ -22,7 +23,7 @@ do
           -wavs $path_to_wavs \
           -yaml $path_to_custom_segmentation_yaml \
           --dac_threshol $thres \
-          -ckpt experiments/tv3_crawl/model_out/$run/ckpts/$ckpt \
+          -ckpt experiments/$dataset/model_out/$run/ckpts/$ckpt \
           -max $maxlen
 
         done

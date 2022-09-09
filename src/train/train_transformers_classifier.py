@@ -30,6 +30,7 @@ class SegmentsDataset(torch.utils.data.Dataset):
     def __getitem__(self, idx):
         item = {key: torch.tensor(val[idx]) for key, val in self.encodings.items()}
         item['labels'] = torch.tensor([self.labels[idx]])
+        print(item["input_values"].shape)
         return item
 
     def __len__(self):
@@ -236,20 +237,19 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
                                              span_folder=generate_eval_datasets_from_span_folder)
         dev_labels = [sample.label for sample in dev_samples]
 
-        classifier_model = AutoModelForAudioClassification(model_name)
+        classifier_model = AutoModelForAudioClassification.from_pretrained(model_name)
         audio_feature_extractor = AutoFeatureExtractor.from_pretrained(model_name)
 
         def generate_encodings(samples: List[AudioSample], wav_folder: str):
             raw_audio_list = []
             for sample in samples:
-                wav_file = wav_folder + "/" + sample.debate_name
+                wav_file = wav_folder + "/" + sample.debate_name + ".wav"
                 raw_audio, _ = librosa.load(wav_file, sr=16000, offset=sample.words[0].start,
                                          duration=sample.words[-1].end - sample.words[0].start)
-
                 raw_audio_list.append(raw_audio)
-
-            encodings = audio_feature_extractor(raw_audio_list)
-
+            
+            encodings = audio_feature_extractor(raw_audio_list, sampling_rate=16000, max_length=100000, truncation=True)
+            encodings = audio_feature_extractor.pad(encodings, padding="max_length", max_length=100000)
             return encodings
 
         train_encodings = generate_encodings(samples=train_samples, wav_folder=training_args.wav_folder)
@@ -257,9 +257,6 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
 
         train_dataset = SegmentsDataset(encodings=train_encodings, labels=train_labels)
         eval_dataset = SegmentsDataset(encodings=dev_encodings, labels=dev_labels)
-
-
-
     else:
         raise Exception
 

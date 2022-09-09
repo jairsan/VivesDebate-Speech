@@ -6,14 +6,15 @@ out_folder=$PWD/infer/
 for set in dev;
 do
 
-    for maxlen in 5 10 20;
+    for maxlen in 5;
     #for maxlen in 20;
     do
         out_path=$out_folder/$set.maxlen"$maxlen"/
         path_to_custom_segmentation_yaml=$out_path/segmentation.yaml
         #--segment_classifier ../segment_classifier/model.pkl
         #--segment_classifier transformers:../segment_classifier/BERTa:1570
-        python3 ../../../src/convert_audio_segmentation_to_labels.py --segment_classifier transformers:../segment_classifier/BERTa:1570 --yaml_file $path_to_custom_segmentation_yaml --timestamps_folder $TIMESTAMPS_FOLDER --output_folder $out_path
+        classifier=BERTa_spans5:628
+        python3 ../../../src/convert_audio_segmentation_to_labels.py --segment_classifier transformers:../segment_classifier/$classifier --yaml_file $path_to_custom_segmentation_yaml --timestamps_folder $TIMESTAMPS_FOLDER --output_folder $out_path
 
         echo "##########"
         echo "maxlen$maxlen"
