@@ -17,7 +17,7 @@ do
   spans_train=../SHAS-multi/spans/train.maxlen$num_spans/
   spans_dev=../SHAS-multi/spans/dev.maxlen$num_spans/
 
-  python3 ../../../src/train/train_transformers_classifier.py  --model_type audio --model_name facebook/wav2vec2-large-xlsr-53 \
+  python3 ../../../src/train/train_transformers_classifier.py  --model_type audio --model_name facebook/wav2vec2-xls-r-300m \
    --train_files "$train_files" --eval_files "$dev_files" --output_dir_name audio_classifier_$num_spans \
    --generate_train_datasets_from_spans_folder $spans_train \
    --generate_eval_datasets_from_spans_folder $spans_dev \
