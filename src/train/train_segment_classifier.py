@@ -57,7 +57,6 @@ class SKLearnSegmentClassifier(SegmentClassifier):
         yhat = self.estimator.predict(x)
         return classification_report(y_true=eval_labels, y_pred=yhat)
 
-
 def generate_dataset(document_name_list: List[str]) -> Tuple[List[str], List[int]]:
     """
     Produces pairs of (sample,label)

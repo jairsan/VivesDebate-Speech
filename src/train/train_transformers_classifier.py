@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 import numpy as np
 
 import torch
@@ -83,7 +83,7 @@ def generate_dataset_from_spans(document_name_list: List[str],
     spans: List[List[str]] = []
 
     for filename in document_name_list:
-        filename_raw=filename.split("/")[-1].split(".")[0]
+        filename_raw = filename.split("/")[-1].split(".")[0]
         with open(span_folder + "/" + filename_raw + ".spans") as span_file:
             for line in span_file:
                 spans.append(line.strip().split())
@@ -116,37 +116,121 @@ def generate_dataset_from_spans(document_name_list: List[str],
     return new_samples, new_labels
 
 
+@dataclass
+class Word:
+    start: float
+    end: float
+    word: str
+
+
+@dataclass
+class AudioSample:
+    words: List[Word]
+    debate_name: str
+    label: int
+
+
+def generate_audio_dataset(document_name_list: List[str], span_folder: str) -> List[AudioSample]:
+    # TODO ensure this method works properly
+
+    samples: List[AudioSample] = []
+
+    for file_fp in document_name_list:
+        debate_name = file_fp.split("/")[-1].split(".")[0]
+
+        this_words: List[Word] = []
+        this_per_token_word_labels: List[int] = []
+
+        with open(file_fp) as file, open(span_folder + "/" + debate_name + ".spans") as span_file:
+            span_lengths: List[int] = []
+            for span in span_file:
+                span_lengths.append(len(span.strip().split()))
+
+            for line in file:
+                fields = line.strip().split()
+                word = fields[0]
+                start = float(fields[1])
+                end = float(fields[2])
+                word_label = fields[3]
+
+                this_words.append(Word(word=word, start=start, end=end))
+
+                # Setup label
+                if word_label == "O":
+                    this_per_token_word_labels.append(DISCARD)
+                else:
+                    this_per_token_word_labels.append(KEEP)
+
+            assert len(this_words) == len(this_per_token_word_labels) == sum(span_lengths)
+
+            for span_length in span_lengths:
+                my_span_labels = this_per_token_word_labels[:span_length]
+                my_span_words = this_words[:span_length]
+
+                count_o = my_span_labels.count(DISCARD)
+                count_i = span_length - count_o
+
+                if count_o > count_i:
+                    this_label = DISCARD
+                else:
+                    this_label = KEEP
+
+                samples.append(AudioSample(words=my_span_words, debate_name=debate_name, label=this_label))
+
+                this_per_token_word_labels = this_per_token_word_labels[span_length:]
+                this_words = this_words[span_length:]
+
+            assert len(this_words) == len(this_per_token_word_labels) == 0
+
+    return samples
+
+
 def train_model(model_name: str, train_files: List[str], eval_files: List[str], output_dir_name: str,
                 generate_train_datasets_from_span_folder: str, generate_eval_datasets_from_span_folder: str,
-                training_args: TrainingArgs):
+                training_args: TrainingArgs, model_type: str):
 
     punct_name = "softcatala/fullstop-catalan-punctuation-prediction"
     punct_model = AutoModelForTokenClassification.from_pretrained(punct_name)
     punct_tokenizer = AutoTokenizer.from_pretrained(punct_name)
     pipeline = TokenClassificationPipeline(model=punct_model, tokenizer=punct_tokenizer)
 
-    if generate_train_datasets_from_span_folder is not None:
-        print("Generating train dataset from spans...")
-        train_samples, train_labels = generate_dataset_from_spans(document_name_list=train_files,
-                                                                  span_folder=generate_train_datasets_from_span_folder)
+    if model_type == "text":
+        if generate_train_datasets_from_span_folder is not None:
+            print("Generating train dataset from spans...")
+            train_samples, train_labels = generate_dataset_from_spans(document_name_list=train_files,
+                                                                      span_folder=generate_train_datasets_from_span_folder)
+        else:
+            train_samples, train_labels = generate_and_punct_split_dataset(train_files, pip=pipeline)
+
+        if generate_eval_datasets_from_span_folder is not None:
+            print("Generating dev dataset from spans...")
+            eval_samples, eval_labels = generate_dataset_from_spans(document_name_list=eval_files,
+                                                                    span_folder=generate_eval_datasets_from_span_folder)
+        else:
+            eval_samples, eval_labels = generate_and_punct_split_dataset(eval_files, pip=pipeline)
+
+        classifier_tknzr = AutoTokenizer.from_pretrained(model_name)
+        classifier_model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)
+
+        train_encodings = classifier_tknzr(train_samples, truncation=True, padding=True)
+        eval_encodings = classifier_tknzr(eval_samples, truncation=True, padding=True)
+
+        train_dataset = SegmentsDataset(encodings=train_encodings, labels=train_labels)
+        eval_dataset = SegmentsDataset(encodings=eval_encodings, labels=eval_labels)
+
+    elif model_type == "audio":
+        if generate_train_datasets_from_span_folder is None or generate_eval_datasets_from_span_folder is None:
+            print("--generate_train_datasets_from_span_folder and --generate_eval_datasets_from_span_folder are"
+                  "mandatory for audio model training")
+            raise Exception
+
+        dev_dataset = generate_audio_dataset(document_name_list=eval_files,
+                                             span_folder=generate_eval_datasets_from_span_folder)
+
+        print(dev_dataset)
+
     else:
-        train_samples, train_labels = generate_and_punct_split_dataset(train_files, pip=pipeline)
-
-    if generate_eval_datasets_from_span_folder is not None:
-        print("Generating dev dataset from spans...")
-        eval_samples, eval_labels = generate_dataset_from_spans(document_name_list=eval_files,
-                                                                span_folder=generate_eval_datasets_from_span_folder)
-    else:
-        eval_samples, eval_labels = generate_and_punct_split_dataset(eval_files, pip=pipeline)
-
-    classifier_tknzr = AutoTokenizer.from_pretrained(model_name)
-    classifier_model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)
-
-    train_encodings = classifier_tknzr(train_samples, truncation=True, padding=True)
-    eval_encodings = classifier_tknzr(eval_samples, truncation=True, padding=True)
-
-    train_dataset = SegmentsDataset(encodings=train_encodings, labels=train_labels)
-    eval_dataset = SegmentsDataset(encodings=eval_encodings, labels=eval_labels)
+        raise Exception
 
     def compute_metrics(eval_preds):
         f1 = evaluate.load("f1")
@@ -192,6 +276,7 @@ if __name__ == "__main__":
     parser.add_argument('--output_dir_name', type=str, required=True)
     parser.add_argument('--generate_train_datasets_from_spans_folder', type=str)
     parser.add_argument('--generate_eval_datasets_from_spans_folder', type=str)
+    parser.add_argument('--model_type', type=str, choices=["audio", "text"], default="text")
 
     args, remaining_args = parser.parse_known_args()
 
