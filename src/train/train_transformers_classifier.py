@@ -199,9 +199,7 @@ if __name__ == "__main__":
 
     output = hf_parser.parse_args_into_dataclasses(args=remaining_args)
 
-    training_args_dc_it = output[0]
-
-    training_args_dc = training_args_dc_it[0]
+    training_args_dc = output[0]
 
     train_model(model_name=args.model_name, train_files=args.train_files.split(), eval_files=args.eval_files.split(),
                 output_dir_name=args.output_dir_name,
