@@ -59,6 +59,44 @@ def prepare_sample_segmented_sequence(bio_file):
     return text
 
 
+def prepare_samples_token_audio(bio_file, shas_file):
+    samples_tags = []
+    samples_tokens = []
+    tags = []
+    tokens = []
+    i = 0
+    shaslines = shas_file.readlines()
+    for ln in bio_file:
+        split_len = len(shaslines[i].split())
+        line = ln.split()
+        tokens.append(line[0])
+
+        if line[1] == 'B':
+            tags.append(0)
+
+        elif line[1] == 'I':
+            tags.append(1)
+
+        elif line[1] == 'O':
+            tags.append(2)
+        else:
+            # E(nd) label treated as I
+            tags.append(1)
+
+        if len(tags) == split_len:
+            samples_tags.append(tags)
+            tags = []
+            samples_tokens.append(tokens)
+            tokens = []
+            i += 1
+
+    if len(tags) > 0:
+        samples_tags.append(tags)
+        samples_tokens.append(tokens)
+
+    return samples_tags, samples_tokens
+
+
 def prepare_samples_token(bio_file, only_seg):
     samples_tags = []
     samples_tokens = []
@@ -151,7 +189,7 @@ def load_segmented_dataset(audio):
     return full_data
 
 
-def load_dataset(mode, flag):
+def load_dataset(mode, flag, audio):
     data = {'train': {}, 'dev': {}, 'test': {}}
     if mode == 'T-Sequence' or mode == 'P-Sequence':
         data['dev']['label'] = []
@@ -170,6 +208,7 @@ def load_dataset(mode, flag):
 
     for file in os.listdir("BIO_arg/"):
         bio_file = open('BIO_arg/' + file, 'r')
+
         if mode == 'T-Sequence' or mode == 'P-Sequence':
             tags, text = prepare_sample_sequence(bio_file)
             if file == 'Debate24.txt' or file == 'Debate25.txt' or file == 'Debate26.txt':
@@ -189,7 +228,12 @@ def load_dataset(mode, flag):
                     data['train']['label'].append(tags[c])
                     data['train']['text'].append(text[c])
         else:
-            tags, text = prepare_samples_token(bio_file, flag)
+            if audio:
+                seg_file = open('BIO_SHAS/' + file.split('.')[0] + '.spans', 'r')
+                tags, text = prepare_samples_token_audio(bio_file, seg_file)
+            else:
+                tags, text = prepare_samples_token(bio_file, flag)
+
             if file == 'Debate24.txt' or file == 'Debate25.txt' or file == 'Debate26.txt':
                 for c in range(len(tags)):
                     data['dev']['tags'].append(tags[c])
@@ -271,8 +315,8 @@ def train_model(model, tokenizer, data):
         save_total_limit=3,
         learning_rate=1e-5,
         weight_decay=0.01,
-        per_device_train_batch_size=50,
-        per_device_eval_batch_size=50,
+        per_device_train_batch_size=256,
+        per_device_eval_batch_size=256,
         num_train_epochs=50,
         load_best_model_at_end=True
     )
@@ -368,9 +412,9 @@ def predictions_output_token(preds, partition, only_seg):
 
 if __name__ == "__main__":
     # T-Token, P-Token, T-Sequence, P-Sequence
-    mode = 'P-Sequence'
+    mode = 'T-Token'
     # Activate only segmentation for T-Token and P-Token modes to detect argumentative spans instead of BIO tags.
-    only_segmentation = True
+    only_segmentation = False
     from_audio = True
 
     num_labels = 3
@@ -380,8 +424,7 @@ if __name__ == "__main__":
     if mode == 'P-Sequence':
         dataset = load_segmented_dataset(from_audio)
     else:
-        # TODO: add from audio variable and load data splits from SHAS segments
-        dataset = load_dataset(mode, only_segmentation)
+        dataset = load_dataset(mode, only_segmentation, from_audio)
 
     # Predict Model
     if mode == 'P-Sequence':
