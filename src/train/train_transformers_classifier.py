@@ -225,7 +225,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
                   "mandatory for audio model training")
             raise Exception
         if training_args.wav_folder is None:
-            print("--wav_folder is mandatory for audio model trianing")
+            print("--wav_folder is mandatory for audio model training")
             raise Exception
 
         train_samples = generate_audio_samples(document_name_list=train_files,
