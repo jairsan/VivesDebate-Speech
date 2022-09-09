@@ -290,4 +290,4 @@ if __name__ == "__main__":
                 output_dir_name=args.output_dir_name,
                 generate_train_datasets_from_span_folder=args.generate_train_datasets_from_spans_folder,
                 generate_eval_datasets_from_span_folder=args.generate_eval_datasets_from_spans_folder,
-                training_args=training_args_dc)
+                training_args=training_args_dc, model_type=args.model_type)
