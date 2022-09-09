@@ -248,8 +248,8 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
                                          duration=sample.words[-1].end - sample.words[0].start)
                 raw_audio_list.append(raw_audio)
             
-            encodings = audio_feature_extractor(raw_audio_list, sampling_rate=16000, max_length=100000, truncation=True)
-            encodings = audio_feature_extractor.pad(encodings, padding="max_length", max_length=100000)
+            encodings = audio_feature_extractor(raw_audio_list, padding="max_length", sampling_rate=16000, max_length=100000, truncation=True)
+            #encodings = audio_feature_extractor.pad(encodings, padding="max_length", max_length=100000)
             return encodings
 
         train_encodings = generate_encodings(samples=train_samples, wav_folder=training_args.wav_folder)
