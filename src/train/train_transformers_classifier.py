@@ -5,12 +5,12 @@ import numpy as np
 import torch
 
 from train_segment_classifier import generate_dataset, KEEP, DISCARD
-from transformers import Pipeline, AutoTokenizer, AutoModelForTokenClassification, AutoModelForSequenceClassification,\
-    TokenClassificationPipeline
-from transformers import Trainer, TrainingArguments, HfArgumentParser
+from transformers import Pipeline, AutoTokenizer, AutoFeatureExtractor, AutoModelForTokenClassification,\
+    AutoModelForSequenceClassification, AutoModelForAudioClassification, \
+    TokenClassificationPipeline, Trainer, TrainingArguments, HfArgumentParser
 import evaluate
 import argparse
-
+import librosa
 
 @dataclass
 class TrainingArgs:
@@ -19,6 +19,7 @@ class TrainingArgs:
     gradient_accumulation_steps: int = field(default=1)
     per_device_eval_batch_size: int = field(default=16)
     num_train_epochs: int = field(default=3)
+    wav_folder: Optional[str] = field(default=None)
 
 
 class SegmentsDataset(torch.utils.data.Dataset):
@@ -130,7 +131,7 @@ class AudioSample:
     label: int
 
 
-def generate_audio_dataset(document_name_list: List[str], span_folder: str) -> List[AudioSample]:
+def generate_audio_samples(document_name_list: List[str], span_folder: str) -> List[AudioSample]:
     # TODO ensure this method works properly
 
     samples: List[AudioSample] = []
@@ -223,11 +224,41 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
             print("--generate_train_datasets_from_span_folder and --generate_eval_datasets_from_span_folder are"
                   "mandatory for audio model training")
             raise Exception
+        if training_args.wav_folder is None:
+            print("--wav_folder is mandatory for audio model trianing")
+            raise Exception
 
-        dev_dataset = generate_audio_dataset(document_name_list=eval_files,
+        train_samples = generate_audio_samples(document_name_list=train_files,
+                                               span_folder=generate_train_datasets_from_span_folder)
+        train_labels = [sample.label for sample in train_samples]
+
+        dev_samples = generate_audio_samples(document_name_list=eval_files,
                                              span_folder=generate_eval_datasets_from_span_folder)
+        dev_labels = [sample.label for sample in dev_samples]
 
-        print(dev_dataset)
+        classifier_model = AutoModelForAudioClassification(model_name)
+        audio_feature_extractor = AutoFeatureExtractor.from_pretrained(model_name)
+
+        def generate_encodings(samples: List[AudioSample], wav_folder: str):
+            raw_audio_list = []
+            for sample in samples:
+                wav_file = wav_folder + "/" + sample.debate_name
+                raw_audio, _ = librosa.load(wav_file, sr=16000, offset=sample.words[0].start,
+                                         duration=sample.words[-1].end - sample.words[0].start)
+
+                raw_audio_list.append(raw_audio)
+
+            encodings = audio_feature_extractor(raw_audio_list)
+
+            return encodings
+
+        train_encodings = generate_encodings(samples=train_samples, wav_folder=training_args.wav_folder)
+        dev_encodings = generate_encodings(samples=dev_samples, wav_folder=training_args.wav_folder)
+
+        train_dataset = SegmentsDataset(encodings=train_encodings, labels=train_labels)
+        eval_dataset = SegmentsDataset(encodings=dev_encodings, labels=dev_labels)
+
+
 
     else:
         raise Exception
@@ -263,7 +294,8 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
         compute_metrics=compute_metrics
     )
 
-    classifier_tknzr.save_pretrained(output_dir_name + "_tokenizer")
+    if model_type == "text":
+        classifier_tknzr.save_pretrained(output_dir_name + "_tokenizer")
     print("Finished preparing training")
     trainer.train()
 
