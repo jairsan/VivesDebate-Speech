@@ -197,7 +197,7 @@ if __name__ == "__main__":
 
     hf_parser = HfArgumentParser([TrainingArgs])
 
-    training_args_dc_it, _ = hf_parser.parse_args(args=remaining_args)
+    training_args_dc_it, _ = hf_parser.parse_args_into_dataclasses(args=remaining_args)
 
     training_args_dc = training_args_dc_it[0]
 
