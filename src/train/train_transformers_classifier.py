@@ -30,7 +30,6 @@ class SegmentsDataset(torch.utils.data.Dataset):
     def __getitem__(self, idx):
         item = {key: torch.tensor(val[idx]) for key, val in self.encodings.items()}
         item['labels'] = torch.tensor([self.labels[idx]])
-        print(item["input_values"].shape)
         return item
 
     def __len__(self):
@@ -219,7 +218,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
 
         train_dataset = SegmentsDataset(encodings=train_encodings, labels=train_labels)
         eval_dataset = SegmentsDataset(encodings=eval_encodings, labels=eval_labels)
-
+    
     elif model_type == "audio":
         if generate_train_datasets_from_span_folder is None or generate_eval_datasets_from_span_folder is None:
             print("--generate_train_datasets_from_span_folder and --generate_eval_datasets_from_span_folder are"
@@ -244,12 +243,13 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
             raw_audio_list = []
             for sample in samples:
                 wav_file = wav_folder + "/" + sample.debate_name + ".wav"
-                raw_audio, _ = librosa.load(wav_file, sr=16000, offset=sample.words[0].start,
-                                         duration=sample.words[-1].end - sample.words[0].start)
+                offset=sample.words[0].start
+                duration=sample.words[-1].end - sample.words[0].start
+                raw_audio, _ = librosa.load(wav_file, sr=16000, offset=offset,
+                                         duration=duration)
                 raw_audio_list.append(raw_audio)
             
             encodings = audio_feature_extractor(raw_audio_list, padding="max_length", sampling_rate=16000, max_length=100000, truncation=True)
-            #encodings = audio_feature_extractor.pad(encodings, padding="max_length", max_length=100000)
             return encodings
 
         train_encodings = generate_encodings(samples=train_samples, wav_folder=training_args.wav_folder)

@@ -16,9 +16,9 @@ do
    --generate_train_datasets_from_spans_folder $spans_train \
    --generate_eval_datasets_from_spans_folder $spans_dev \
    --learning_rate 5e-5 \
-   --per_device_train_batch_size 32 \
+   --per_device_train_batch_size 14 \
    --gradient_accumulation_steps 1 \
-   --per_device_eval_batch_size 32 \
+   --per_device_eval_batch_size 14 \
    --num_train_epochs 5
 
  done
