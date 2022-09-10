@@ -5,8 +5,11 @@ from typing import List, Dict, Tuple
 
 from utils import check_if_token_belongs
 from train.train_segment_classifier import SegmentClassifier, MajorityClassifier, KEEP, MAJORITY_STR
-from transformers import AutoModelForSequenceClassification, AutoTokenizer, TextClassificationPipeline
+from transformers import AutoModelForSequenceClassification, AutoModelForAudioClassification, \
+    AutoTokenizer, AutoFeatureExtractor, TextClassificationPipeline, AudioClassificationPipeline
 import numpy as np
+import librosa
+
 
 class TransformersClassifier(SegmentClassifier):
 
@@ -30,6 +33,25 @@ class TransformersClassifier(SegmentClassifier):
         raise NotImplementedError
 
 
+class TransformersAudioClassifier:
+    def __init__(self, model_folder_path: str, checkpoint: str):
+        # TODO fixme so that the tokenizer is saved during training, that way it can be loaded later
+        self.feature_extractor = AutoFeatureExtractor.from_pretrained(model_folder_path + "_extractor")
+        self.model = AutoModelForAudioClassification.from_pretrained(model_folder_path +
+                                                                        "_models/checkpoint-" + checkpoint,
+                                                                        local_files_only=True)
+        self.pipeline = AudioClassificationPipeline(model=self.model, feature_extractor=self.feature_extractor)
+
+    def classify_segment(self, wav_file: str, duration: float, offset: float):
+        raw_audio, _ = librosa.load(wav_file, sr=16000, offset=offset,
+                                    duration=duration)
+
+        prediction = self.pipeline(raw_audio)
+        label = int(prediction[0]["label"].split("_")[1])
+
+        return label
+
+
 def get_segmentation_from_yaml(yaml_fp) -> Dict[str, List[Dict]]:
     organized_segments: Dict[str, List[Dict]] = {}
 
@@ -47,7 +69,7 @@ def get_segmentation_from_yaml(yaml_fp) -> Dict[str, List[Dict]]:
 
 
 def filter_segments(organized_segments: Dict[str, List[Dict]], tokens_belonging_to_segmentation: Dict[str, List[List[str]]],
-                    segment_classifier: str) -> Dict[str, List[Dict]]:
+                    segment_classifier: str, wav_folder: str = "../../data_preparation/audios_16khz_mono/") -> Dict[str, List[Dict]]:
 
     if segment_classifier == MAJORITY_STR:
         segment_classifier = MajorityClassifier()
@@ -56,9 +78,15 @@ def filter_segments(organized_segments: Dict[str, List[Dict]], tokens_belonging_
         path = fields[1]
         checkpoint = fields[2]
         segment_classifier = TransformersClassifier(model_folder_path=path, checkpoint=checkpoint)
+    elif segment_classifier.startswith("audio-transformers:"):
+        fields = segment_classifier.split(":")
+        path = fields[1]
+        checkpoint = fields[2]
+        segment_classifier = TransformersAudioClassifier(model_folder_path=path, checkpoint=checkpoint)
+
     else:
         with open(segment_classifier, "rb") as fil:
-            segment_classifier: SegmentClassifier = pickle.load(fil)
+            segment_classifier = pickle.load(fil)
 
     for vid in list(organized_segments.keys()):
         segments = organized_segments[vid]
@@ -67,7 +95,13 @@ def filter_segments(organized_segments: Dict[str, List[Dict]], tokens_belonging_
         assert len(segments) == len(tokens)
         for segment, tokens in zip(segments, tokens):
             sentence = " ".join(tokens)
-            predict = segment_classifier.classify_segment(segment=sentence).flatten()[0]
+            if isinstance(segment_classifier, TransformersAudioClassifier):
+                wav_file = wav_folder + "/" + segment["wav"].split("_")[0] + ".wav"
+
+                predict = segment_classifier.classify_segment(wav_file=wav_file, duration=segment["duration"],
+                                                              offset=segment["offset"])
+            else:
+                predict = segment_classifier.classify_segment(segment=sentence).flatten()[0]
             if predict == KEEP:
                 new_segments.append(segment)
         organized_segments[vid] = new_segments

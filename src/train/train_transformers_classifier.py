@@ -12,6 +12,7 @@ import evaluate
 import argparse
 import librosa
 
+
 @dataclass
 class TrainingArgs:
     learning_rate: float = field(default=5e-5)
@@ -293,6 +294,9 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
 
     if model_type == "text":
         classifier_tknzr.save_pretrained(output_dir_name + "_tokenizer")
+    else:
+        audio_feature_extractor.save_pretrained(output_dir_name + "_extractor")
+
     print("Finished preparing training")
     trainer.train()
 
