@@ -15,7 +15,7 @@ do
    --train_files "$train_files" --eval_files "$dev_files" --output_dir_name audio_classifier_$num_spans \
    --generate_train_datasets_from_spans_folder $spans_train \
    --generate_eval_datasets_from_spans_folder $spans_dev \
-   --learning_rate 5e-5 \
+   --learning_rate 5e-6 \
    --per_device_train_batch_size 14 \
    --gradient_accumulation_steps 1 \
    --per_device_eval_batch_size 14 \

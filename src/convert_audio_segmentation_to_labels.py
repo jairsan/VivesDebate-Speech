@@ -69,7 +69,7 @@ def get_segmentation_from_yaml(yaml_fp) -> Dict[str, List[Dict]]:
 
 
 def filter_segments(organized_segments: Dict[str, List[Dict]], tokens_belonging_to_segmentation: Dict[str, List[List[str]]],
-                    segment_classifier: str, wav_folder: str = "../../data_preparation/audios_16khz_mono/") -> Dict[str, List[Dict]]:
+                    segment_classifier: str, wav_folder: str = "../../../data_preparation/audios_16khz_mono/") -> Dict[str, List[Dict]]:
 
     if segment_classifier == MAJORITY_STR:
         segment_classifier = MajorityClassifier()
