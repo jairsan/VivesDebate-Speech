@@ -23,7 +23,7 @@ class TrainingArgs:
     wav_folder: Optional[str] = field(default=None)
     warmup_ratio: float = field(default=0.1)
     lr_scheduler: SchedulerType = field(default=SchedulerType.LINEAR)
-    use_fp16: bool = field(default=False)
+    fp16: bool = field(default=False)
 
 
 class SegmentsDataset(torch.utils.data.Dataset):
@@ -281,7 +281,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
         per_device_eval_batch_size=training_args.per_device_eval_batch_size,  # batch size for evaluation
         warmup_ratio=training_args.warmup_ratio,  # number of warmup steps for learning rate scheduler
         lr_scheduler_type=training_args.lr_scheduler,
-        fp16=training_args.use_fp16,
+        fp16=training_args.fp16,
         weight_decay=0.01,  # strength of weight decay
         logging_steps=10,
         do_eval=True,
