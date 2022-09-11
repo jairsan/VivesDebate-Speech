@@ -11,6 +11,9 @@ do
   spans_train=../SHAS-multi/spans/train.maxlen$num_spans/
   spans_dev=../SHAS-multi/spans/dev.maxlen$num_spans/
 
+  output_dir=audio_classifier_$num_spans
+  rm -r $output_dir
+
   python3 ../../../src/train/train_transformers_classifier.py  --model_type audio --wav_folder $WAV_FOLDER --model_name facebook/wav2vec2-xls-r-300m \
    --train_files "$train_files" --eval_files "$dev_files" --output_dir_name audio_classifier_$num_spans \
    --generate_train_datasets_from_spans_folder $spans_train \
@@ -19,6 +22,8 @@ do
    --per_device_train_batch_size 14 \
    --gradient_accumulation_steps 20 \
    --per_device_eval_batch_size 14 \
-   --num_train_epochs 16
+   --num_train_epochs 16 \
+   --lr_scheduler "cosine" \
+   --warmup_steps 50
 
  done

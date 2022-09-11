@@ -7,7 +7,7 @@ import torch
 from train_segment_classifier import generate_dataset, KEEP, DISCARD
 from transformers import Pipeline, AutoTokenizer, AutoFeatureExtractor, AutoModelForTokenClassification,\
     AutoModelForSequenceClassification, AutoModelForAudioClassification, \
-    TokenClassificationPipeline, Trainer, TrainingArguments, HfArgumentParser
+    TokenClassificationPipeline, Trainer, TrainingArguments, HfArgumentParser, SchedulerType
 import evaluate
 import argparse
 import librosa
@@ -21,6 +21,8 @@ class TrainingArgs:
     per_device_eval_batch_size: int = field(default=16)
     num_train_epochs: int = field(default=3)
     wav_folder: Optional[str] = field(default=None)
+    warmup_steps: int = field(default=100)
+    lr_scheduler: SchedulerType = field(default=SchedulerType.LINEAR)
 
 
 class SegmentsDataset(torch.utils.data.Dataset):

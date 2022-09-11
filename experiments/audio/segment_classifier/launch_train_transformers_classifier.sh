@@ -17,8 +17,11 @@ do
   spans_train=../SHAS-multi/spans/train.maxlen$num_spans/
   spans_dev=../SHAS-multi/spans/dev.maxlen$num_spans/
 
+  output_dir=BERTa_spans$num_spans
+  rm -r $output_dir
+
   python3 ../../../src/train/train_transformers_classifier.py  --model_name PlanTL-GOB-ES/roberta-base-ca \
-   --train_files "$train_files" --eval_files "$dev_files" --output_dir_name BERTa_spans$num_spans \
+   --train_files "$train_files" --eval_files "$dev_files" --output_dir_name $output_dir \
    --generate_train_datasets_from_spans_folder $spans_train \
    --generate_eval_datasets_from_spans_folder $spans_dev \
    --learning_rate 5e-5 \
