@@ -21,7 +21,7 @@ class TrainingArgs:
     per_device_eval_batch_size: int = field(default=16)
     num_train_epochs: int = field(default=3)
     wav_folder: Optional[str] = field(default=None)
-    warmup_steps: int = field(default=100)
+    warmup_ratio: float = field(default=0.1)
     lr_scheduler: SchedulerType = field(default=SchedulerType.LINEAR)
 
 
@@ -278,7 +278,8 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
         per_device_train_batch_size=training_args.per_device_train_batch_size,  # batch size per device during training
         gradient_accumulation_steps=training_args.gradient_accumulation_steps,
         per_device_eval_batch_size=training_args.per_device_eval_batch_size,  # batch size for evaluation
-        warmup_steps=250,  # number of warmup steps for learning rate scheduler
+        warmup_ratio=training_args.warmup_ratio,  # number of warmup steps for learning rate scheduler
+        lr_scheduler_type=training_args.lr_scheduler,
         weight_decay=0.01,  # strength of weight decay
         logging_steps=10,
         do_eval=True,
