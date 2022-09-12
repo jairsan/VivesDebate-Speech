@@ -18,7 +18,7 @@ do
   spans_dev=../SHAS-multi/spans/dev.maxlen$num_spans/
 
   output_dir=BERTa_spans$num_spans
-  rm -r $output_dir
+  rm -r "$output_dir"_models "$output_dir"_tokenizer
 
   python3 ../../../src/train/train_transformers_classifier.py  --model_name PlanTL-GOB-ES/roberta-base-ca \
    --train_files "$train_files" --eval_files "$dev_files" --output_dir_name $output_dir \

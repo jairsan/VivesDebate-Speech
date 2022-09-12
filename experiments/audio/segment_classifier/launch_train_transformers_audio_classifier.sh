@@ -3,27 +3,32 @@ dev_files="../../../data_preparation/DATA/BIO_arg_timestamps/Debate24.txt ../../
 WAV_FOLDER=/scratch/jiranzotmp/trabajo/ICASSP2023_argumentation/data_preparation/audios_16khz_mono/
 
 
-
+set -x
 #for num_spans in 5 10;
-for num_spans in 5;
+for lr in 1e-5 5e-6;
 do
-  #With spans datasets
-  spans_train=../SHAS-multi/spans/train.maxlen$num_spans/
-  spans_dev=../SHAS-multi/spans/dev.maxlen$num_spans/
+    for num_spans in 5;
+    do
+      #With spans datasets
+      spans_train=../SHAS-multi/spans/train.maxlen$num_spans/
+      spans_dev=../SHAS-multi/spans/dev.maxlen$num_spans/
 
-  output_dir=audio_classifier_$num_spans
-  rm -r $output_dir
+      output_dir=audio_classifier_"$num_spans"_lr$lr
 
-  python3 ../../../src/train/train_transformers_classifier.py  --model_type audio --wav_folder $WAV_FOLDER --model_name facebook/wav2vec2-xls-r-300m \
-   --train_files "$train_files" --eval_files "$dev_files" --output_dir_name audio_classifier_$num_spans \
-   --generate_train_datasets_from_spans_folder $spans_train \
-   --generate_eval_datasets_from_spans_folder $spans_dev \
-   --learning_rate 2.5e-4 \
-   --per_device_train_batch_size 14 \
-   --gradient_accumulation_steps 20 \
-   --per_device_eval_batch_size 14 \
-   --num_train_epochs 16 \
-   --lr_scheduler "cosine" \
-   --warmup_steps 50
+      rm -r "$output_dir"_models "$output_dir"_extractor
 
- done
+      python3 ../../../src/train/train_transformers_classifier.py  --model_type audio --wav_folder $WAV_FOLDER --model_name facebook/wav2vec2-xls-r-300m \
+       --train_files "$train_files" --eval_files "$dev_files" --output_dir_name $output_dir \
+       --generate_train_datasets_from_spans_folder $spans_train \
+       --generate_eval_datasets_from_spans_folder $spans_dev \
+       --learning_rate $lr \
+       --per_device_train_batch_size 14 \
+       --gradient_accumulation_steps 20 \
+       --per_device_eval_batch_size 14 \
+       --num_train_epochs 24 \
+       --lr_scheduler "cosine" \
+       --warmup_ratio 0.15 \
+       --fp16 true
+
+     done
+done
