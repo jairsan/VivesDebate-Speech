@@ -2,7 +2,7 @@ from typing import List, Dict
 from dataclasses import dataclass
 import yaml
 import sys
-
+import os
 
 # Duplicate
 @dataclass
@@ -12,7 +12,10 @@ class Word:
     token: str
 
 
-def convert_spans_to_segmentations(spans_files: List[str], timestamps_folder: str, output_yaml_file: str):
+def convert_spans_to_segmentations(spans_files: List[str], timestamps_folder: str, output_yaml_file: str,
+                                   wav_folder: str = "../../../data_preparation/audios_16khz_mono_trim/"):
+    dirpath, dirname, filenames = os.walk(wav_folder)
+    print(filenames)
     output_segments: List[Dict] = []
     for span_file_fp in spans_files:
         debate_name = span_file_fp.split("/")[-1].split(".")[0]
