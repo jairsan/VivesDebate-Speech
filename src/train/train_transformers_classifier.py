@@ -24,6 +24,7 @@ class TrainingArgs:
     warmup_ratio: float = field(default=0.1)
     lr_scheduler: SchedulerType = field(default=SchedulerType.LINEAR)
     fp16: bool = field(default=False)
+    gradient_checkpointing: bool = field(default=False)
 
 
 class SegmentsDataset(torch.utils.data.Dataset):
@@ -271,7 +272,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
         predictions = np.argmax(logits, axis=-1)
         return {"f1": f1.compute(predictions=predictions, references=labels), "acc": acc.compute(predictions=predictions, references=labels)}
 
-    training_args = TrainingArguments(
+    hf_trainer_training_args = TrainingArguments(
         output_dir=output_dir_name + "_models",  # output directory
         overwrite_output_dir=True,
         num_train_epochs=training_args.num_train_epochs,  # total number of training epochs
@@ -282,6 +283,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
         warmup_ratio=training_args.warmup_ratio,  # number of warmup steps for learning rate scheduler
         lr_scheduler_type=training_args.lr_scheduler,
         fp16=training_args.fp16,
+        gradient_checkpointing=training_args.gradient_checkpointing,
         weight_decay=0.01,  # strength of weight decay
         logging_steps=10,
         do_eval=True,
@@ -291,7 +293,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
 
     trainer = Trainer(
         model=classifier_model,  # the instantiated 🤗 Transformers model to be trained
-        args=training_args,  # training arguments, defined above
+        args=hf_trainer_training_args,  # training arguments, defined above
         train_dataset=train_dataset,  # training dataset
         eval_dataset=eval_dataset,  # evaluation dataset
         compute_metrics=compute_metrics
@@ -303,6 +305,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
         audio_feature_extractor.save_pretrained(output_dir_name + "_extractor")
 
     print("Finished preparing training")
+    print("Training args:", training_args)
     trainer.train()
 
 
