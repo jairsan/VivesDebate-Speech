@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import List, Tuple, Optional
+from typing import List, Tuple, Optional, Any, Dict, Union
 import numpy as np
 
 import torch
@@ -12,6 +12,29 @@ import evaluate
 import argparse
 import librosa
 
+
+@dataclass
+class AudioDataCollator:
+    feature_extractor: Any
+    sample_max_len: int
+
+    def __call__(self, features: List[Dict]) -> Dict[str, torch.Tensor]:
+        # split inputs and labels since they have to be of different lenghts and need
+        # different padding methods
+        input_features = [{"input_values": feature["input_values"]} for feature in features]
+        label_features = [feature["labels"] for feature in features]
+
+        batch = self.feature_extractor.pad(
+            input_features,
+            return_tensors="pt",
+            max_length=self.sample_max_len,
+            truncation=True,
+            padding=True
+        )
+
+        batch["labels"] = torch.stack(label_features)
+
+        return batch
 
 @dataclass
 class TrainingArgs:
@@ -223,6 +246,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
 
         train_dataset = SegmentsDataset(encodings=train_encodings, labels=train_labels)
         eval_dataset = SegmentsDataset(encodings=eval_encodings, labels=eval_labels)
+        data_collator = None
     
     elif model_type == "audio":
         if generate_train_datasets_from_span_folder is None or generate_eval_datasets_from_span_folder is None:
@@ -242,6 +266,8 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
         dev_labels = [sample.label for sample in dev_samples]
 
         classifier_model = AutoModelForAudioClassification.from_pretrained(model_name)
+        classifier_model.freeze_feature_encoder()
+
         audio_feature_extractor = AutoFeatureExtractor.from_pretrained(model_name)
 
         def generate_encodings(samples: List[AudioSample], wav_folder: str):
@@ -254,7 +280,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
                                          duration=duration)
                 raw_audio_list.append(raw_audio)
             
-            encodings = audio_feature_extractor(raw_audio_list, padding="max_length", sampling_rate=16000, max_length=100000, truncation=True)
+            encodings = audio_feature_extractor(raw_audio_list, sampling_rate=16000)
             return encodings
 
         train_encodings = generate_encodings(samples=train_samples, wav_folder=training_args.wav_folder)
@@ -262,6 +288,9 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
 
         train_dataset = SegmentsDataset(encodings=train_encodings, labels=train_labels)
         eval_dataset = SegmentsDataset(encodings=dev_encodings, labels=dev_labels)
+
+        data_collator = AudioDataCollator(feature_extractor=audio_feature_extractor, sample_max_len=100000)
+
     else:
         raise Exception
 
@@ -284,7 +313,6 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
         lr_scheduler_type=training_args.lr_scheduler,
         fp16=training_args.fp16,
         gradient_checkpointing=training_args.gradient_checkpointing,
-        weight_decay=0.01,  # strength of weight decay
         logging_steps=10,
         do_eval=True,
         evaluation_strategy="epoch",
@@ -296,7 +324,8 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
         args=hf_trainer_training_args,  # training arguments, defined above
         train_dataset=train_dataset,  # training dataset
         eval_dataset=eval_dataset,  # evaluation dataset
-        compute_metrics=compute_metrics
+        compute_metrics=compute_metrics,
+        data_collator=data_collator
     )
 
     if model_type == "text":
