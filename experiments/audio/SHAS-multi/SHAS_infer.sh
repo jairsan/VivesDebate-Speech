@@ -3,7 +3,8 @@ AUDIO_LOC=/scratch/jiranzotmp/trabajo/ICASSP2023_argumentation/data_preparation/
 SHAS_ROOT=/scratch/jiranzotmp/trabajo/ICASSP2023_argumentation/software/SHAS
 out_folder=$PWD/infer/
 
-for set in dev test;
+#for set in dev test;
+for set in train;
 do
 
     path_to_wavs=$AUDIO_LOC/$set/

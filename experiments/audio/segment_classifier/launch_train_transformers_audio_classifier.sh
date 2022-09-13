@@ -2,10 +2,8 @@ train_files="../../../data_preparation/DATA/BIO_arg_timestamps/Debate1.txt ../..
 dev_files="../../../data_preparation/DATA/BIO_arg_timestamps/Debate24.txt ../../../data_preparation/DATA/BIO_arg_timestamps/Debate25.txt ../../../data_preparation/DATA/BIO_arg_timestamps/Debate26.txt"
 WAV_FOLDER=/scratch/jiranzotmp/trabajo/ICASSP2023_argumentation/data_preparation/audios_16khz_mono/
 
-
-set -x
 #for num_spans in 5 10;
-for lr in 1e-5 5e-6;
+for lr in 2.5e-4 1e-5 5e-6;
 do
     for num_spans in 5;
     do
@@ -23,7 +21,7 @@ do
        --generate_eval_datasets_from_spans_folder $spans_dev \
        --learning_rate $lr \
        --per_device_train_batch_size 14 \
-       --gradient_accumulation_steps 20 \
+       --gradient_accumulation_steps 40 \
        --per_device_eval_batch_size 14 \
        --num_train_epochs 24 \
        --lr_scheduler "cosine" \

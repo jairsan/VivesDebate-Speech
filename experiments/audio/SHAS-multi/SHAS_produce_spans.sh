@@ -1,7 +1,7 @@
-#TIMESTAMPS_FOLDER=/scratch/jiranzotmp/trabajo/ICASSP2023_argumentation/data_preparation/DATA/BIO_arg_timestamps/
 TIMESTAMPS_FOLDER=../../../data_preparation/DATA/BIO_arg_timestamps/
 
-for set in dev test;
+#for set in dev test;
+for set in train;
 do
 
     for maxlen in 5 10 20 30;
