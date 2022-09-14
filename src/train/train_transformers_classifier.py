@@ -246,7 +246,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
                                                                     span_folder=generate_eval_datasets_from_span_folder)
             joint_samples_labels = zip(eval_samples, eval_labels)
             filterd_samples_labels = [x for x in joint_samples_labels if
-                                      len(x[0].strip().split()) > training_args.min_sample_len]
+                                      len(x[0].strip().split()) >= training_args.min_sample_len]
             print(f"Filtered {len(eval_samples) - len(filterd_samples_labels)} due to "
                   f"min sample len {training_args.min_sample_len}")
             eval_samples = [x[0] for x in filterd_samples_labels]
