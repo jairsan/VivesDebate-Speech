@@ -29,7 +29,7 @@ class AudioDataCollator:
             return_tensors="pt",
             max_length=self.sample_max_len,
             truncation=True,
-            padding=True
+            padding=True #max_length
         )
 
         batch["labels"] = torch.stack(label_features)
@@ -45,9 +45,10 @@ class TrainingArgs:
     num_train_epochs: int = field(default=3)
     wav_folder: Optional[str] = field(default=None)
     warmup_ratio: float = field(default=0.1)
-    lr_scheduler: SchedulerType = field(default=SchedulerType.LINEAR)
+    lr_scheduler: str = field(default="linear")
     fp16: bool = field(default=False)
     gradient_checkpointing: bool = field(default=False)
+    min_sample_len: int = field(default=0)  #if text, taken as nr of words, if audio, take as number of points
 
 
 class SegmentsDataset(torch.utils.data.Dataset):
@@ -228,13 +229,29 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
             print("Generating train dataset from spans...")
             train_samples, train_labels = generate_dataset_from_spans(document_name_list=train_files,
                                                                       span_folder=generate_train_datasets_from_span_folder)
+
+            if training_args.min_sample_len > 0:
+                joint_samples_labels = zip(train_samples, train_labels)
+                filterd_samples_labels = [x for x in joint_samples_labels if len(x[0].strip().split()) > training_args.min_sample_len]
+                print(f"Filtered {len(train_samples) - len(filterd_samples_labels)} due to "
+                      f"min sample len {training_args.min_sample_len}")
+                train_samples = [x[0] for x in filterd_samples_labels]
+                train_labels = [x[1] for x in filterd_samples_labels]
+
         else:
             train_samples, train_labels = generate_and_punct_split_dataset(train_files, pip=pipeline)
-
         if generate_eval_datasets_from_span_folder is not None:
             print("Generating dev dataset from spans...")
             eval_samples, eval_labels = generate_dataset_from_spans(document_name_list=eval_files,
                                                                     span_folder=generate_eval_datasets_from_span_folder)
+            joint_samples_labels = zip(eval_samples, eval_labels)
+            filterd_samples_labels = [x for x in joint_samples_labels if
+                                      len(x[0].strip().split()) > training_args.min_sample_len]
+            print(f"Filtered {len(eval_samples) - len(filterd_samples_labels)} due to "
+                  f"min sample len {training_args.min_sample_len}")
+            eval_samples = [x[0] for x in filterd_samples_labels]
+            eval_labels = [x[1] for x in filterd_samples_labels]
+
         else:
             eval_samples, eval_labels = generate_and_punct_split_dataset(eval_files, pip=pipeline)
 
