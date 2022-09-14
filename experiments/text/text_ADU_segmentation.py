@@ -315,8 +315,8 @@ def train_model(model, tokenizer, data):
         save_total_limit=3,
         learning_rate=1e-5,
         weight_decay=0.01,
-        per_device_train_batch_size=256,
-        per_device_eval_batch_size=256,
+        per_device_train_batch_size=128,
+        per_device_eval_batch_size=128,
         num_train_epochs=50,
         load_best_model_at_end=True
     )
