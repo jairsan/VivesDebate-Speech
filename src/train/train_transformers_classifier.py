@@ -48,7 +48,7 @@ class TrainingArgs:
     lr_scheduler: str = field(default="linear")
     fp16: bool = field(default=False)
     gradient_checkpointing: bool = field(default=False)
-    min_sample_len: int = field(default=0)  #if text, taken as nr of words, if audio, take as number of points
+    min_sample_len: float = field(default=0.0)  # if text, taken as nr of words, if audio, take as number of seconds
 
 
 class SegmentsDataset(torch.utils.data.Dataset):
@@ -276,10 +276,24 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
 
         train_samples = generate_audio_samples(document_name_list=train_files,
                                                span_folder=generate_train_datasets_from_span_folder)
+        if training_args.min_sample_len > 0:
+            train_samples_f = [x for x in train_samples if (x.words[-1].end - x.words[0].start)
+                             >= training_args.min_sample_len]
+            print(f"Filtered {len(train_samples) - len(train_samples_f)} due to "
+                  f"min sample len {training_args.min_sample_len}")
+            train_samples = train_samples_f
+
         train_labels = [sample.label for sample in train_samples]
 
         dev_samples = generate_audio_samples(document_name_list=eval_files,
                                              span_folder=generate_eval_datasets_from_span_folder)
+
+        dev_samples_f = [x for x in dev_samples if (x.words[-1].end - x.words[0].start)
+                           >= training_args.min_sample_len]
+        print(f"Filtered {len(dev_samples) - len(dev_samples_f)} due to "
+              f"min sample len {training_args.min_sample_len}")
+        dev_samples = dev_samples_f
+
         dev_labels = [sample.label for sample in dev_samples]
 
         classifier_model = AutoModelForAudioClassification.from_pretrained(model_name)
