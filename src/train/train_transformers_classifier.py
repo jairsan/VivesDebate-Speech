@@ -68,7 +68,7 @@ class SegmentsDataset(torch.utils.data.Dataset):
 
     def summary(self) -> str:
         count_i = self.labels.count(KEEP)
-        return f"Dataset with {count_i /len(self.labels)} samples "
+        return f"   -Dataset with {count_i /len(self.labels)} % of positive samples "
 
 def generate_and_punct_split_dataset(document_name_list, pip: Pipeline) -> Tuple[List[str], List[int]]:
     samples, labels = generate_dataset(document_name_list=document_name_list)
