@@ -1,21 +1,17 @@
 #TIMESTAMPS_FOLDER=/scratch/jiranzotmp/trabajo/ICASSP2023_argumentation/data_preparation/DATA/BIO_arg_timestamps/
 TIMESTAMPS_FOLDER=../../../data_preparation/DATA/BIO_arg_timestamps/
 out_folder=$PWD/infer/
-
 #for set in dev test;
 for set in dev;
 do
 
-    for maxlen in 5 10 20;
-    #for maxlen in 20;
-    do
-        out_path=$out_folder/$set.maxlen"$maxlen"/
+        out_path=$out_folder/$set/
         path_to_custom_segmentation_yaml=$out_path/segmentation.yaml
-        classifier=transformers:../segment_classifier/BERTa_table:945
-        python3 ../../../src/convert_audio_segmentation_to_labels.py --segment_classifier $classifier --yaml_file $path_to_custom_segmentation_yaml --timestamps_folder $TIMESTAMPS_FOLDER --output_folder $out_path
 
+        classifier=audio_classifier_table:170
+
+        python3 ../../../src/convert_audio_segmentation_to_labels.py --segment_classifier audio-transformers:../segment_classifier/$classifier --yaml_file $path_to_custom_segmentation_yaml --timestamps_folder $TIMESTAMPS_FOLDER --output_folder $out_path
         echo "##########"
-        echo "maxlen$maxlen"
         if [[ $set == "dev" ]];
         then
             python3 ../../../src/eval/eval.py --convert_to_bio --hypotheses_files $out_path/Debate24.labels $out_path/Debate25.labels $out_path/Debate26.labels --reference_files ../../../data_preparation/DATA/BIO_arg_timestamps/Debate24.txt ../../../data_preparation/DATA/BIO_arg_timestamps/Debate25.txt ../../../data_preparation/DATA/BIO_arg_timestamps/Debate26.txt
@@ -25,5 +21,4 @@ do
         echo "##########"
 
         done
-    done
 

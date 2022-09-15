@@ -12,7 +12,7 @@ do
         out_path=$out_folder/$set.maxlen"$maxlen"/
         path_to_custom_segmentation_yaml=$out_path/segmentation.yaml
 
-        classifier=audio_classifier_5:560
+        classifier=audio_classifier_table:170
 
         python3 ../../../src/convert_audio_segmentation_to_labels.py --segment_classifier audio-transformers:../segment_classifier/$classifier --yaml_file $path_to_custom_segmentation_yaml --timestamps_folder $TIMESTAMPS_FOLDER --output_folder $out_path
 

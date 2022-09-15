@@ -22,6 +22,7 @@ def convert_spans_to_segmentations(spans_files: List[str], timestamps_folder: st
         with_s = [x for x in wavlist if x.startswith(debate_name + "_")]
         assert len(with_s) == 1
         debate_name_full = ".".join(with_s[0].split(".")[:-1])
+        debate_start = float(debate_name_full.split("_")[1])
 
         current_segment: List[Word] = []
         with open(span_file_fp) as span_file, open(timestamps_folder + "/" + debate_name + ".txt") as timestamps_file:
@@ -36,7 +37,7 @@ def convert_spans_to_segmentations(spans_files: List[str], timestamps_folder: st
                 if span_label == "B":
                     if len(current_segment) > 0:
                         line = {"duration": current_segment[-1].end - current_segment[0].start,
-                                "offset": current_segment[0].start, "rW": 0, "speaker_id": "NA",
+                                "offset": current_segment[0].start - debate_start, "rW": 0, "speaker_id": "NA",
                                 "uW": 0, "wav": debate_name_full + ".wav"}
                         output_segments.append(line)
                         current_segment = []
@@ -44,7 +45,7 @@ def convert_spans_to_segmentations(spans_files: List[str], timestamps_folder: st
                                             token=timestamp_fields[0]))
             if len(current_segment) > 0:
                 line = {"duration": current_segment[-1].end - current_segment[0].start,
-                        "offset": current_segment[0].start, "rW": 0, "speaker_id": "NA",
+                        "offset": current_segment[0].start - debate_start, "rW": 0, "speaker_id": "NA",
                         "uW": 0, "wav": debate_name_full + ".wav"}
                 output_segments.append(line)
 
