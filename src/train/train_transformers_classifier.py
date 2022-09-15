@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import List, Tuple, Optional, Any, Dict, Union
+from typing import List, Tuple, Optional, Any, Dict
 import numpy as np
 
 import torch
@@ -7,7 +7,7 @@ import torch
 from train_segment_classifier import generate_dataset, KEEP, DISCARD
 from transformers import Pipeline, AutoTokenizer, AutoFeatureExtractor, AutoModelForTokenClassification,\
     AutoModelForSequenceClassification, AutoModelForAudioClassification, \
-    TokenClassificationPipeline, Trainer, TrainingArguments, HfArgumentParser, SchedulerType
+    TokenClassificationPipeline, Trainer, TrainingArguments, HfArgumentParser
 import evaluate
 import argparse
 import librosa
@@ -35,6 +35,7 @@ class AudioDataCollator:
         batch["labels"] = torch.stack(label_features)
 
         return batch
+
 
 @dataclass
 class TrainingArgs:
@@ -225,6 +226,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
     pipeline = TokenClassificationPipeline(model=punct_model, tokenizer=punct_tokenizer)
 
     if model_type == "text":
+        # TODO deduplicate this code
         if generate_train_datasets_from_span_folder is not None:
             print("Generating train dataset from spans...")
             train_samples, train_labels = generate_dataset_from_spans(document_name_list=train_files,
@@ -233,7 +235,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
             if training_args.min_sample_len > 0:
                 joint_samples_labels = zip(train_samples, train_labels)
                 filterd_samples_labels = [x for x in joint_samples_labels if len(x[0].strip().split()) > training_args.min_sample_len]
-                print(f"Filtered {len(train_samples) - len(filterd_samples_labels)} due to "
+                print(f"Filtered {len(train_samples) - len(filterd_samples_labels)} train samples due to "
                       f"min sample len {training_args.min_sample_len}")
                 train_samples = [x[0] for x in filterd_samples_labels]
                 train_labels = [x[1] for x in filterd_samples_labels]
@@ -247,7 +249,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
             joint_samples_labels = zip(eval_samples, eval_labels)
             filterd_samples_labels = [x for x in joint_samples_labels if
                                       len(x[0].strip().split()) >= training_args.min_sample_len]
-            print(f"Filtered {len(eval_samples) - len(filterd_samples_labels)} due to "
+            print(f"Filtered {len(eval_samples) - len(filterd_samples_labels)} eval samples due to "
                   f"min sample len {training_args.min_sample_len}")
             eval_samples = [x[0] for x in filterd_samples_labels]
             eval_labels = [x[1] for x in filterd_samples_labels]
@@ -276,10 +278,11 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
 
         train_samples = generate_audio_samples(document_name_list=train_files,
                                                span_folder=generate_train_datasets_from_span_folder)
+        # TODO deduplicate this code
         if training_args.min_sample_len > 0:
             train_samples_f = [x for x in train_samples if (x.words[-1].end - x.words[0].start)
                              >= training_args.min_sample_len]
-            print(f"Filtered {len(train_samples) - len(train_samples_f)} due to "
+            print(f"Filtered {len(train_samples) - len(train_samples_f)} train samplesdue to "
                   f"min sample len {training_args.min_sample_len}")
             train_samples = train_samples_f
 
@@ -290,7 +293,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
 
         dev_samples_f = [x for x in dev_samples if (x.words[-1].end - x.words[0].start)
                            >= training_args.min_sample_len]
-        print(f"Filtered {len(dev_samples) - len(dev_samples_f)} due to "
+        print(f"Filtered {len(dev_samples) - len(dev_samples_f)} dev samples due to "
               f"min sample len {training_args.min_sample_len}")
         dev_samples = dev_samples_f
 
