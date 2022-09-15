@@ -50,6 +50,7 @@ class TrainingArgs:
     fp16: bool = field(default=False)
     gradient_checkpointing: bool = field(default=False)
     min_sample_len: float = field(default=0.0)  # if text, taken as nr of words, if audio, take as number of seconds
+    seed: int = field(default=42)
 
 
 class SegmentsDataset(torch.utils.data.Dataset):
@@ -65,6 +66,9 @@ class SegmentsDataset(torch.utils.data.Dataset):
     def __len__(self):
         return len(self.labels)
 
+    def summary(self) -> str:
+        count_i = self.labels.count(KEEP)
+        return f"Dataset with {count_i /len(self.labels)} samples "
 
 def generate_and_punct_split_dataset(document_name_list, pip: Pipeline) -> Tuple[List[str], List[int]]:
     samples, labels = generate_dataset(document_name_list=document_name_list)
@@ -349,6 +353,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
         gradient_checkpointing=training_args.gradient_checkpointing,
         logging_steps=10,
         do_eval=True,
+        seed=training_args.seed,
         evaluation_strategy="epoch",
         save_strategy="epoch"
     )
@@ -368,6 +373,10 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
         audio_feature_extractor.save_pretrained(output_dir_name + "_extractor")
 
     print("Finished preparing training")
+    print("Train dataset stats:")
+    print(train_dataset.summary())
+    print("Dev dataset stats:")
+    print(eval_dataset.summary())
     print("Training args:", training_args)
     trainer.train()
 
