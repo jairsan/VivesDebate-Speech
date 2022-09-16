@@ -105,7 +105,7 @@ def filter_segments(organized_segments: Dict[str, List[Dict]], tokens_belonging_
         organized_segments[vid] = new_segments
 
     end_num_segments = sum([len(organized_segments[x]) for x in list(organized_segments.keys())])
-    print(f"After segment classifier, {end_num_segments - init_num_segments} out of {init_num_segments} "
+    print(f"After segment classifier, {init_num_segments - end_num_segments} out of {init_num_segments} "
           f"segments were filtered out")
     return organized_segments
 
