@@ -1,0 +1,3 @@
+[submodule "software/SHAS"]
+	path = software/SHAS
+	url = https://github.com/jairsan/SHAS.git
