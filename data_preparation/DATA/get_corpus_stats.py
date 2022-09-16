@@ -22,7 +22,7 @@ def compute_stats_for_set(set_ids: List[int], timestamps_folder: str) -> str:
     total_length = sum([x.length for x in debates_stats])
     total_tokens = sum([x.num_words for x in debates_stats])
 
-    return f"{num_debates} & {total_length} & {total_tokens} \\"
+    return f"{num_debates} & {(total_length/3600):.1f} & {total_tokens} \\\\"
 
 
 def stats():
