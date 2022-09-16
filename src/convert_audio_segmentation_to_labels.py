@@ -68,7 +68,6 @@ def get_segmentation_from_yaml(yaml_fp) -> Dict[str, List[Dict]]:
 
 def filter_segments(organized_segments: Dict[str, List[Dict]], tokens_belonging_to_segmentation: Dict[str, List[List[str]]],
                     segment_classifier: str, device: int, wav_folder: str = "../../../data_preparation/audios_16khz_mono/") -> Dict[str, List[Dict]]:
-    init_num_segments = sum([len(organized_segments[x]) for x in list(organized_segments.keys())])
     if segment_classifier == MAJORITY_STR:
         segment_classifier = MajorityClassifier()
     elif segment_classifier.startswith("transformers:"):
@@ -104,9 +103,7 @@ def filter_segments(organized_segments: Dict[str, List[Dict]], tokens_belonging_
                 new_segments.append(segment)
         organized_segments[vid] = new_segments
 
-    end_num_segments = sum([len(organized_segments[x]) for x in list(organized_segments.keys())])
-    print(f"After segment classifier, {init_num_segments - end_num_segments} out of {init_num_segments} "
-          f"segments were filtered out")
+
     return organized_segments
 
 
@@ -226,6 +223,8 @@ def get_tokens_belonging_to_segmentation(organized_segments: Dict[str, List[Dict
 
 def convert_segmentation_to_labels(yaml_fp, timestamps_folder, out_folder, segment_classifier,device):
     organized_segments = get_segmentation_from_yaml(yaml_fp=yaml_fp)
+    init_num_segments = sum([len(organized_segments[x]) for x in list(organized_segments.keys())])
+
     tokens_belonging_to_seg, _, oracle_labels = get_tokens_belonging_to_segmentation(organized_segments=organized_segments,
                                                                    timestamps_folder=timestamps_folder)
 
@@ -237,6 +236,9 @@ def convert_segmentation_to_labels(yaml_fp, timestamps_folder, out_folder, segme
         filtered_segments = filter_segments_oracle(organized_segments=organized_segments,
                                                    reference_labels=oracle_labels)
 
+    end_num_segments = sum([len(filtered_segments[x]) for x in list(filtered_segments.keys())])
+    print(f"After segment classifier, {init_num_segments - end_num_segments} out of {init_num_segments} "
+          f"segments were filtered out")
     _, labels_dict, _ = get_tokens_belonging_to_segmentation(organized_segments=filtered_segments,
                                                                             timestamps_folder=timestamps_folder)
     for filename_raw in list(labels_dict.keys()):
