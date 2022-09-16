@@ -13,13 +13,13 @@ import librosa
 
 class TransformersClassifier(SegmentClassifier):
 
-    def __init__(self, model_folder_path: str, checkpoint: str):
+    def __init__(self, model_folder_path: str, checkpoint: str, device: int):
         # TODO fixme so that the tokenizer is saved during training, that way it can be loaded later
         self.tokenizer = AutoTokenizer.from_pretrained(model_folder_path + "_tokenizer")
         self.model = AutoModelForSequenceClassification.from_pretrained(model_folder_path +
                                                                         "_models/checkpoint-" + checkpoint,
                                                                         local_files_only=True)
-        self.pipeline = TextClassificationPipeline(model=self.model, tokenizer=self.tokenizer)
+        self.pipeline = TextClassificationPipeline(model=self.model, tokenizer=self.tokenizer, device=device)
 
     def classify_segment(self, segment: str):
         prediction = self.pipeline([segment])
@@ -34,13 +34,13 @@ class TransformersClassifier(SegmentClassifier):
 
 
 class TransformersAudioClassifier:
-    def __init__(self, model_folder_path: str, checkpoint: str):
+    def __init__(self, model_folder_path: str, checkpoint: str, device: int):
         # TODO fixme so that the tokenizer is saved during training, that way it can be loaded later
         self.feature_extractor = AutoFeatureExtractor.from_pretrained(model_folder_path + "_extractor")
         self.model = AutoModelForAudioClassification.from_pretrained(model_folder_path +
                                                                         "_models/checkpoint-" + checkpoint,
                                                                         local_files_only=True)
-        self.pipeline = AudioClassificationPipeline(model=self.model, feature_extractor=self.feature_extractor)
+        self.pipeline = AudioClassificationPipeline(model=self.model, feature_extractor=self.feature_extractor, device=device)
 
     def classify_segment(self, wav_file: str, duration: float, offset: float):
         raw_audio, _ = librosa.load(wav_file, sr=16000, offset=offset,
@@ -69,7 +69,7 @@ def get_segmentation_from_yaml(yaml_fp) -> Dict[str, List[Dict]]:
 
 
 def filter_segments(organized_segments: Dict[str, List[Dict]], tokens_belonging_to_segmentation: Dict[str, List[List[str]]],
-                    segment_classifier: str, wav_folder: str = "../../../data_preparation/audios_16khz_mono/") -> Dict[str, List[Dict]]:
+                    segment_classifier: str, device: int, wav_folder: str = "../../../data_preparation/audios_16khz_mono/") -> Dict[str, List[Dict]]:
 
     if segment_classifier == MAJORITY_STR:
         segment_classifier = MajorityClassifier()
@@ -77,12 +77,12 @@ def filter_segments(organized_segments: Dict[str, List[Dict]], tokens_belonging_
         fields = segment_classifier.split(":")
         path = fields[1]
         checkpoint = fields[2]
-        segment_classifier = TransformersClassifier(model_folder_path=path, checkpoint=checkpoint)
+        segment_classifier = TransformersClassifier(model_folder_path=path, checkpoint=checkpoint, device=device)
     elif segment_classifier.startswith("audio-transformers:"):
         fields = segment_classifier.split(":")
         path = fields[1]
         checkpoint = fields[2]
-        segment_classifier = TransformersAudioClassifier(model_folder_path=path, checkpoint=checkpoint)
+        segment_classifier = TransformersAudioClassifier(model_folder_path=path, checkpoint=checkpoint, device=device)
 
     else:
         with open(segment_classifier, "rb") as fil:
@@ -223,14 +223,14 @@ def get_tokens_belonging_to_segmentation(organized_segments: Dict[str, List[Dict
     return tokens_paired_with_segments_per_wav_dict, labels, oracle_labels
 
 
-def convert_segmentation_to_labels(yaml_fp, timestamps_folder, out_folder, segment_classifier):
+def convert_segmentation_to_labels(yaml_fp, timestamps_folder, out_folder, segment_classifier,device):
     organized_segments = get_segmentation_from_yaml(yaml_fp=yaml_fp)
     tokens_belonging_to_seg, _, oracle_labels = get_tokens_belonging_to_segmentation(organized_segments=organized_segments,
                                                                    timestamps_folder=timestamps_folder)
 
     if not segment_classifier.startswith("oracle"):
         filtered_segments = filter_segments(organized_segments=organized_segments, segment_classifier=segment_classifier,
-                                        tokens_belonging_to_segmentation=tokens_belonging_to_seg)
+                                        tokens_belonging_to_segmentation=tokens_belonging_to_seg, device=device)
 
     else:
         filtered_segments = filter_segments_oracle(organized_segments=organized_segments,
@@ -254,8 +254,10 @@ if __name__ == "__main__":
     parser.add_argument('--timestamps_folder', type=str, required=True)
     parser.add_argument('--output_folder', type=str, required=True)
     parser.add_argument('--segment_classifier', type=str, default=MAJORITY_STR)
+    parser.add_argument('--device', type=int, default=0)
 
     args = parser.parse_args()
 
     convert_segmentation_to_labels(yaml_fp=args.yaml_file, timestamps_folder=args.timestamps_folder,
-                                   out_folder=args.output_folder, segment_classifier=args.segment_classifier)
+                                   out_folder=args.output_folder, segment_classifier=args.segment_classifier,
+                                   device=args.device)

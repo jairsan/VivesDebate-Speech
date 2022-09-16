@@ -238,7 +238,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
 
             if training_args.min_sample_len > 0:
                 joint_samples_labels = zip(train_samples, train_labels)
-                filterd_samples_labels = [x for x in joint_samples_labels if len(x[0].strip().split()) > training_args.min_sample_len]
+                filterd_samples_labels = [x for x in joint_samples_labels if len(x[0].strip().split()) >= training_args.min_sample_len]
                 print(f"Filtered {len(train_samples) - len(filterd_samples_labels)} train samples due to "
                       f"min sample len {training_args.min_sample_len}")
                 train_samples = [x[0] for x in filterd_samples_labels]
