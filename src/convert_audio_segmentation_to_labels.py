@@ -14,7 +14,6 @@ import librosa
 class TransformersClassifier(SegmentClassifier):
 
     def __init__(self, model_folder_path: str, checkpoint: str, device: int):
-        # TODO fixme so that the tokenizer is saved during training, that way it can be loaded later
         self.tokenizer = AutoTokenizer.from_pretrained(model_folder_path + "_tokenizer")
         self.model = AutoModelForSequenceClassification.from_pretrained(model_folder_path +
                                                                         "_models/checkpoint-" + checkpoint,
@@ -35,7 +34,6 @@ class TransformersClassifier(SegmentClassifier):
 
 class TransformersAudioClassifier:
     def __init__(self, model_folder_path: str, checkpoint: str, device: int):
-        # TODO fixme so that the tokenizer is saved during training, that way it can be loaded later
         self.feature_extractor = AutoFeatureExtractor.from_pretrained(model_folder_path + "_extractor")
         self.model = AutoModelForAudioClassification.from_pretrained(model_folder_path +
                                                                         "_models/checkpoint-" + checkpoint,
@@ -70,7 +68,7 @@ def get_segmentation_from_yaml(yaml_fp) -> Dict[str, List[Dict]]:
 
 def filter_segments(organized_segments: Dict[str, List[Dict]], tokens_belonging_to_segmentation: Dict[str, List[List[str]]],
                     segment_classifier: str, device: int, wav_folder: str = "../../../data_preparation/audios_16khz_mono/") -> Dict[str, List[Dict]]:
-
+    init_num_segments = sum([len(organized_segments[x]) for x in list(organized_segments.keys())])
     if segment_classifier == MAJORITY_STR:
         segment_classifier = MajorityClassifier()
     elif segment_classifier.startswith("transformers:"):
@@ -106,6 +104,9 @@ def filter_segments(organized_segments: Dict[str, List[Dict]], tokens_belonging_
                 new_segments.append(segment)
         organized_segments[vid] = new_segments
 
+    end_num_segments = sum([len(organized_segments[x]) for x in list(organized_segments.keys())])
+    print(f"After segment classifier, {end_num_segments - init_num_segments} out of {init_num_segments} "
+          f"segments were filtered out")
     return organized_segments
 
 
