@@ -269,7 +269,7 @@ if __name__ == "__main__":
     parser.add_argument('--output_folder', type=str, required=True)
     parser.add_argument('--segment_classifier', type=str, default=MAJORITY_STR)
     parser.add_argument('--min_sample_len', type=float, default=0.0)
-    parser.add_argument('--device', type=int, default=0)
+    parser.add_argument('--device', type=int, default=-1)
 
     args = parser.parse_args()
 

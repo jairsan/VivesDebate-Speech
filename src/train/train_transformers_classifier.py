@@ -1,13 +1,14 @@
 from dataclasses import dataclass, field
 from typing import List, Tuple, Optional, Any, Dict
 import numpy as np
-
+import os
 import torch
 
 from train_segment_classifier import generate_dataset, KEEP, DISCARD
 from transformers import Pipeline, AutoTokenizer, AutoFeatureExtractor, AutoModelForTokenClassification,\
     AutoModelForSequenceClassification, AutoModelForAudioClassification, \
     TokenClassificationPipeline, Trainer, TrainingArguments, HfArgumentParser
+from transformers.trainer_utils import get_last_checkpoint
 import evaluate
 import argparse
 import librosa
@@ -392,6 +393,10 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
     print(eval_dataset.summary())
     print("Training args:", training_args)
     trainer.train()
+
+    last_checkpoint = get_last_checkpoint(output_dir_name + "_models/")
+    os.symlink(last_checkpoint, output_dir_name + "_models/checkpoint-last", target_is_directory=True)
+
     trainer.save_model(output_dir_name + "_models/checkpoint-best/")
 
 
