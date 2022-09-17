@@ -221,7 +221,18 @@ def get_tokens_belonging_to_segmentation(organized_segments: Dict[str, List[Dict
     return tokens_paired_with_segments_per_wav_dict, labels, oracle_labels
 
 
-def convert_segmentation_to_labels(yaml_fp, timestamps_folder, out_folder, segment_classifier,device):
+def filter_segments_min_len(organized_segments: Dict[str, List[Dict]], sample_min_len: float):
+    for vid in list(organized_segments.keys()):
+        segments = organized_segments[vid]
+        filt_segments = [segment for segment in segments if segment["duration"] >= sample_min_len]
+
+        organized_segments[vid] = filt_segments
+
+    return organized_segments
+
+
+def convert_segmentation_to_labels(yaml_fp, timestamps_folder, out_folder, segment_classifier,
+                                   device, min_sample_len):
     organized_segments = get_segmentation_from_yaml(yaml_fp=yaml_fp)
     init_num_segments = sum([len(organized_segments[x]) for x in list(organized_segments.keys())])
 
@@ -231,7 +242,7 @@ def convert_segmentation_to_labels(yaml_fp, timestamps_folder, out_folder, segme
     if not segment_classifier.startswith("oracle"):
         filtered_segments = filter_segments(organized_segments=organized_segments, segment_classifier=segment_classifier,
                                         tokens_belonging_to_segmentation=tokens_belonging_to_seg, device=device)
-
+        filtered_segments = filter_segments_min_len(filtered_segments, sample_min_len=min_sample_len)
     else:
         filtered_segments = filter_segments_oracle(organized_segments=organized_segments,
                                                    reference_labels=oracle_labels)
@@ -257,10 +268,11 @@ if __name__ == "__main__":
     parser.add_argument('--timestamps_folder', type=str, required=True)
     parser.add_argument('--output_folder', type=str, required=True)
     parser.add_argument('--segment_classifier', type=str, default=MAJORITY_STR)
+    parser.add_argument('--min_sample_len', type=float, default=0.0)
     parser.add_argument('--device', type=int, default=0)
 
     args = parser.parse_args()
 
     convert_segmentation_to_labels(yaml_fp=args.yaml_file, timestamps_folder=args.timestamps_folder,
                                    out_folder=args.output_folder, segment_classifier=args.segment_classifier,
-                                   device=args.device)
+                                   device=args.device, min_sample_len=args.min_sample_len)
