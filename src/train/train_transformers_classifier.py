@@ -355,7 +355,10 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
         do_eval=True,
         seed=training_args.seed,
         evaluation_strategy="epoch",
-        save_strategy="epoch"
+        save_strategy="epoch",
+        load_best_model_at_end=True,
+        metric_for_best_model="f1",
+        save_total_limit=1
     )
 
     trainer = Trainer(
@@ -379,6 +382,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
     print(eval_dataset.summary())
     print("Training args:", training_args)
     trainer.train()
+    trainer.save_model(output_dir_name + "_models/best/")
 
 
 if __name__ == "__main__":
