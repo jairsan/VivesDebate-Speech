@@ -345,7 +345,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
         # Compute_metrics has to return a non nested Dict[str, Any]
         return {"f1": f1.compute(predictions=predictions, references=labels)["f1"],
                 "accuracy": acc.compute(predictions=predictions, references=labels)["accuracy"],
-                "f1_neg_label": f1.compute(predictions=predictions, references=labels)["f1"]}
+                "f1_macro": f1_neg_label.compute(predictions=predictions, references=labels, average="macro")["f1"]}
 
         # return metrics.compute(predictions=predictions, references=labels)
 
