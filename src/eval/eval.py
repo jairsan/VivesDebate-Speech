@@ -167,10 +167,15 @@ if __name__ == "__main__":
                         help="If set, converts the BIOE format to BIO, in both hypotheses and references.")
     parser.add_argument('--only_segmentation', action='store_true',
                         help="If set, evaluates only the segmentation problem.")
+    parser.add_argument('--only_f1', action='store_true',
+                        help="If set, returns the Macro-F1 score instead of the full classification report")
 
     args = parser.parse_args()
 
     per_file_results, flat_results_eval = eval_all(args.hypotheses_files, args.reference_files, args.convert_to_bio,
                                                    args.only_segmentation)
 
-    print(flat_results_eval.report)
+    if args.only_f1:
+        print(flat_results_eval.f1)
+    else:
+        print(flat_results_eval.report)

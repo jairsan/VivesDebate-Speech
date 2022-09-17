@@ -334,6 +334,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
 
     def compute_metrics(eval_preds):
         f1 = evaluate.load("f1")
+        f1_neg_label = evaluate.load("f1")
         acc = evaluate.load("accuracy")
 
         #metrics = evaluate.combine(["f1", "accuracy"])
@@ -343,7 +344,8 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
 
         # Compute_metrics has to return a non nested Dict[str, Any]
         return {"f1": f1.compute(predictions=predictions, references=labels)["f1"],
-                "accuracy": acc.compute(predictions=predictions, references=labels)["accuracy"]}
+                "accuracy": acc.compute(predictions=predictions, references=labels)["accuracy"],
+                "f1_neg_label": f1.compute(predictions=predictions, references=labels)["f1"]}
 
         # return metrics.compute(predictions=predictions, references=labels)
 
@@ -390,7 +392,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
     print(eval_dataset.summary())
     print("Training args:", training_args)
     trainer.train()
-    trainer.save_model(output_dir_name + "_models/best/")
+    trainer.save_model(output_dir_name + "_models/checkpoint-best/")
 
 
 if __name__ == "__main__":
