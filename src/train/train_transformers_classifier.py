@@ -395,7 +395,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
     trainer.train()
 
     last_checkpoint = get_last_checkpoint(output_dir_name + "_models/")
-    os.symlink(last_checkpoint, output_dir_name + "_models/checkpoint-last", target_is_directory=True)
+    os.symlink(os.path.basename(last_checkpoint), output_dir_name + "_models/checkpoint-last", target_is_directory=True)
 
     trainer.save_model(output_dir_name + "_models/checkpoint-best/")
 
