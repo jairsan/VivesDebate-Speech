@@ -304,7 +304,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
 
         dev_labels = [sample.label for sample in dev_samples]
 
-        classifier_model = AutoModelForAudioClassification.from_pretrained(model_name)
+        classifier_model = AutoModelForAudioClassification.from_pretrained(model_name, num_labels=2)
         classifier_model.freeze_feature_encoder()
 
         audio_feature_extractor = AutoFeatureExtractor.from_pretrained(model_name)
@@ -362,6 +362,7 @@ def train_model(model_name: str, train_files: List[str], eval_files: List[str], 
         lr_scheduler_type=training_args.lr_scheduler,
         fp16=training_args.fp16,
         gradient_checkpointing=training_args.gradient_checkpointing,
+        group_by_length=True,
         logging_steps=10,
         do_eval=True,
         seed=training_args.seed,
