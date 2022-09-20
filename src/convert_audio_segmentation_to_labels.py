@@ -4,7 +4,7 @@ import pickle
 from typing import List, Dict, Tuple
 
 from utils import check_if_token_belongs
-from train.train_segment_classifier import SegmentClassifier, MajorityClassifier, KEEP, MAJORITY_STR
+from train.train_segment_classifier import SegmentClassifier, MajorityClassifier, KEEP, MAJORITY_STR, DISCARD
 from transformers import AutoModelForSequenceClassification, AutoModelForAudioClassification, \
     AutoTokenizer, AutoFeatureExtractor, TextClassificationPipeline, AudioClassificationPipeline
 import numpy as np
@@ -38,7 +38,8 @@ class TransformersAudioClassifier:
         self.model = AutoModelForAudioClassification.from_pretrained(model_folder_path +
                                                                         "_models/checkpoint-" + checkpoint,
                                                                         local_files_only=True)
-        self.pipeline = AudioClassificationPipeline(model=self.model, feature_extractor=self.feature_extractor, device=device)
+        self.pipeline = AudioClassificationPipeline(model=self.model, feature_extractor=self.feature_extractor,
+                                                    device=device)
 
     def classify_segment(self, wav_file: str, duration: float, offset: float):
         raw_audio, _ = librosa.load(wav_file, sr=16000, offset=offset,
@@ -67,7 +68,8 @@ def get_segmentation_from_yaml(yaml_fp) -> Dict[str, List[Dict]]:
 
 
 def filter_segments(organized_segments: Dict[str, List[Dict]], tokens_belonging_to_segmentation: Dict[str, List[List[str]]],
-                    segment_classifier: str, device: int, wav_folder: str = "../../../data_preparation/audios_16khz_mono/") -> Dict[str, List[Dict]]:
+                    segment_classifier: str, device: int, min_sample_len_tokens: int,
+                    wav_folder: str = "../../../data_preparation/audios_16khz_mono/") -> Dict[str, List[Dict]]:
     if segment_classifier == MAJORITY_STR:
         segment_classifier = MajorityClassifier()
     elif segment_classifier.startswith("transformers:"):
@@ -99,10 +101,11 @@ def filter_segments(organized_segments: Dict[str, List[Dict]], tokens_belonging_
                                                               offset=segment["offset"])
             else:
                 predict = segment_classifier.classify_segment(segment=sentence).flatten()[0]
+            if len(tokens) < min_sample_len_tokens:
+                predict = DISCARD
             if predict == KEEP:
                 new_segments.append(segment)
         organized_segments[vid] = new_segments
-
 
     return organized_segments
 
@@ -119,8 +122,6 @@ def filter_segments_oracle(organized_segments: Dict[str, List[Dict]], reference_
         for segment, this_segment_labels in zip(segments, labels):
             count_O = this_segment_labels.count("O")
             count_I = len(this_segment_labels) - count_O
-
-            #print(count_I, count_O)
 
             if count_I >= count_O:
                 new_segments.append(segment)
@@ -221,7 +222,7 @@ def get_tokens_belonging_to_segmentation(organized_segments: Dict[str, List[Dict
     return tokens_paired_with_segments_per_wav_dict, labels, oracle_labels
 
 
-def filter_segments_min_len(organized_segments: Dict[str, List[Dict]], sample_min_len: float):
+def filter_segments_min_len_seconds(organized_segments: Dict[str, List[Dict]], sample_min_len: float):
     for vid in list(organized_segments.keys()):
         segments = organized_segments[vid]
         filt_segments = [segment for segment in segments if segment["duration"] >= sample_min_len]
@@ -232,7 +233,7 @@ def filter_segments_min_len(organized_segments: Dict[str, List[Dict]], sample_mi
 
 
 def convert_segmentation_to_labels(yaml_fp, timestamps_folder, out_folder, segment_classifier,
-                                   device, min_sample_len):
+                                   device, min_sample_len_seconds, min_sample_len_tokens):
     organized_segments = get_segmentation_from_yaml(yaml_fp=yaml_fp)
     init_num_segments = sum([len(organized_segments[x]) for x in list(organized_segments.keys())])
 
@@ -241,8 +242,9 @@ def convert_segmentation_to_labels(yaml_fp, timestamps_folder, out_folder, segme
 
     if not segment_classifier.startswith("oracle"):
         filtered_segments = filter_segments(organized_segments=organized_segments, segment_classifier=segment_classifier,
-                                        tokens_belonging_to_segmentation=tokens_belonging_to_seg, device=device)
-        filtered_segments = filter_segments_min_len(filtered_segments, sample_min_len=min_sample_len)
+                                        tokens_belonging_to_segmentation=tokens_belonging_to_seg, device=device,
+                                            min_sample_len_tokens=min_sample_len_tokens)
+        filtered_segments = filter_segments_min_len_seconds(filtered_segments, sample_min_len=min_sample_len_seconds)
     else:
         filtered_segments = filter_segments_oracle(organized_segments=organized_segments,
                                                    reference_labels=oracle_labels)
@@ -268,11 +270,13 @@ if __name__ == "__main__":
     parser.add_argument('--timestamps_folder', type=str, required=True)
     parser.add_argument('--output_folder', type=str, required=True)
     parser.add_argument('--segment_classifier', type=str, default=MAJORITY_STR)
-    parser.add_argument('--min_sample_len', type=float, default=0.0)
+    parser.add_argument('--min_sample_len_seconds', type=float, default=0.0)
+    parser.add_argument('--min_sample_len_tokens', type=int, default=1)
     parser.add_argument('--device', type=int, default=-1)
 
     args = parser.parse_args()
 
     convert_segmentation_to_labels(yaml_fp=args.yaml_file, timestamps_folder=args.timestamps_folder,
                                    out_folder=args.output_folder, segment_classifier=args.segment_classifier,
-                                   device=args.device, min_sample_len=args.min_sample_len)
+                                   device=args.device, min_sample_len_seconds=args.min_sample_len_seconds,
+                                   min_sample_len_tokens=args.min_sample_len_tokens)
