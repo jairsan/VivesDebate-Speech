@@ -6,6 +6,9 @@ from typing import List
 class DebateStats:
     length: float
     num_words: int
+    B: int
+    I: int
+    O: int
 
 
 def compute_stats_for_set(set_ids: List[int], timestamps_folder: str) -> str:
@@ -16,13 +19,29 @@ def compute_stats_for_set(set_ids: List[int], timestamps_folder: str) -> str:
             num_words = len(lines)
             start = float(lines[0].strip().split()[1])
             end = float(lines[-1].strip().split()[2])
-            debates_stats.append(DebateStats(num_words=num_words, length=end-start))
+
+            b = i = o = 0
+            for line in lines:
+                label = line.strip().split()[-1]
+                if label == "B":
+                    b += 1
+                elif label == "I":
+                    i += 1
+                elif label == "O":
+                    o += 1
+                else:
+                    raise Exception
+            assert num_words == sum([b, i, o])
+            debates_stats.append(DebateStats(num_words=num_words, length=end-start, B=b, I=i, O=0))
 
     num_debates = len(debates_stats)
     total_length = sum([x.length for x in debates_stats])
     total_tokens = sum([x.num_words for x in debates_stats])
+    total_b = sum([x.B for x in debates_stats])
+    total_i = sum([x.I for x in debates_stats])
+    total_o = sum([x.O for x in debates_stats])
 
-    return f"{num_debates} & {(total_length/3600):.1f} & {total_tokens} \\\\"
+    return f"{num_debates} & {(total_length/3600):.1f} & {total_b} & {total_i} & {total_o}\\\\"
 
 
 def stats():
