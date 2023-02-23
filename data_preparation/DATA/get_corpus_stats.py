@@ -29,10 +29,12 @@ def compute_stats_for_set(set_ids: List[int], timestamps_folder: str) -> str:
                     i += 1
                 elif label == "O":
                     o += 1
+                elif label == "E":
+                    i += 1
                 else:
                     raise Exception
             assert num_words == sum([b, i, o])
-            debates_stats.append(DebateStats(num_words=num_words, length=end-start, B=b, I=i, O=0))
+            debates_stats.append(DebateStats(num_words=num_words, length=end-start, B=b, I=i, O=o))
 
     num_debates = len(debates_stats)
     total_length = sum([x.length for x in debates_stats])
